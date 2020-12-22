@@ -5,12 +5,26 @@
 #include "../math/tek_math.hpp"
 #include "tek_shader.hpp"
 
-typedef struct
+struct TekMeshVertexData
 {
     Vec3 position;
     Vec2 uv;
     Vec3 normal;
-}TekMeshVertexData;
+
+    TekMeshVertexData(){};
+    TekMeshVertexData(Vec3 position, Vec2 uv, Vec3 normal)
+    {
+    	this->position = position;
+    	this->uv = uv;
+    	this->normal = normal;
+    }
+    TekMeshVertexData(float x, float y, float z, float u, float v, float nx, float ny, float nz)
+    {
+	    this->position = Vec3(x,y,z);
+	    this->uv = Vec2(u,v);
+	    this->normal = Vec3(nx,ny,nz);
+    }
+};
 
 TekMeshVertexData tek_mesh_vertex_data_create(float x, float y, float z, float u, float v, float nx, float ny, float nz);
 

@@ -385,7 +385,7 @@ static bool load_mesh(TekMesh* mesh, const char* filename)
 				return false;
 			}
 
-			TekMeshVertexData vert = { x, y, z, u, v, nx, ny, nz };
+			TekMeshVertexData vert = { {x, y, z}, {u, v}, {nx, ny, nz} };
 			mesh->vertices[vertex_ctr++] = vert;
 		}
 		else if (line[0] == 'i' && line[1] == 'd')
@@ -433,9 +433,6 @@ void tek_mesh_create_plane(TekMesh* mesh, float width, float depth, int x_segmen
 {
 	TekMeshVertexData* vertices = (TekMeshVertexData*)tek_malloc(sizeof(TekMeshVertexData) * x_segments * y_segments * 4);
 	u32* indices = (u32*)tek_malloc(sizeof(u32) * x_segments * y_segments * 6);
-
-	float w = width / 2.0f;
-	float d = depth / 2.0f;
 
 	float x_step = width / x_segments;
 	float y_step = depth / y_segments;
@@ -570,7 +567,7 @@ void tek_mesh_create_skybox(TekMesh* mesh, float width)
 	float d = width / 2.0f;
 	float h = width / 2.0f;
 
-	TekRect uv = tek_rect_uv(0, 0, 256, 256, 256 * 3, 256 * 3);
+	TekRect uv = TekRect(0, 0, 256, 256, 256 * 3, 256 * 3);
 
 	//front
 	vertices[0] = tek_mesh_vertex_data_create(w, h, d, uv.x, uv.h, 0, 0, -1);
@@ -579,35 +576,35 @@ void tek_mesh_create_skybox(TekMesh* mesh, float width)
 	vertices[3] = tek_mesh_vertex_data_create(-w, h, d, uv.w, uv.h, 0, 0, -1);
 
 	//left
-	uv = tek_rect_uv(256, 0, 256, 256, 256 * 3, 256 * 3);
+	uv = TekRect(256, 0, 256, 256, 256 * 3, 256 * 3);
 	vertices[4] = tek_mesh_vertex_data_create(-w, h, d, uv.x, uv.h, 1, 0, 0);
 	vertices[5] = tek_mesh_vertex_data_create(-w, -h, d, uv.x, uv.y, 1, 0, 0);
 	vertices[6] = tek_mesh_vertex_data_create(-w, -h, -d, uv.w, uv.y, 1, 0, 0);
 	vertices[7] = tek_mesh_vertex_data_create(-w, h, -d, uv.w, uv.h, 1, 0, 0);
 
 	//right
-	uv = tek_rect_uv(512, 0, 256, 256, 256 * 3, 256 * 3);
+	uv = TekRect(512, 0, 256, 256, 256 * 3, 256 * 3);
 	vertices[8] = tek_mesh_vertex_data_create(w, h, -d, uv.x, uv.h, -1, 0, 0);
 	vertices[9] = tek_mesh_vertex_data_create(w, -h, -d, uv.x, uv.y, -1, 0, 0);
 	vertices[10] = tek_mesh_vertex_data_create(w, -h, d, uv.w, uv.y, -1, 0, 0);
 	vertices[11] = tek_mesh_vertex_data_create(w, h, d, uv.w, uv.h, -1, 0, 0);
 
 	//back
-	uv = tek_rect_uv(0, 256, 256, 256, 256 * 3, 256 * 3);
+	uv = TekRect(0, 256, 256, 256, 256 * 3, 256 * 3);
 	vertices[12] = tek_mesh_vertex_data_create(-w, h, -d, uv.x, uv.h, 0, 0, 1);
 	vertices[13] = tek_mesh_vertex_data_create(-w, -h, -d, uv.x, uv.y, 0, 0, 1);
 	vertices[14] = tek_mesh_vertex_data_create(w, -h, -d, uv.w, uv.y, 0, 0, 1);
 	vertices[15] = tek_mesh_vertex_data_create(w, h, -d, uv.w, uv.h, 0, 0, 1);
 
 	//top
-	uv = tek_rect_uv(256, 256, 256, 256, 256 * 3, 256 * 3);
+	uv = TekRect(256, 256, 256, 256, 256 * 3, 256 * 3);
 	vertices[16] = tek_mesh_vertex_data_create(-w, h, d, uv.x, uv.h, 0, -1, 0);
 	vertices[17] = tek_mesh_vertex_data_create(-w, h, -d, uv.x, uv.y, 0, -1, 0);
 	vertices[18] = tek_mesh_vertex_data_create(w, h, -d, uv.w, uv.y, 0, -1, 0);
 	vertices[19] = tek_mesh_vertex_data_create(w, h, d, uv.w, uv.h, 0, -1, 0);
 
 	//bottom
-	uv = tek_rect_uv(512, 256, 256, 256, 256 * 3, 256 * 3);
+	uv = TekRect(512, 256, 256, 256, 256 * 3, 256 * 3);
 	vertices[20] = tek_mesh_vertex_data_create(-w, -h, -d, uv.x, uv.h, 0, 1, 0);
 	vertices[21] = tek_mesh_vertex_data_create(-w, -h, d, uv.x, uv.y, 0, 1, 0);
 	vertices[22] = tek_mesh_vertex_data_create(w, -h, d, uv.w, uv.y, 0, 1, 0);

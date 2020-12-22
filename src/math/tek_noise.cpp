@@ -2,55 +2,55 @@
 
 #include "tek_math.hpp"
 
-void tek_noise_init(TekNoise *noise, u32 width, u32 height)
+TekNoise::TekNoise(u32 width, u32 height)
 {
-	noise->width = width;
-	noise->height = height;
-	noise->values = (float*)tek_malloc(sizeof(float) * (width * height));
-	noise->num_values = width * height;
+	this->width = width;
+	this->height = height;
+	this->values = (float*)tek_malloc(sizeof(float) * (width * height));
+	this->num_values = width * height;
 
-	for (u32 i = 0; i < noise->num_values; ++i)
+	for (u32 i = 0; i < num_values; ++i)
 	{
-		noise->values[i] = math_get_random_float(0, 1);
+		values[i] = math_get_random_float(0, 1);
 	}
 }
 
-void tek_noise_destroy(TekNoise *noise)
+TekNoise::~TekNoise()
 {
-	tek_free(noise->values);
+	tek_free(values);
 }
 
-static double smooth_noise(TekNoise *noise, double x, double y)
+double TekNoise::smooth_noise(double x, double y)
 {
 	//get fractional part of x and y
 	double fractX = x - (int) x;
 	double fractY = y - (int) y;
 
 	//wrap around
-	int x1 = ((int) x + noise->width) % noise->width;
-	int y1 = ((int) y + noise->height) % noise->height;
+	int x1 = ((int) x + width) % width;
+	int y1 = ((int) y + height) % height;
 
 	//neighbor values
-	int x2 = (x1 + noise->width - 1) % noise->width;
-	int y2 = (y1 + noise->height - 1) % noise->height;
+	int x2 = (x1 + width - 1) % width;
+	int y2 = (y1 + height - 1) % height;
 
 	//smooth the noise with bilinear interpolation
 	double value = 0.0;
-	value += fractX * fractY * noise->values[y1 * noise->width + x1];
-	value += (1 - fractX) * fractY * noise->values[y1 * noise->width + x2];
-	value += fractX * (1 - fractY) * noise->values[y2 * noise->width + x1];
-	value += (1 - fractX) * (1 - fractY) * noise->values[y2 * noise->width + x2];
+	value += fractX * fractY * values[y1 * width + x1];
+	value += (1 - fractX) * fractY * values[y1 * width + x2];
+	value += fractX * (1 - fractY) * values[y2 * width + x1];
+	value += (1 - fractX) * (1 - fractY) * values[y2 * width + x2];
 
 	return value;
 }
 
-static double turbulence(TekNoise *noise, double x, double y, double size)
+double TekNoise::turbulence(double x, double y, double size)
 {
 	double value = 0.0, initialSize = size;
 
 	while (size >= 1)
 	{
-		value += smooth_noise(noise, x / size, y / size) * size;
+		value += smooth_noise(x / size, y / size) * size;
 		size /= 2.0;
 	}
 
@@ -59,7 +59,7 @@ static double turbulence(TekNoise *noise, double x, double y, double size)
 	return res;
 }
 
-const float tek_noise_get_value(TekNoise *noise, u32 x, u32 y)
+const float TekNoise::get_value(u32 x, u32 y)
 {
-	return turbulence(noise, x, y, 16.0);
+	return turbulence(x, y, 16.0);
 }

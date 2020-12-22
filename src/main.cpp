@@ -6,7 +6,7 @@
 #include "game/tek_game.hpp"
 
 static TekRect g_target_rect;
-static TekFramebuffer g_fb;
+static TekFramebuffer* g_fb;
 static Mat4 g_ortho;
 
 static u32 g_width = 0;
@@ -25,7 +25,7 @@ static TekRect get_target_rect(u32 win_width, u32 win_height, u32 render_width, 
 		y = 0;
 		w = (float)win_width;
 		h = (float)win_height;
-		result = tek_rect_create(x, y, w, h);
+		result = TekRect(x, y, w, h);
 		return result;
 	}
 
@@ -42,7 +42,7 @@ static TekRect get_target_rect(u32 win_width, u32 win_height, u32 render_width, 
 		w = new_width;
 		y = 0;
 		h = (float)win_height;
-		result = tek_rect_create(x, y, w, h);
+		result = TekRect(x, y, w, h);
 	}
 	else
 	{
@@ -53,7 +53,7 @@ static TekRect get_target_rect(u32 win_width, u32 win_height, u32 render_width, 
 
 		y = (win_height - new_height) / 2;
 		h = new_height;
-		result = tek_rect_create(x, y, w, h);
+		result = TekRect(x, y, w, h);
 	}
 
 	return result;
@@ -70,14 +70,14 @@ bool on_init()
 void on_render()
 {	
 	tek_renderer_start_frame();
-	tek_renderer_bind_framebuffer(&g_fb, tek_color_black());
+	tek_renderer_bind_framebuffer(g_fb, TekColor::black());
 
 	tek_game_render();
 
 	tek_renderer_unbind_framebuffer();
 	tek_renderer_viewport(g_width, g_height);
-	tek_fb_bind_reading(&g_fb, 0);
-	tek_renderer_render_sprite(g_target_rect, tek_rect_create(0, 0, 1, 1), g_fb.tex_id,&g_ortho );
+	g_fb->bind_reading(0);
+	tek_renderer_render_sprite(g_target_rect, TekRect(0, 0, 1, 1), g_fb->get_tex_id(),&g_ortho );
 }
 
 void on_update(float delta)
@@ -98,8 +98,8 @@ int main(int argc, char* args[])
 {
 	g_width = 1280;
 	g_height = 720;
-	g_render_width = 768;
-	g_render_height = 432;
+	g_render_width = 640;
+	g_render_height = 360;
 
 	tek_app_set_on_init(on_init);
 	tek_app_set_on_render(on_render);
@@ -114,12 +114,12 @@ int main(int argc, char* args[])
 	g_target_rect = get_target_rect(g_width, g_height, g_render_width, g_render_height);
 	g_ortho = mat4_ortho(0, g_width, 0, g_height, -1, 1);
 	g_ortho = mat4_transposed(&g_ortho);
-	tek_fb_init(&g_fb, g_render_width, g_render_height);
+	g_fb = new TekFramebuffer(g_render_width, g_render_height);
 
 	tek_app_start_main_loop();
 
 	tek_game_destroy();
-	tek_fb_destroy(&g_fb);
+	delete g_fb;
 	tek_app_destroy();
 	return 0;
 }

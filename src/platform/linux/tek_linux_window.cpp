@@ -1,6 +1,4 @@
-#include "../tek_platform.h"
-
-#include "../../observer/tek_event_manager.h"
+#include "../tek_platform.hpp"
 
 #include <X11/X.h>
 #include <X11/Xlib.h>
@@ -25,6 +23,9 @@ static XSetWindowAttributes g_swa;
 static bool g_keys_down[NUM_KEYS];
 static bool g_buttons_down[NUM_MOUSE_BUTTONS];
 
+static TekInputLetter g_input_letters[8];
+static u32 g_num_input_letters = 0;
+
 static Cursor g_blank_cursor;
 
 static int g_mx = 0;
@@ -35,9 +36,9 @@ static bool g_close_requested = false;
 
 static Key g_keys_defs[512];
 
-void init_keys();
+static void init_keys();
 
-Key get_key_def(int key);
+static Key get_key_def(int key);
 
 static Cursor create_blank_cursor()
 {
@@ -114,7 +115,7 @@ bool tek_window_open(u32 width, u32 height, const char *title, bool fullscreen)
 	assert(g_display);
 
 	int number_of_screens = XScreenCount(g_display);
-	printf("number of screens %d\n",number_of_screens);
+	printf("number of screens %d\n", number_of_screens);
 
 	g_root = DefaultRootWindow(g_display);
 
@@ -190,7 +191,7 @@ bool tek_window_open(u32 width, u32 height, const char *title, bool fullscreen)
 	//set opengl version
 	static int context_attribs[] =
 			{
-					GLX_CONTEXT_MAJOR_VERSION_ARB, 4,
+					GLX_CONTEXT_MAJOR_VERSION_ARB, 3,
 					GLX_CONTEXT_MINOR_VERSION_ARB, 3,
 					None
 			};
@@ -253,6 +254,7 @@ bool tek_window_update()
 {
 	XEvent e;
 	g_wheel = 0;
+	g_num_input_letters = 0;
 	while (XPending(g_display))
 	{
 		XNextEvent(g_display, &e);
@@ -269,9 +271,6 @@ bool tek_window_update()
 
 				g_width = xce.width;
 				g_height = xce.height;
-
-				TekWindowEvent evt = tek_window_event_resize(g_width, g_height);
-				tek_events_send_window_event(&evt);
 			}
 				break;
 			case KeyPress:
@@ -279,32 +278,58 @@ bool tek_window_update()
 				Key mapped_key = get_key_def(e.xkey.keycode);
 				g_keys_down[mapped_key] = true;
 
+				TekInputLetter input_letter;
+
 				if (mapped_key == KEY_TAB)
 				{
-					TekInputEvent evt = tek_input_event_tab();
-					tek_events_send_input_event(&evt);
+					input_letter.type = INPUT_LETTER_TAB;
 				}
 				else if (mapped_key == KEY_ENTER)
 				{
-					TekInputEvent evt = tek_input_event_enter();
-					tek_events_send_input_event(&evt);
+					input_letter.type = INPUT_LETTER_ENTER;
 				}
 				else if (mapped_key == KEY_BACKSPACE)
 				{
-					TekInputEvent evt = tek_input_event_backspace();
-					tek_events_send_input_event(&evt);
+					input_letter.type = INPUT_LETTER_BACKSPACE;
 				}
 				else if (mapped_key == KEY_ESCAPE)
 				{
-					TekInputEvent evt = tek_input_event_escape();
-					tek_events_send_input_event(&evt);
+					input_letter.type = INPUT_LETTER_ESCAPE;
+				}
+				else if (mapped_key == KEY_SPACE)
+				{
+					input_letter.type = INPUT_LETTER_SPACE;
+				}
+				else if (mapped_key == KEY_UP)
+				{
+					input_letter.type = INPUT_LETTER_UP;
+				}
+				else if (mapped_key == KEY_DOWN)
+				{
+					input_letter.type = INPUT_LETTER_DOWN;
+				}
+				else if (mapped_key == KEY_LEFT)
+				{
+					input_letter.type = INPUT_LETTER_LEFT;
+				}
+				else if (mapped_key == KEY_RIGHT)
+				{
+					input_letter.type = INPUT_LETTER_RIGHT;
+				}
+				else if (mapped_key == KEY_DELETE)
+				{
+					input_letter.type = INPUT_LETTER_DELETE;
+				}
+				else
+				{
+					input_letter.type = INPUT_LETTER_LETTER;
+					input_letter.key = mapped_key;
 				}
 
-				KeySym sym = XLookupKeysym(&e.xkey, 0);
-				char *letter = XKeysymToString(sym);
-
-				TekInputEvent evt = tek_input_event_letter_input(*letter);
-				tek_events_send_input_event(&evt);
+				if(g_num_input_letters < 8)
+				{
+					g_input_letters[g_num_input_letters++] = input_letter;
+				}
 			}
 				break;
 			case KeyRelease:
@@ -344,21 +369,17 @@ bool tek_window_update()
 				break;
 			case EnterNotify:
 			{
-				TekWindowEvent evt = tek_window_event_enter();
-				tek_events_send_window_event(&evt);
+
 			}
 				break;
 			case LeaveNotify:
 			{
-				TekWindowEvent evt = tek_window_event_leave();
-				tek_events_send_window_event(&evt);
+
 			}
 				break;
 			case ClientMessage:
 			{
 				//printf("window closed by wm\n");
-				TekWindowEvent evt = tek_window_event_close();
-				tek_events_send_window_event(&evt);
 
 				g_close_requested = true;
 
@@ -413,7 +434,7 @@ void tek_window_set_cursor_pos(int x, int y)
 
 void tek_window_show_cursor(int val)
 {
-	if(val)
+	if (val)
 	{
 		XDefineCursor(g_display, g_window, None);
 	}
@@ -425,10 +446,11 @@ void tek_window_show_cursor(int val)
 
 TekInputLetter *tek_window_get_letter(int *letters)
 {
-	return NULL;
+	*letters = g_num_input_letters;
+	return g_input_letters;
 }
 
-Key get_key_def(int key)
+static Key get_key_def(int key)
 {
 	if (key < 1 || key > 512)
 	{
@@ -438,7 +460,7 @@ Key get_key_def(int key)
 	return g_keys_defs[key];
 }
 
-void init_keys()
+static void init_keys()
 {
 	for (int i = 0; i < NUM_KEYS; ++i)
 	{

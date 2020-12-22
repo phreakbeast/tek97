@@ -4,41 +4,47 @@
 #include "../core/tek_core.hpp"
 #include "tek_texture.hpp"
 
-	typedef struct
-	{
-		char character;
-		float uv_l;
-		float uv_r;
-		float uv_t;
-		float uv_b;
-		int width;
-		int x_offset;
-		int y_offset;
-	}TekFontLetter;
+struct TekFontLetter
+{
+	char character;
+	float uv_l;
+	float uv_r;
+	float uv_t;
+	float uv_b;
+	int width;
+	int x_offset;
+	int y_offset;
+};
 
-	typedef struct
-	{
-		int val[512][512];
-	}TekKerningTable;
+struct TekKerningTable
+{
+	int val[512][512];
+};
 
-	typedef struct
-	{
-		TekTexture texture;
-		TekKerningTable kernings;
-		TekFontLetter letters[512];
-		int num_letters;
-		int width;
-		int height;
-	}TekFont;
+class TekFont
+{
+public:
+	~TekFont();
 
-void tek_font_destroy(TekFont* font);
+	const TekFontLetter* get_letter(char character) const;
 
-TekFontLetter* tek_font_get_letter(TekFont* font, char character);
+	const u32 text_length(const char *text) const;
 
-const u32 tek_font_text_length(TekFont* font, const char *text);
+	const u32 text_height(const char *text) const;
 
-const u32 tek_font_text_height(TekFont* font, const char *text);
+	const int get_width() const {return width;}
+	const int get_height() const {return height;}
+	const TekTexture* get_texture() const {return &texture;}
 
-bool tek_font_load(TekFont* font, const char *filename);
+	static TekFont* load(const char *filename);
+private:
+	TekFont();
+	TekTexture texture;
+	TekKerningTable kernings;
+	TekFontLetter letters[512];
+	int num_letters;
+	int width;
+	int height;
+};
 
 #endif

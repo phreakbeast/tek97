@@ -80,7 +80,7 @@ void main()
 		{
 			tex_color = texture(u_texture_7, v_uv.xy);
 		}
-		gl_FragColor = tex_color;
+		gl_FragColor = tex_color * v_color;
 	}
 	else
 	{

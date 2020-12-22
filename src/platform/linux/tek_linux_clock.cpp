@@ -1,4 +1,4 @@
-#include "../tek_platform.h"
+#include "../tek_platform.hpp"
 
 #include <time.h>
 

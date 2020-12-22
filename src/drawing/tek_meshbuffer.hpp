@@ -56,6 +56,7 @@ struct TekMeshbuffer
 	TekMeshbuffer(TekCamera* cam, TekLightManager* lights, OrderType order = OrderType::FrontToBack);
 	~TekMeshbuffer();
 	void draw_mesh(TekMesh* mesh, TekMaterial* material,TekTransform* transform);
+	void draw_vertices(TekMeshVertexData* vertices, u32 num_vertices, TekMaterial* material);
 	void draw_billboard(TekBillboard* bb, TekMaterial* material,TekTransform* transform, bool spherical = false);
 	void render();
 	void reset();

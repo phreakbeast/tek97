@@ -5,13 +5,12 @@
 #include "../core/tek_core.hpp"
 #include "tek_mesh.hpp"
 
-typedef struct
+class TekBillboard
 {
+public:
 	TekMeshVertexData vertices[6];
-} TekBillboard;
-
-void tek_bb_init(TekBillboard *bb, float width, float height, TekRect uv);
-
-void tek_bb_destroy(TekBillboard *bb);
+	TekBillboard(float width, float height, TekRect uv);
+	~TekBillboard();
+};
 
 #endif

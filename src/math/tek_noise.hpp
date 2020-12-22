@@ -3,18 +3,22 @@
 
 #include "../core/tek_core.hpp"
 
-	typedef struct
-	{
-		u32 width;
-		u32 height;
-		float *values;
-		u32 num_values;
-	}TekNoise;
+struct TekNoise
+{
+	TekNoise(u32 width, u32 height);
+	~TekNoise();
 
-void tek_noise_init(TekNoise* noise, u32 width, u32 height);
+	const float get_value(u32 x, u32 y);
+	const u32 get_width() const {return width;}
+	const u32 get_height() const {return height;}
+private:
+	double smooth_noise(double x, double y);
+	double turbulence(double x, double y, double size);
 
-void tek_noise_destroy(TekNoise* noise);
-
-const float tek_noise_get_value(TekNoise* noise, u32 x, u32 y);
+	u32 width;
+	u32 height;
+	float *values;
+	u32 num_values;
+};
 
 #endif

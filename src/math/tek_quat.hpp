@@ -3,37 +3,35 @@
 
 #include "tek_vec3.hpp"
 
-typedef struct
+struct Quat
 {
 	float x;
 	float y;
 	float z;
 	float w;
-} Quat;
 
-Quat quat_create(float x, float y, float z, float w);
+	Quat();
+	Quat(float x, float y, float z, float w);
 
-const float quat_length(Quat q);
+	const float length() const;
 
-const Quat quat_normalize(Quat q);
+	const Quat normalized() const;
 
-const Vec3 quat_to_euler(Quat q);
+	const Vec3 to_euler() const;
 
-Vec3 quat_rotate(Vec3 v, Quat q);
+	static Vec3 rotate(Vec3 v, Quat q);
+	static Quat rotation(Vec3 v1, Vec3 v2);
+	static Quat rotation_axis(float num, Vec3 v);
+	static Quat from_euler(Vec3 euler);
 
-Quat quat_rotation(Vec3 v1, Vec3 v2);
+	const Quat operator+(const Quat& q2) const;
 
-Quat quat_rotation_axis(float num, Vec3 v);
+	const Quat operator-(const Quat& q2) const;
 
-Quat quat_from_euler(Vec3 euler);
+	const Quat operator*(const Quat& q2) const;
 
-const Quat quat_add(const Quat q1, const Quat q2);
-
-const Quat quat_sub(const Quat q1, const Quat q2);
-
-const Quat quat_mul(const Quat q1, const Quat q2);
-
-const Quat quat_mul_num(const Quat q, float num);
+	const Quat operator*(float num) const;
+};
 
 
 #endif

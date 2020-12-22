@@ -130,11 +130,70 @@ void TekMeshbuffer::draw_mesh(TekMesh* mesh, TekMaterial* material, TekTransform
 		
 		dc.transform = transform->matrix;
 
-		dc.distance = vec3_distance(cam->position, transform->position);
+		dc.distance = vec3_distance(cam->get_position(), transform->position);
 
 		commands.push_back(dc);
 	}	
 	
+}
+
+void TekMeshbuffer::draw_vertices(TekMeshVertexData* vertices, u32 num_vertices, TekMaterial* material)
+{
+	Mat4 trans = Mat4().transposed();
+
+	Vec2 ids = add_material(material);
+	float mat_id = ids.x;
+	float tex_id = ids.y;
+
+	for (u32 i = 0; i < num_vertices; i += 3)
+	{
+		TekMeshVertexData v0 = vertices[i + 0];
+		TekMeshVertexData v1 = vertices[i + 1];
+		TekMeshVertexData v2 = vertices[i + 2];
+
+		DrawCommand dc;
+		VertexData vert0;
+		VertexData vert1;
+		VertexData vert2;
+		vert0.position = v0.position;
+		vert1.position = v1.position;
+		vert2.position = v2.position;
+		vert0.normal = v0.normal;
+		vert1.normal = v1.normal;
+		vert2.normal = v2.normal;
+		vert0.uv = v0.uv;
+		vert1.uv = v1.uv;
+		vert2.uv = v2.uv;
+		vert0.model0 = trans.rows[0];
+		vert0.model1 = trans.rows[1];
+		vert0.model2 = trans.rows[2];
+		vert0.model3 = trans.rows[3];
+		vert1.model0 = trans.rows[0];
+		vert1.model1 = trans.rows[1];
+		vert1.model2 = trans.rows[2];
+		vert1.model3 = trans.rows[3];
+		vert2.model0 = trans.rows[0];
+		vert2.model1 = trans.rows[1];
+		vert2.model2 = trans.rows[2];
+		vert2.model3 = trans.rows[3];
+
+		vert0.flags = vec4_create(mat_id,0,0,0);
+		vert1.flags = vec4_create(mat_id,0,0,0);
+		vert2.flags = vec4_create(mat_id,0,0,0);
+
+		dc.vertices[0]= vert0;
+		dc.vertices[1]= vert1;
+		dc.vertices[2]= vert2;
+
+		dc.tex_id = tex_id;
+		dc.mat_id = mat_id;
+
+		dc.transform = Mat4();
+
+		dc.distance = vec3_distance(cam->get_position(), vert0.position);
+
+		commands.push_back(dc);
+	}
 }
 
 void TekMeshbuffer::draw_billboard(TekBillboard* bb, TekMaterial* material, TekTransform* transform, bool spherical)
@@ -195,7 +254,7 @@ void TekMeshbuffer::draw_billboard(TekBillboard* bb, TekMaterial* material, TekT
 
 		dc.transform = transform->matrix;
 
-		dc.distance = vec3_distance(cam->position, transform->position);
+		dc.distance = vec3_distance(cam->get_position(), transform->position);
 
 		commands.push_back(dc);
 	}
@@ -228,10 +287,10 @@ void TekMeshbuffer::render()
 		//tek_renderer_draw_mesh(commands[i].mesh, commands[i].material, &commands[i].transform,cam, dlight, plights,lights->num_plights);
 	}
 
-	Mat4 p = cam->projection;
+	Mat4 p = cam->get_projection();
 	p = mat4_transposed(&p);
 
-	Mat4 v = cam->view;
+	Mat4 v = cam->get_view();
 	v = mat4_transposed(&v);
 
 	TekShader* shader = tek_renderer_get_meshbuffer_shader();
@@ -309,8 +368,8 @@ void TekMeshbuffer::render()
 			sprintf(name2, "u_material_%u.diffuse_color", i);
 
 			tek_shader_uniform_int(shader, name0, 0);
-			tek_shader_uniform_vec4(shader, name1, tek_color_to_vec4(mat->ambient_color));
-			tek_shader_uniform_vec4(shader, name2, tek_color_to_vec4(mat->diffuse_color));
+			tek_shader_uniform_vec4(shader, name1, mat->ambient_color.to_vec4());
+			tek_shader_uniform_vec4(shader, name2, mat->diffuse_color.to_vec4());
 		}
 	}
 

@@ -109,6 +109,8 @@ typedef enum
 	NUM_KEYS
 }Key;
 
+char tek_printable_char(Key key, bool shift);
+
 typedef enum
 {
 	MOUSE_BUTTON_NONE = 0,

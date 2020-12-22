@@ -6,22 +6,22 @@
 #include "tek_camera.hpp"
 #include <vector>
 
-struct TekShapebuffer
+typedef struct
 {
-	struct VertexData
-	{
-		Vec3 position;
-		Vec3 color;
-	};
+	Vec3 position;
+	Vec3 color;
+}TekSBufferVertexData;
 
-	TekShapebuffer(TekCamera* cam);
-	~TekShapebuffer();
-	void draw_line(Vec3 p0, Vec3 p1, TekColor color);
-	void render();
-	void reset();
-private:
+typedef struct
+{
 	TekCamera* cam;
-	std::vector<VertexData> buffer;
-};
+	std::vector<TekSBufferVertexData> buffer;
+}TekShapebuffer;
+
+void tek_shapebuffer_init(TekShapebuffer* buffer, TekCamera* cam);
+void tek_shapebuffer_destroy(TekShapebuffer* buffer);
+void tek_shapebuffer_draw_line(TekShapebuffer* buffer, Vec3 p0, Vec3 p1, TekColor color);
+void tek_shapebuffer_render(TekShapebuffer* buffer);
+void tek_shapebuffer_reset(TekShapebuffer* buffer);
 
 #endif

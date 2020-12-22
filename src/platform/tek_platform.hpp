@@ -6,14 +6,23 @@
 //---------------------------------------------------
 // opengl
 //---------------------------------------------------
+#ifdef TEK_PLATFORM_LINUX
+#include <X11/X.h>
+#include <X11/Xlib.h>
+#include <GL/gl.h>
+#include <GL/glx.h>
+#include <GL/glext.h>
+#include <GL/glxext.h>
+#endif
 
+#ifdef TEK_PLATFORM_WINDOWS
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #include <GL/GL.h>
 #include <GL/GLext.h>
 #define WGL_WGLEXT_PROTOTYPES
 #include <GL/wglext.h>
-
+#endif
 
 #ifdef TEK_DEBUG
 #define GLCall(x) x; _check_gl_error(#x, __FILE__, __LINE__)
@@ -42,12 +51,18 @@ typedef enum
 	INPUT_LETTER_ESCAPE,
 	INPUT_LETTER_TAB,
 	INPUT_LETTER_ENTER,
+	INPUT_LETTER_SPACE,
+	INPUT_LETTER_UP,
+	INPUT_LETTER_DOWN,
+	INPUT_LETTER_LEFT,
+	INPUT_LETTER_RIGHT,
+	INPUT_LETTER_DELETE,
 }TekInputLetterType;
 
 typedef struct
 {
 	TekInputLetterType type;
-	char letter;
+	Key key;
 }TekInputLetter;
 
 void tek_window_destroy();

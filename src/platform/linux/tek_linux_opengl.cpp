@@ -1,4 +1,4 @@
-#include "../tek_platform.h"
+#include "../tek_platform.hpp"
 
 #undef GL_FUNCTION
 #define GL_FUNCTION(x, y)PFN## x ##PROC y = NULL;
@@ -8,7 +8,7 @@
 
 void load_gl_extensions()
 {
-#ifdef ARGOS_PLATFORM_LINUX
+#ifdef TEK_PLATFORM_LINUX
 #undef GL_FUNCTION
 #define GL_FUNCTION(x, y)y = (PFN## x ##PROC)glXGetProcAddress((const GLubyte*)#y);
 
@@ -16,7 +16,7 @@ void load_gl_extensions()
 
 #endif
 
-#ifdef ARGOS_PLATFORM_WINDOWS
+#ifdef TEK_PLATFORM_WINDOWS
 #undef GL_FUNCTION
 #define GL_FUNCTION(x,y)y = (PFN## x ##PROC)wglGetProcAddress(#y);
 

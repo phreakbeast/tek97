@@ -3,37 +3,37 @@
 #include "../platform/tek_platform.hpp"
 #include "tek_drawing.hpp"
 
-TekShapebuffer::TekShapebuffer(TekCamera* cam)
+void tek_shapebuffer_init(TekShapebuffer* buffer, TekCamera* cam)
 {
-	this->cam = cam;
+	buffer->cam = cam;
 }
 
-TekShapebuffer::~TekShapebuffer()
+void tek_shapebuffer_destroy(TekShapebuffer* buffer)
 {
 
 }
 
-void TekShapebuffer::draw_line(Vec3 p0, Vec3 p1, TekColor color)
+void tek_shapebuffer_draw_line(TekShapebuffer* buffer, Vec3 p0, Vec3 p1, TekColor color)
 {
-	VertexData v0;
-	VertexData v1;
+	TekSBufferVertexData v1;
+	TekSBufferVertexData v0;
 
 	v0.position = p0;
-	v0.color = tek_color_to_vec3(color);
+	v0.color = color.to_vec3();
 
 	v1.position = p1;
-	v1.color = tek_color_to_vec3(color);
+	v1.color = color.to_vec3();
 
-	buffer.push_back(v0);
-	buffer.push_back(v1);
+	buffer->buffer.push_back(v0);
+	buffer->buffer.push_back(v1);
 }
 
-void TekShapebuffer::render()
+void tek_shapebuffer_render(TekShapebuffer* buffer)
 {
 	TekShader* shader = tek_renderer_get_shape_shader();
 	tek_shader_bind(shader);
 
-	Mat4 mvp = mat4_mul2(&cam->projection, &cam->view);
+	Mat4 mvp = buffer->cam->get_projection() * buffer->cam->get_view();
 	mvp = mat4_transposed(&mvp);
 
 	tek_shader_uniform_mat4(shader, "u_mvp", &mvp, 1);
@@ -44,7 +44,7 @@ void TekShapebuffer::render()
 	int loc_pos = tek_shader_get_attrib_loc(shader, "a_position");
 	int loc_color = tek_shader_get_attrib_loc(shader, "a_color");
 
-	int size = buffer.size() * sizeof(VertexData);
+	int size = buffer->buffer.size() * sizeof(TekSBufferVertexData);
 
 	GLCall(glGenVertexArrays(1, &vao));
 	GLCall(glBindVertexArray(vao));
@@ -52,19 +52,19 @@ void TekShapebuffer::render()
 	GLCall(glGenBuffers(1, &vbo));
 
 	GLCall(glBindBuffer(GL_ARRAY_BUFFER, vbo));
-	GLCall(glBufferData(GL_ARRAY_BUFFER, size, &buffer[0], GL_STATIC_DRAW));
+	GLCall(glBufferData(GL_ARRAY_BUFFER, size, &buffer->buffer[0], GL_STATIC_DRAW));
 
-	int stride = sizeof(VertexData);
+	int stride = sizeof(TekSBufferVertexData);
 
-	GLCall(glVertexAttribPointer(loc_pos, 3, GL_FLOAT, GL_FALSE, stride, (const GLvoid*)(offsetof(VertexData, position))));
+	GLCall(glVertexAttribPointer(loc_pos, 3, GL_FLOAT, GL_FALSE, stride, (const GLvoid*)(offsetof(TekSBufferVertexData, position))));
 	GLCall(glEnableVertexAttribArray(loc_pos));
 
 	GLCall(glVertexAttribPointer(loc_color, 3, GL_FLOAT, GL_FALSE, stride,
-		(const GLvoid*)(offsetof(VertexData, color))));
+		(const GLvoid*)(offsetof(TekSBufferVertexData, color))));
 	GLCall(glEnableVertexAttribArray(loc_color));	
 
 
-	GLCall(glDrawArrays(GL_LINES, 0, buffer.size()));
+	GLCall(glDrawArrays(GL_LINES, 0, buffer->buffer.size()));
 
 	GLCall(glDisableVertexAttribArray(loc_pos));
 	GLCall(glDisableVertexAttribArray(loc_color));
@@ -76,7 +76,7 @@ void TekShapebuffer::render()
 	GLCall(glDeleteVertexArrays(1, &vao));
 }
 
-void TekShapebuffer::reset()
+void tek_shapebuffer_reset(TekShapebuffer* buffer)
 {
-	buffer.clear();
+	buffer->buffer.clear();
 }

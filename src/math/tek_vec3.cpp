@@ -2,6 +2,118 @@
 
 #include "tek_math_functions.hpp"
 
+Vec3::Vec3()
+{
+	this->x = 0;
+	this->y = 0;
+	this->z = 0;
+}
+
+Vec3::Vec3(float a)
+{
+	this->x = a;
+	this->y = a;
+	this->z = a;
+}
+
+Vec3::Vec3(float x, float y, float z)
+{
+	this->x = x;
+	this->y = y;
+	this->z = z;
+}
+
+const float Vec3::length() const
+{
+	return sqrtf(x * x + y * y + z * z);
+}
+
+const Vec3 Vec3::normalized() const
+{
+	float len = length();
+	if (len == 0)
+	{
+		len = 0.0000001f;
+	}
+
+	Vec3 res = {
+			x / len,
+			y / len,
+			z / len
+	};
+	return res;
+}
+
+const Vec3 Vec3::negate() const
+{
+	Vec3 res = {-x, -y, -z};
+	return res;
+}
+
+const float Vec3::dot(Vec3 v2) const
+{
+	return x * v2.x + y * v2.y + z * v2.z;
+}
+
+const Vec3 Vec3::cross(Vec3 v2) const
+{
+	Vec3 res = {
+			y * v2.z - z * v2.y,
+			z * v2.x - x * v2.z,
+			x * v2.y - y * v2.x
+	};
+
+	return res;
+}
+
+const float Vec3::distance(Vec3 v2) const
+{
+	float a = x - v2.x;
+	float b = y - v2.y;
+	float c = z - v2.z;
+	return sqrtf(a * a + b * b + c * c);
+}
+
+const Vec3 Vec3::lerp(Vec3 v2, float t) const
+{
+	Vec3 res = {
+			x + t * (v2.x - x),
+			y + t * (v2.y - y),
+			z + t * (v2.z - z)
+	};
+	return res;
+}
+
+const Vec3 Vec3::operator+(const Vec3& v2)
+{
+	Vec3 res = {
+			x + v2.x,
+			y + v2.y,
+			z + v2.z
+	};
+	return res;
+}
+
+const Vec3 Vec3::operator-(const Vec3& v2)
+{
+	Vec3 res = {
+			x - v2.x,
+			y - v2.y,
+			z - v2.z
+	};
+	return res;
+}
+
+const Vec3 Vec3::operator*(float num)
+{
+	Vec3 res = {
+			x * num,
+			y * num,
+			z * num
+	};
+	return res;
+}
+
 Vec3 math_calc_normals(Vec3 p0, Vec3 p1, Vec3 p2)
 {
 	Vec3 v1 = vec3_sub(p1, p0);

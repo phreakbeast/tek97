@@ -15,6 +15,8 @@ typedef struct
 
 	TekTexture diffuse_map;
 	TekTexture specular_map;
+	char diffuse_name[128];
+	char specular_name[128];
 } TekMaterial;
 
 void tek_material_init(TekMaterial *mat);

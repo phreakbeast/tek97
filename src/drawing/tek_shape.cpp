@@ -76,8 +76,8 @@ void tek_shape_create_line(TekShape* shape, Vec3 p0, Vec3 p1, TekColor color)
 	TekShapeVertexData vertices[2];
 	u32 indices[2];
 
-	TekShapeVertexData v0 = { p0, tek_color_to_vec3(color) };
-	TekShapeVertexData v1 = { p1, tek_color_to_vec3(color) };
+	TekShapeVertexData v0 = { p0, color.to_vec3() };
+	TekShapeVertexData v1 = { p1, color.to_vec3() };
 
 	vertices[0] = v0;
 	vertices[1] = v1;
@@ -93,14 +93,14 @@ void tek_shape_create_box(TekShape* shape, Vec3 min, Vec3 max, TekColor color)
 	TekShapeVertexData vertices[8];
 	u32 indices[24];
 
-	TekShapeVertexData v0 = { vec3_create(min.x, max.y, min.z), tek_color_to_vec3(color) };
-	TekShapeVertexData v1 = { vec3_create(min.x, max.y, max.z), tek_color_to_vec3(color) };
-	TekShapeVertexData v2 = { vec3_create(min.x, min.y, max.z), tek_color_to_vec3(color) };
-	TekShapeVertexData v3 = { vec3_create(min.x, min.y, min.z), tek_color_to_vec3(color) };
-	TekShapeVertexData v4 = { vec3_create(max.x, max.y, min.z), tek_color_to_vec3(color) };
-	TekShapeVertexData v5 = { vec3_create(max.x, max.y, max.z), tek_color_to_vec3(color) };
-	TekShapeVertexData v6 = { vec3_create(max.x, min.y, max.z), tek_color_to_vec3(color) };
-	TekShapeVertexData v7 = { vec3_create(max.x, min.y, min.z), tek_color_to_vec3(color) };
+	TekShapeVertexData v0 = { vec3_create(min.x, max.y, min.z), color.to_vec3() };
+	TekShapeVertexData v1 = { vec3_create(min.x, max.y, max.z), color.to_vec3() };
+	TekShapeVertexData v2 = { vec3_create(min.x, min.y, max.z), color.to_vec3() };
+	TekShapeVertexData v3 = { vec3_create(min.x, min.y, min.z), color.to_vec3() };
+	TekShapeVertexData v4 = { vec3_create(max.x, max.y, min.z), color.to_vec3() };
+	TekShapeVertexData v5 = { vec3_create(max.x, max.y, max.z), color.to_vec3() };
+	TekShapeVertexData v6 = { vec3_create(max.x, min.y, max.z), color.to_vec3() };
+	TekShapeVertexData v7 = { vec3_create(max.x, min.y, min.z), color.to_vec3() };
 
 	vertices[0] = v0;
 	vertices[1] = v1;
@@ -167,7 +167,7 @@ tek_shape_create_circle(TekShape* shape, Vec3 center, float radius, TekColor col
 	TekShapeVertexData* vertices = (TekShapeVertexData*)tek_malloc(sizeof(TekShapeVertexData) * segments);
 	u32* indices = (u32*)tek_malloc(sizeof(u32) * segments * 2);
 
-	Vec3 color_vec = tek_color_to_vec3(color);
+	Vec3 color_vec = color.to_vec3();
 	u32 index_ctr = 0;
 
 	for (u32 i = 0; i < segments; ++i)
@@ -194,12 +194,12 @@ void tek_shape_create_bone(TekShape* shape, float width, float height, TekColor 
 	float h = height;
 	float hh = height / 2;
 
-	TekShapeVertexData v0 = { vec3_create(0, h, 0), tek_color_to_vec3(color) };
-	TekShapeVertexData v1 = { vec3_create(-w, hh, -w), tek_color_to_vec3(color) };
-	TekShapeVertexData v2 = { vec3_create(-w, hh, w), tek_color_to_vec3(color) };
-	TekShapeVertexData v3 = { vec3_create(w, hh, w), tek_color_to_vec3(color) };
-	TekShapeVertexData v4 = { vec3_create(w, hh, -w), tek_color_to_vec3(color) };
-	TekShapeVertexData v5 = { vec3_create(0, 0, 0), tek_color_to_vec3(color) };
+	TekShapeVertexData v0 = { vec3_create(0, h, 0), color.to_vec3() };
+	TekShapeVertexData v1 = { vec3_create(-w, hh, -w), color.to_vec3() };
+	TekShapeVertexData v2 = { vec3_create(-w, hh, w), color.to_vec3() };
+	TekShapeVertexData v3 = { vec3_create(w, hh, w), color.to_vec3() };
+	TekShapeVertexData v4 = { vec3_create(w, hh, -w), color.to_vec3() };
+	TekShapeVertexData v5 = { vec3_create(0, 0, 0), color.to_vec3() };
 
 	vertices[0] = v0;
 	vertices[1] = v1;
@@ -252,8 +252,8 @@ void tek_shape_create_grid(TekShape* shape, float width, float height, u32 segs_
 	{
 		float pos = i * x_step;
 
-		TekShapeVertexData v0 = { vec3_create(pos, 0, 0), tek_color_to_vec3(color) };
-		TekShapeVertexData v1 = { vec3_create(pos, 0, height), tek_color_to_vec3(color) };
+		TekShapeVertexData v0 = { vec3_create(pos, 0, 0), color.to_vec3() };
+		TekShapeVertexData v1 = { vec3_create(pos, 0, height), color.to_vec3() };
 
 		vertices[vertex_ctr++] = v0;
 		vertices[vertex_ctr++] = v1;
@@ -263,8 +263,8 @@ void tek_shape_create_grid(TekShape* shape, float width, float height, u32 segs_
 	{
 		float pos = i * y_step;
 
-		TekShapeVertexData v0 = { vec3_create(0, 0, pos), tek_color_to_vec3(color) };
-		TekShapeVertexData v1 = { vec3_create(width, 0, pos), tek_color_to_vec3(color) };
+		TekShapeVertexData v0 = { vec3_create(0, 0, pos), color.to_vec3() };
+		TekShapeVertexData v1 = { vec3_create(width, 0, pos), color.to_vec3() };
 
 		vertices[vertex_ctr++] = v0;
 		vertices[vertex_ctr++] = v1;
@@ -297,11 +297,11 @@ void tek_shape_create_normals_for_mesh(TekShape* shape, TekMesh* mesh, TekColor 
 
 		TekShapeVertexData vert0;
 		vert0.position = p0;
-		vert0.color = tek_color_to_vec3(color);
+		vert0.color = color.to_vec3();
 
 		TekShapeVertexData vert1;
 		vert1.position = p1;
-		vert1.color = tek_color_to_vec3(color);
+		vert1.color = color.to_vec3();
 
 		vertices[vertex_ctr++] = vert0;
 		vertices[vertex_ctr++] = vert1;

@@ -3,15 +3,30 @@
 
 #include "../math/tek_math.hpp"
 
-typedef enum
+class TekCamera
 {
-	TEK_CAM_FIRST,
-	TEK_CAM_THIRD,
-} TekCameraType;
+public:
+	enum class Type
+	{
+		First,
+		Third,
+	};
 
-typedef struct
-{
-	TekCameraType type;
+	TekCamera() = default;
+	TekCamera(TekCamera::Type type, Mat4 projection);
+
+	void calc();
+	void move(float dir, float speed);
+	void move_up(float dir, float speed);
+	void rotate_x(float val);
+	void rotate_y(float val);
+	void zoom(float val);
+	const Mat4 get_view() const {return view;}
+	const Mat4 get_projection() const {return projection;}
+	const Vec3 get_position() const {return position;}
+	const Vec3 get_rotation() const {return rotation;};
+private:
+	Type type;
 
 	Vec3 position;
 	Vec3 rotation;
@@ -28,20 +43,5 @@ typedef struct
 	float max_distance;
 	float min_tilt;
 	float max_tilt;
-} TekCamera;
-
-TekCamera tek_cam_create(TekCameraType type, Mat4 projection);
-
-void tek_cam_calc(TekCamera *cam);
-
-void tek_cam_move(TekCamera *cam, float dir, float speed);
-
-void tek_cam_move_up(TekCamera *cam, float dir, float speed);
-
-void tek_cam_rotate_x(TekCamera *cam, float val);
-
-void tek_cam_rotate_y(TekCamera *cam, float val);
-
-void tek_cam_zoom(TekCamera *cam, float val);
-
+};
 #endif
