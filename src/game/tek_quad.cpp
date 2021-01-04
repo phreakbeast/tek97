@@ -29,10 +29,10 @@ void tek_plane_reset_uv(TekPlane* plane)
 
 void tek_quad_init(TekQuad *quad)
 {
-	quad->points[0] = Vec3(0, 0, 0);
-	quad->points[1] = Vec3(0, 0, 1);
-	quad->points[2] = Vec3(1, 0, 1);
-	quad->points[3] = Vec3(1, 0, 0);
+	quad->points[0] = vec3_create(0, 0, 0);
+	quad->points[1] = vec3_create(0, 0, 1);
+	quad->points[2] = vec3_create(1, 0, 1);
+	quad->points[3] = vec3_create(1, 0, 0);
 
 	quad->lines[0].p0 = 0;
 	quad->lines[0].p1 = 3;
@@ -54,7 +54,7 @@ void tek_quad_init(TekQuad *quad)
 	quad->plane.l1 = 1;
 	quad->plane.l2 = 2;
 	quad->plane.l3 = 3;
-	quad->plane.mat = nullptr;
+	quad->plane.mat_id = -1;
 
 	quad->plane.uv0 = vec2_create(0,1);
 	quad->plane.uv1 = vec2_create(0,0);
@@ -64,11 +64,12 @@ void tek_quad_init(TekQuad *quad)
 	update_vertices(quad);
 }
 
-void tek_quad_render(TekQuad *quad, TekMeshbuffer *buffer)
+void tek_quad_render(TekQuad *quad, TekMeshbuffer *buffer, TekMap* map)
 {
-	if (quad->plane.mat)
+	if (quad->plane.mat_id >= 0)
 	{
-		buffer->draw_vertices(quad->plane.vertices, 6, quad->plane.mat);
+		TekMaterial* mat = &map->materials[quad->plane.mat_id].material;
+		tek_mb_draw_vertices(buffer, quad->plane.vertices, 6, mat);
 	}
 }
 
@@ -76,18 +77,19 @@ void tek_quad_render_shape(TekQuad *quad, TekShapebuffer *buffer, int mode, int 
 {
 	if(mode == 1)
 	{
-		tek_shapebuffer_draw_line(buffer, quad->points[0], quad->points[1], TekColor::white());
-		tek_shapebuffer_draw_line(buffer, quad->points[1], quad->points[2], TekColor::white());
-		tek_shapebuffer_draw_line(buffer, quad->points[2], quad->points[3], TekColor::white());
-		tek_shapebuffer_draw_line(buffer, quad->points[3], quad->points[0], TekColor::white());
+		TekColor color = tek_color_white();
+		tek_shapebuffer_draw_line(buffer, quad->points[0], quad->points[1], color);
+		tek_shapebuffer_draw_line(buffer, quad->points[1], quad->points[2], color);
+		tek_shapebuffer_draw_line(buffer, quad->points[2], quad->points[3], color);
+		tek_shapebuffer_draw_line(buffer, quad->points[3], quad->points[0], color);
 	}
 	else if(mode == 2)
 	{
 		for(u32 i=0; i<4; ++i)
 		{
-			TekColor color = TekColor::white();
+			TekColor color = tek_color_white();
 			if(selected == i)
-				color = TekColor::red();
+				color = tek_color_red();
 
 			int p0 = quad->lines[i].p0;
 			int p1 = quad->lines[i].p1;
@@ -97,7 +99,7 @@ void tek_quad_render_shape(TekQuad *quad, TekShapebuffer *buffer, int mode, int 
 	}
 	else if(mode == 3)
 	{
-		TekColor color = TekColor::white();
+		TekColor color = tek_color_white();
 		tek_shapebuffer_draw_line(buffer, quad->points[0], quad->points[1], color);
 		tek_shapebuffer_draw_line(buffer, quad->points[1], quad->points[2], color);
 		tek_shapebuffer_draw_line(buffer, quad->points[2], quad->points[3], color);
@@ -105,17 +107,17 @@ void tek_quad_render_shape(TekQuad *quad, TekShapebuffer *buffer, int mode, int 
 
 		float offset = 0.05f;
 		Vec3 p_original = quad->points[selected];
-		Vec3 p0 = Vec3(p_original.x-offset, p_original.y+offset, p_original.z-offset);
-		Vec3 p1 = Vec3(p_original.x-offset, p_original.y+offset, p_original.z+offset);
-		Vec3 p2 = Vec3(p_original.x+offset, p_original.y+offset, p_original.z+offset);
-		Vec3 p3 = Vec3(p_original.x+offset, p_original.y+offset, p_original.z-offset);
+		Vec3 p0 = vec3_create(p_original.x-offset, p_original.y+offset, p_original.z-offset);
+		Vec3 p1 = vec3_create(p_original.x-offset, p_original.y+offset, p_original.z+offset);
+		Vec3 p2 = vec3_create(p_original.x+offset, p_original.y+offset, p_original.z+offset);
+		Vec3 p3 = vec3_create(p_original.x+offset, p_original.y+offset, p_original.z-offset);
 
-		Vec3 p4 = Vec3(p_original.x-offset, p_original.y-offset, p_original.z-offset);
-		Vec3 p5 = Vec3(p_original.x-offset, p_original.y-offset, p_original.z+offset);
-		Vec3 p6 = Vec3(p_original.x+offset, p_original.y-offset, p_original.z+offset);
-		Vec3 p7 = Vec3(p_original.x+offset, p_original.y-offset, p_original.z-offset);
+		Vec3 p4 = vec3_create(p_original.x-offset, p_original.y-offset, p_original.z-offset);
+		Vec3 p5 = vec3_create(p_original.x-offset, p_original.y-offset, p_original.z+offset);
+		Vec3 p6 = vec3_create(p_original.x+offset, p_original.y-offset, p_original.z+offset);
+		Vec3 p7 = vec3_create(p_original.x+offset, p_original.y-offset, p_original.z-offset);
 
-		color = TekColor::red();
+		color = tek_color_red();
 		tek_shapebuffer_draw_line(buffer, p0, p1, color);
 		tek_shapebuffer_draw_line(buffer, p1, p2, color);
 		tek_shapebuffer_draw_line(buffer, p2, p3, color);
@@ -129,11 +131,6 @@ void tek_quad_render_shape(TekQuad *quad, TekShapebuffer *buffer, int mode, int 
 		tek_shapebuffer_draw_line(buffer, p2, p6, color);
 		tek_shapebuffer_draw_line(buffer, p3, p7, color);
 	}
-}
-
-void tek_quad_set_material(TekQuad *quad, TekMaterial *mat)
-{
-	quad->plane.mat = mat;
 }
 
 void tek_quad_move(TekQuad *quad, float x, float y, float z)
@@ -208,10 +205,10 @@ static void update_vertices(TekQuad *quad)
 	Vec2 uv2 = quad->plane.uv2;
 	Vec2 uv3 = quad->plane.uv3;
 
-	quad->plane.vertices[0] = TekMeshVertexData(p0, uv0, Vec3());
-	quad->plane.vertices[1] = TekMeshVertexData(p1, uv1, Vec3());
-	quad->plane.vertices[2] = TekMeshVertexData(p2, uv2, Vec3());
-	quad->plane.vertices[3] = TekMeshVertexData(p0, uv0, Vec3());
-	quad->plane.vertices[4] = TekMeshVertexData(p2, uv2, Vec3());
-	quad->plane.vertices[5] = TekMeshVertexData(p3, uv3, Vec3());
+	quad->plane.vertices[0] = TekMeshVertexData(p0, uv0, vec3_create(0,0,0));
+	quad->plane.vertices[1] = TekMeshVertexData(p1, uv1, vec3_create(0,0,0));
+	quad->plane.vertices[2] = TekMeshVertexData(p2, uv2, vec3_create(0,0,0));
+	quad->plane.vertices[3] = TekMeshVertexData(p0, uv0, vec3_create(0,0,0));
+	quad->plane.vertices[4] = TekMeshVertexData(p2, uv2, vec3_create(0,0,0));
+	quad->plane.vertices[5] = TekMeshVertexData(p3, uv3, vec3_create(0,0,0));
 }

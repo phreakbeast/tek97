@@ -21,24 +21,8 @@ struct TekKerningTable
 	int val[512][512];
 };
 
-class TekFont
+struct TekFont
 {
-public:
-	~TekFont();
-
-	const TekFontLetter* get_letter(char character) const;
-
-	const u32 text_length(const char *text) const;
-
-	const u32 text_height(const char *text) const;
-
-	const int get_width() const {return width;}
-	const int get_height() const {return height;}
-	const TekTexture* get_texture() const {return &texture;}
-
-	static TekFont* load(const char *filename);
-private:
-	TekFont();
 	TekTexture texture;
 	TekKerningTable kernings;
 	TekFontLetter letters[512];
@@ -46,5 +30,16 @@ private:
 	int width;
 	int height;
 };
+
+
+void tek_font_destroy(TekFont* font);
+
+const TekFontLetter* tek_font_get_letter(TekFont* font, char character);
+
+const u32 tek_font_text_length(TekFont* font, const char* text);
+
+const u32 tek_font_text_height(TekFont* font, const char* text);
+
+bool tek_font_load(TekFont* font, const char* filename);
 
 #endif

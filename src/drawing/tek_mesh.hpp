@@ -7,41 +7,41 @@
 
 struct TekMeshVertexData
 {
-    Vec3 position;
-    Vec2 uv;
-    Vec3 normal;
+	Vec3 position;
+	Vec2 uv;
+	Vec3 normal;
 
-    TekMeshVertexData(){};
-    TekMeshVertexData(Vec3 position, Vec2 uv, Vec3 normal)
-    {
-    	this->position = position;
-    	this->uv = uv;
-    	this->normal = normal;
-    }
-    TekMeshVertexData(float x, float y, float z, float u, float v, float nx, float ny, float nz)
-    {
-	    this->position = Vec3(x,y,z);
-	    this->uv = Vec2(u,v);
-	    this->normal = Vec3(nx,ny,nz);
-    }
+	TekMeshVertexData(){};
+	TekMeshVertexData(Vec3 position, Vec2 uv, Vec3 normal)
+	{
+		this->position = position;
+		this->uv = uv;
+		this->normal = normal;
+	}
+	TekMeshVertexData(float x, float y, float z, float u, float v, float nx, float ny, float nz)
+	{
+		this->position = vec3_create(x,y,z);
+		this->uv = vec2_create(u,v);
+		this->normal = vec3_create(nx,ny,nz);
+	}
 };
 
 TekMeshVertexData tek_mesh_vertex_data_create(float x, float y, float z, float u, float v, float nx, float ny, float nz);
 
 typedef struct
 {
-    Vec3 min;
-    Vec3 max;
-    Vec3 center;
+	Vec3 min;
+	Vec3 max;
+	Vec3 center;
 
-    u32 vao;
-    u32 vbo;
-    u32 ibo;
+	u32 vao;
+	u32 vbo;
+	u32 ibo;
 
-    u32 num_vertices;
-    u32 num_indices;
-    TekMeshVertexData *vertices;
-    u32 *indices;
+	u32 num_vertices;
+	u32 num_indices;
+	TekMeshVertexData *vertices;
+	u32 *indices;
 }TekMesh;
 
 void tek_mesh_destroy(TekMesh* mesh);

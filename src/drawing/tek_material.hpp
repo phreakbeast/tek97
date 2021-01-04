@@ -23,7 +23,7 @@ void tek_material_init(TekMaterial *mat);
 
 void tek_material_destroy(TekMaterial *mat);
 
-void tek_material_add_diffuse_map(TekMaterial* material, const char* tex_name);
-void tek_material_add_specular_map(TekMaterial* material, const char* tex_name);
+bool tek_material_add_diffuse_map(TekMaterial* material, const char* tex_name);
+bool tek_material_add_specular_map(TekMaterial* material, const char* tex_name);
 
 #endif

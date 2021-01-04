@@ -12,46 +12,40 @@ static inline float norm_helper(Quat q)
 	return result;
 }
 
-Quat::Quat()
+Quat quat_create(float x, float y, float z, float w)
 {
-	x= 0;
-	y= 0;
-	z= 0;
-	w= 0;
+	Quat res;
+	res.x = x;
+	res.y = y;
+	res.z = z;
+	res.w = w;
+	return res;
 }
 
-Quat::Quat(float x, float y, float z, float w)
+const float quat_length(Quat q)
 {
-	this->x = x;
-	this->y = y;
-	this->z = z;
-	this->w = w;
+	return sqrtf(norm_helper(q));
 }
 
-const float Quat::length() const
+const Quat quat_normalized(Quat q)
 {
-	return sqrtf(norm_helper(*this));
-}
-
-const Quat Quat::normalized() const
-{
-	float len_sqr = norm_helper(*this);
+	float len_sqr = norm_helper(q);
 	float len_inv = math_rsqrtf(len_sqr);
-	return (*this) * len_inv;
+	return quat_mul_num(q,len_inv);
 }
 
-const Vec3 Quat::to_euler() const
+const Vec3 quat_to_euler(Quat q)
 {
 	Vec3 res = {
-			atan2f(2 * x * w - 2 * y * z, 1 - 2 * x * x - 2 * z * z),
-			atan2f(2 * y * w - 2 * x * z, 1 - 2 * y * y - 2 * z * z),
-			asinf(2 * x * y + 2 * z * w)
+			atan2f(2 * q.x * q.w - 2 * q.y * q.z, 1 - 2 * q.x * q.x - 2 * q.z * q.z),
+			atan2f(2 * q.y * q.w - 2 * q.x * q.z, 1 - 2 * q.y * q.y - 2 * q.z * q.z),
+			asinf( 2 * q.x * q.y + 2 * q.z * q.w)
 	};
 	return res;
 }
 
 
-Vec3 Quat::rotate(Vec3 v, Quat q)
+const Vec3 quat_rotate(Vec3 v, Quat q)
 {
 	float tmpX, tmpY, tmpZ, tmpW;
 	tmpX = (((q.w * v.x) + (q.y * v.z)) - (q.z * v.y));
@@ -67,7 +61,7 @@ Vec3 Quat::rotate(Vec3 v, Quat q)
 	return res;
 }
 
-Quat Quat::rotation(Vec3 v1, Vec3 v2)
+const Quat quat_rotation(Vec3 v1, Vec3 v2)
 {
 	float cosHalfAngleX2, recipCosHalfAngleX2;
 	float dot = vec3_dot(v1, v2);
@@ -83,7 +77,7 @@ Quat Quat::rotation(Vec3 v1, Vec3 v2)
 	return res;
 }
 
-Quat Quat::rotation_axis(float num, Vec3 v)
+const Quat quat_rotation_axis(float num, Vec3 v)
 {
 	float angle = num * 0.5f;
 	Vec3 t = vec3_mul(v, (sinf(angle)));
@@ -95,7 +89,7 @@ Quat Quat::rotation_axis(float num, Vec3 v)
 	return res;
 }
 
-Quat Quat::from_euler(Vec3 euler)
+const Quat quat_from_euler(Vec3 euler)
 {
 	Quat pitch;
 	pitch.x = 1;
@@ -115,48 +109,49 @@ Quat Quat::from_euler(Vec3 euler)
 	roll.z = 1;
 	roll.w = euler.z;
 
-	Quat t = pitch * yaw * roll;
+	Quat t = quat_mul(pitch, yaw);
+	t = quat_mul(t,roll);
 	return t;
 }
 
-const Quat Quat::operator+(const Quat& q2) const
+const Quat quat_add(Quat q1, Quat q2)
 {
 	Quat res;
-	res.x = x + q2.x;
-	res.y = y + q2.y;
-	res.z = z + q2.z;
-	res.w = w + q2.w;
+	res.x = q1.x + q2.x;
+	res.y = q1.y + q2.y;
+	res.z = q1.z + q2.z;
+	res.w = q1.w + q2.w;
 	return res;
 }
 
-const Quat Quat::operator-(const Quat& q2) const
+const Quat quat_sub(Quat q1, Quat q2)
 {
 	Quat res;
-	res.x = x - q2.x;
-	res.y = y - q2.y;
-	res.z = z - q2.z;
-	res.w = w - q2.w;
+	res.x = q1.x - q2.x;
+	res.y = q1.y - q2.y;
+	res.z = q1.z - q2.z;
+	res.w = q1.w - q2.w;
 	return res;
 }
 
-const Quat Quat::operator*(float num) const
+const Quat quat_mul_num(Quat q, float num)
 {
 	Quat res;
-	res.x = x * num;
-	res.y = y * num;
-	res.z = z * num;
-	res.w = w * num;
+	res.x = q.x * num;
+	res.y = q.y * num;
+	res.z = q.z * num;
+	res.w = q.w * num;
 	return res;
 }
 
-const Quat Quat::operator*(const Quat& q2) const
+const Quat quat_mul(Quat q1, Quat q2)
 {
 	Quat res;
 
-	res.x = (((w * q2.x) + (x * q2.w)) + (y * q2.z)) - (z * q2.y);
-	res.y = (((w * q2.y) + (y * q2.w)) + (z * q2.x)) - (x * q2.z);
-	res.z = (((w * q2.z) + (z * q2.w)) + (x * q2.y)) - (y * q2.x);
-	res.w = (((w * q2.w) - (x * q2.x)) - (y * q2.y)) - (z * q2.z);
+	res.x = (((q1.w * q2.x) + (q1.x * q2.w)) + (q1.y * q2.z)) - (q1.z * q2.y);
+	res.y = (((q1.w * q2.y) + (q1.y * q2.w)) + (q1.z * q2.x)) - (q1.x * q2.z);
+	res.z = (((q1.w * q2.z) + (q1.z * q2.w)) + (q1.x * q2.y)) - (q1.y * q2.x);
+	res.w = (((q1.w * q2.w) - (q1.x * q2.x)) - (q1.y * q2.y)) - (q1.z * q2.z);
 
-	return res.normalized();
+	return quat_normalized(res);
 }

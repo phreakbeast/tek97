@@ -2,28 +2,11 @@
 #define _TEK_VEC2_HPP
 
 
-struct Vec2
+typedef struct
 {
 	float x;
 	float y;
-
-	Vec2();
-	Vec2(float x, float y);
-
-	const float length() const;
-
-	const Vec2 normalized() const;
-
-	const float dot(Vec2 v2) const;
-
-	const float distance(Vec2 v2) const;
-
-	const Vec2 operator+(const Vec2& v2);
-
-	const Vec2 operator-(const Vec2& v2);
-
-	const Vec2 operator*(float num);
-};
+}Vec2;
 
 Vec2 vec2_create(float x, float y);
 

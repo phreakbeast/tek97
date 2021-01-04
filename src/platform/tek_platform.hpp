@@ -57,6 +57,7 @@ typedef enum
 	INPUT_LETTER_LEFT,
 	INPUT_LETTER_RIGHT,
 	INPUT_LETTER_DELETE,
+	INPUT_LETTER_NONE,
 }TekInputLetterType;
 
 typedef struct

@@ -1,11 +1,11 @@
-#include "tek_platform.hpp"
+#include "../tek_platform.hpp"
 
 #include <stdio.h>
 
 #undef GL_FUNCTION
 #define GL_FUNCTION(x,y)PFN## x ##PROC y = NULL;
 
-#include "gl_functions.inl"
+#include "../gl_functions.inl"
 
 void load_gl_extensions()
 {
@@ -13,7 +13,7 @@ void load_gl_extensions()
 #undef GL_FUNCTION
 #define GL_FUNCTION(x,y)y = (PFN## x ##PROC)wglGetProcAddress(#y);
 
-#include "gl_functions.inl"
+#include "../gl_functions.inl"
 
 
 //TODO: some kind of check if the functions pointers are correct

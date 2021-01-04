@@ -1,4 +1,4 @@
-#include "tek_platform.hpp"
+#include "../tek_platform.hpp"
 
 #include <Windows.h>
 

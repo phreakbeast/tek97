@@ -231,7 +231,7 @@ void main()
 
 	Material mat;
 	
-	int mid = int(v_flags.x);
+	highp int mid = int(v_flags.x);
 	if(mid == 0)
 	{
 		mat = u_material_0;

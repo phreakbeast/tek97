@@ -9,94 +9,84 @@ static TekColor g_green = {0, 255, 0, 255};
 static TekColor g_blue = {0, 0, 255, 255};
 static TekColor g_yellow = {255, 255, 0, 255};
 
-TekColor TekColor::_white = {255, 255, 255, 255};
-TekColor TekColor::_black = {0, 0, 0, 255};
-TekColor TekColor::_red = {255, 0, 0, 255};
-TekColor TekColor::_green = {0, 255, 0, 255};
-TekColor TekColor::_blue = {0, 0, 255, 255};
-TekColor TekColor::_yellow = {255, 255, 0, 255};
 
-TekColor::TekColor()
+TekColor tek_color_create(u8 r, u8 g, u8 b)
 {
-	r = 255;
-	g = 255;
-	b = 255;
-	a = 255;
+	TekColor res;
+	res.r = r;
+	res.g = g;
+	res.b = b;
+	res.a = 255;
+	return res;
 }
 
-TekColor::TekColor(u8 r, u8 g, u8 b)
+TekColor tek_color_create_alpha(u8 r, u8 g, u8 b, u8 a)
 {
-	this->r = r;
-	this->g = g;
-	this->b = b;
-	this->a = 255;
+	TekColor res;
+	res.r = r;
+	res.g = g;
+	res.b = b;
+	res.a = a;
+	return res;
 }
 
-TekColor::TekColor(u8 r, u8 g, u8 b, u8 a)
+const u32 tek_color_to_int(TekColor col)
 {
-	this->r = r;
-	this->g = g;
-	this->b = b;
-	this->a = a;
+	return (col.a << 24 | col.b << 16 | col.g << 8 | col.r);
 }
 
-const u32 TekColor::to_int() const
-{
-	return (a << 24 | b << 16 | g << 8 | r);
-}
-
-const Vec3 TekColor::to_vec3() const
+const Vec3 tek_color_to_vec3(TekColor col)
 {
 	return vec3_create(
-			r / 255.0f,
-			g / 255.0f,
-			b / 255.0f
+			col.r / 255.0f,
+			col.g / 255.0f,
+			col.b / 255.0f
 	);
 }
 
-const Vec4 TekColor::to_vec4() const
+const Vec4 tek_color_to_vec4(TekColor col)
 {
 	return vec4_create(
-			r / 255.0f,
-			g / 255.0f,
-			b / 255.0f,
-			a / 255.0f
+			col.r / 255.0f,
+			col.g / 255.0f,
+			col.b / 255.0f,
+			col.a / 255.0f
 	);
 }
 
-const TekColor TekColor::lighten(u8 shade) const
+const TekColor tek_color_lighten(TekColor col, u8 shade)
 {
 //TODO: prevent overflow
 	TekColor res;
-	res.r = r + shade;
-	res.g = g + shade;
-	res.b = b + shade;
-	res.a = a;
+	res.r = col.r + shade;
+	res.g = col.g + shade;
+	res.b = col.b + shade;
+	res.a = col.a;
 	return res;
 }
 
-const TekColor TekColor::darken(u8 shade) const
+const TekColor tek_color_darken(TekColor col, u8 shade)
 {
 //TODO: prevent underflow
 	TekColor res;
-	res.r = r - shade;
-	res.g = g - shade;
-	res.b = b - shade;
-	res.a = a;
+	res.r = col.r - shade;
+	res.g = col.g - shade;
+	res.b = col.b - shade;
+	res.a = col.a;
 	return res;
 }
 
-const TekColor TekColor::lerp(TekColor c2, float t) const
+const TekColor tek_color_lerp(TekColor c1, TekColor c2, float t)
 {
-	float rt = (float) r + t * (c2.r - r);
-	float gt = (float) g + t * (c2.g - g);
-	float bt = (float) b + t * (c2.b - b);
-	float at = (float) a + t * (c2.a - a);
+	float rt = (float) c1.r + t * (c2.r - c1.r);
+	float gt = (float) c1.g + t * (c2.g - c1.g);
+	float bt = (float) c1.b + t * (c2.b - c1.b);
+	float at = (float) c1.a + t * (c2.a - c1.a);
 
-	return TekColor((u8) rt, (u8) gt, (u8) bt, (u8) at);
+	return tek_color_create_alpha((u8) rt, (u8) gt, (u8) bt, (u8) at);
 }
 
-const u32 TekColor::floats_to_int(float r, float g, float b, float a)
+const u32 tek_color_floats_to_int(float r, float g, float b, float a)
 {
 	u8 ri = (u8) (r * 255);
 	u8 gi = (u8) (g * 255);
@@ -106,7 +96,7 @@ const u32 TekColor::floats_to_int(float r, float g, float b, float a)
 	return (ai << 24 | bi << 16 | gi << 8 | ri);
 }
 
-const u32 TekColor::vec4_to_int(Vec4 color)
+const u32 tek_color_vec4_to_int(Vec4 color)
 {
 	u8 ri = (u8) (color.x * 255);
 	u8 gi = (u8) (color.y * 255);
@@ -116,7 +106,7 @@ const u32 TekColor::vec4_to_int(Vec4 color)
 	return (ai << 24 | bi << 16 | gi << 8 | ri);
 }
 
-const u32 TekColor::vec3_to_int(Vec3 color)
+const u32 tek_color_vec3_to_int(Vec3 color)
 {
 	u8 ri = (u8) (color.x * 255);
 	u8 gi = (u8) (color.y * 255);
@@ -126,40 +116,40 @@ const u32 TekColor::vec3_to_int(Vec3 color)
 	return (ai << 24 | bi << 16 | gi << 8 | ri);
 }
 
-const TekColor TekColor::white()
+const TekColor tek_color_white()
 {
-	return _white;
+	return g_white;
 }
 
-const TekColor TekColor::black()
+const TekColor tek_color_black()
 {
-	return _black;
+	return g_black;
 }
 
-const TekColor TekColor::red()
+const TekColor tek_color_red()
 {
-	return _red;
+	return g_red;
 }
 
-const TekColor TekColor::green()
+const TekColor tek_color_green()
 {
-	return _green;
+	return g_green;
 }
 
-const TekColor TekColor::blue()
+const TekColor tek_color_blue()
 {
-	return _blue;
+	return g_blue;
 }
 
-const TekColor TekColor::yellow()
+const TekColor tek_color_yellow()
 {
-	return _yellow;
+	return g_yellow;
 }
 
-const TekColor TekColor::random()
+const TekColor tek_color_random()
 {
 	u8 r = (u8)math_get_random_int(0,255);
 	u8 g = (u8)math_get_random_int(0,255);
 	u8 b = (u8)math_get_random_int(0,255);
-	return TekColor(r,g,b);
+	return tek_color_create(r,g,b);
 }

@@ -6,8 +6,9 @@
 #include "../math/tek_transform.hpp"
 #include "../drawing/tek_meshbuffer.hpp"
 #include "../drawing/tek_shapebuffer.hpp"
+#include "tek_assets.hpp"
 
-#include <vector>
+struct TekMap;
 
 enum TekMapObjectType
 {
@@ -23,7 +24,7 @@ struct TekStaticObj
 
 struct TekBillboardObj
 {
-	int bb_id;
+	TekBillboard bb;
 	int mat_id;
 };
 
@@ -41,6 +42,8 @@ struct TekMapObject
 
 	TekTransform transform;
 };
+
+void tek_object_render_shape(TekMapObject* obj, TekShapebuffer* buffer, bool selected);
 
 struct TekLine
 {
@@ -60,7 +63,7 @@ struct TekPlane
 	int l2;
 	int l3;
 
-	TekMaterial* mat;
+	int mat_id;
 	TekMeshVertexData vertices[6];
 
 	Vec2 uv0;
@@ -72,23 +75,21 @@ void tek_plane_move_uv(TekPlane* plane, Vec2 v);
 void tek_plane_scale_uv(TekPlane* plane,Vec2 v);
 void tek_plane_reset_uv(TekPlane* plane);
 
-class TekBrush
-{
-public:
-	TekBrush();
-	void render(TekMeshbuffer* buffer);
-	void render_shape(TekShapebuffer* buffer, int mode, int selected);
-	void set_material(TekMaterial* mat, int plane);
-	void move(float x, float y, float z);
-	void move_point(int point, float x, float y, float z);
-	void move_line(int line, float x, float y, float z);
-	void move_plane(int plane, float x, float y, float z);
-
-	void update_vertices();
+struct TekBrush
+{	
 	Vec3 points[8];
 	TekLine lines[12];
 	TekPlane planes[6];
 };
+
+
+void tek_brush_init(TekBrush* brush);
+void tek_brush_render(TekBrush* brush, TekMeshbuffer* buffer, TekMap* map);
+void tek_brush_render_shape(TekBrush* brush, TekShapebuffer* buffer, int mode, int selected);
+void tek_brush_move(TekBrush* brush, float x, float y, float z);
+void tek_brush_move_point(TekBrush* brush, int point, float x, float y, float z);
+void tek_brush_move_line(TekBrush* brush, int line, float x, float y, float z);
+void tek_brush_move_plane(TekBrush* brush, int plane, float x, float y, float z);
 
 void tek_brush_move_uv(TekBrush* brush, TekPlane* plane, Vec2 v);
 void tek_brush_scale_uv(TekBrush* brush, TekPlane* plane,Vec2 v);
@@ -101,9 +102,8 @@ struct TekQuad
 	TekPlane plane;
 };
 void tek_quad_init(TekQuad* quad);
-void tek_quad_render(TekQuad* quad, TekMeshbuffer* buffer);
+void tek_quad_render(TekQuad* quad, TekMeshbuffer* buffer, TekMap* map);
 void tek_quad_render_shape(TekQuad* quad, TekShapebuffer* buffer, int mode, int selected);
-void tek_quad_set_material(TekQuad* quad, TekMaterial* mat);
 void tek_quad_move(TekQuad* quad, float x, float y, float z);
 void tek_quad_move_point(TekQuad* quad, int point, float x, float y, float z);
 void tek_quad_move_line(TekQuad* quad, int line, float x, float y, float z);
@@ -111,34 +111,21 @@ void tek_quad_move_uv(TekQuad* quad, TekPlane* plane, Vec2 v);
 void tek_quad_scale_uv(TekQuad* quad, TekPlane* plane,Vec2 v);
 void tek_quad_reset_uv(TekQuad* quad, TekPlane* plane);
 
-struct TekMapMesh
-{
-	TekMesh mesh;
-	char name[128];
-};
-
-struct TekMapMaterial
-{
-	TekMaterial material;
-	char name[128];
-};
-
 struct TekMap
 {
-	TekMapMesh* meshes;
+	TekAssetMesh* meshes;
 	u32 num_meshes;
 
-	TekMapMaterial* materials;
+	TekAssetMaterial* materials;
 	u32 num_materials;
-
-	std::vector<TekBillboard*> bbs;
 
 	TekSky* sky;
 
 	TekQuad* quads;
 	u32 num_quads;
 
-	std::vector<TekBrush> brushes;
+	TekBrush* brushes;
+	u32 num_brushes;
 
 	TekMapObject* objects;
 	u32 num_objects;
@@ -153,5 +140,13 @@ bool tek_map_load(TekMap* map, const char* name);
 
 TekBrush* tek_map_add_brush(TekMap* map);
 TekQuad* tek_map_add_quad(TekMap* map);
+void tek_map_add_material(TekMap* map, TekAssetMaterial mat);
+void tek_map_add_mesh(TekMap* map, TekAssetMesh mesh);
+void tek_map_brush_set_material(TekMap* map, TekBrush* brush, TekAssetMaterial* mat, int plane);
+void tek_map_quad_set_material(TekMap* map, TekQuad* quad, TekAssetMaterial* mat);
+TekMapObject* tek_map_add_static_object(TekMap* map);
+TekMapObject* tek_map_add_bb_object(TekMap* map);
+void tek_map_object_set_material(TekMap* map, TekMapObject* obj, TekAssetMaterial* mat);
+void tek_map_object_set_mesh(TekMap* map, TekMapObject* obj, TekAssetMesh* mesh);
 
 #endif

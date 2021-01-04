@@ -4,30 +4,13 @@
 #include "tek_vec3.hpp"
 #include "tek_vec4.hpp"
 
-struct Mat4
+typedef struct
 {
 	union {
 		float m[16];
 		Vec4 rows[4];
 	};
-
-	Mat4();
-
-	Mat4 transposed() const;
-
-	static Mat4 translate(float x, float y, float z);
-	static Mat4 rotate(float angle, float x, float y, float z);
-	static Mat4 scale(float x, float y, float z);
-	static Mat4 ortho(float left, float right, float top, float bottom, float z_near, float z_far);
-	static Mat4 perspective(float fov, float ar, float z_near, float z_far);
-	static Mat4 lookat(Vec3 eye, Vec3 target, Vec3 up);
-
-	const Mat4 operator*(const Mat4& mat2) const;
-
-	const Vec4 operator*(const Vec4& vec) const;
-
-	const Vec3 operator*(const Vec3& vec) const;
-};
+}Mat4;
 
 void mat4_init(Mat4 *m);
 

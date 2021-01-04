@@ -2,36 +2,12 @@
 #define _TEK_VEC3_HPP
 
 
-struct Vec3
+typedef struct
 {
 	float x;
 	float y;
 	float z;
-
-	Vec3();
-	Vec3(float a);
-	Vec3(float x, float y, float z);
-
-	const float length() const;
-
-	const Vec3 normalized() const;
-
-	const Vec3 negate() const;
-
-	const float dot(Vec3 v2) const;
-
-	const Vec3 cross(Vec3 v2) const;
-
-	const float distance(Vec3 v2) const;
-
-	const Vec3 lerp(Vec3 v2, float t) const;
-
-	const Vec3 operator+(const Vec3& v2);
-
-	const Vec3 operator-(const Vec3& v2);
-
-	const Vec3 operator*(float num);
-};
+}Vec3;
 
 Vec3 vec3_create(float x, float y, float z);
 

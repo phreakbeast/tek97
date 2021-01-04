@@ -6,15 +6,14 @@
 #include "tek_console.hpp"
 #include "tek_editor.hpp"
 
-static TekFont *g_font;
+static TekFont g_font;
 
 bool tek_game_init(u32 width, u32 height)
 {
 	if(!tek_console_init())
 		return false;
 
-	g_font = TekFont::load("data/fonts/test.font");
-	if (!g_font)
+	if(!tek_font_load(&g_font,"data/fonts/test.font"))	
 		return false;
 
 	if(!tek_editor_init(width, height))
@@ -26,7 +25,7 @@ bool tek_game_init(u32 width, u32 height)
 void tek_game_destroy()
 {
 	tek_editor_destroy();
-	delete g_font;
+	tek_font_destroy(&g_font);
 	tek_console_destroy();
 }
 
@@ -41,14 +40,14 @@ void tek_game_render()
 	//render gui
 	tek_sb_begin(sb);
 
-	tek_editor_render_2d(sb, g_font);
+	tek_editor_render_2d(sb, &g_font);
 	//render debug text
 	TekRenderStats *stats = tek_renderer_get_stats();
 	char fps_str[256];
 
 	sprintf(fps_str, "fps: %u ups: %u", stats->fps, stats->ups);
 
-	tek_sb_render_text(sb, fps_str, g_font, 5, 5, TekColor::white(), 0);
+	tek_sb_render_text(sb, fps_str, &g_font, 5, 5, tek_color_white(), 0);
 	//console
 	tek_console_render(sb);
 

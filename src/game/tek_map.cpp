@@ -6,60 +6,21 @@
 
 bool tek_map_init(TekMap* map)
 {
-	map->num_materials = 1;
-	map->materials = (TekMapMaterial*)tek_malloc(sizeof(TekMapMaterial) * map->num_materials);
+	map->num_materials = 0;
+	map->materials = NULL;
 
-	tek_material_init(&map->materials[0].material);
-	tek_material_add_diffuse_map(&map->materials[0].material, "data/textures/grid.tga");
-	strcpy(map->materials[0].name,"material1");
-
-	map->num_meshes = 2;
-	map->meshes = (TekMapMesh*)tek_malloc(sizeof(TekMapMesh) * map->num_meshes);
-
-	tek_mesh_load(&map->meshes[0].mesh,"data/meshes/female.obj");
-	strcpy(map->meshes[0].name,"data/meshes/female.obj");
-	tek_mesh_load(&map->meshes[1].mesh,"data/meshes/male.obj");
-	strcpy(map->meshes[1].name,"data/meshes/male.obj");
-
-
-	map->bbs.push_back(new TekBillboard(3, 1, TekRect(0, 0, 1, 1)));
+	map->num_meshes = 0;
+	map->meshes = NULL;
 
 	map->sky = nullptr;
 
-	map->num_objects = 3;
-	map->objects = (TekMapObject*)tek_malloc(sizeof(TekMapObject) * map->num_objects);
+	map->num_objects = 0;
 
-	map->objects[0].type = TEK_MAP_OBJECT_STATIC;
-	map->objects[0].static_obj = (TekStaticObj*)tek_malloc(sizeof(TekStaticObj));
-	map->objects[0].static_obj->mat_id = 0;
-	map->objects[0].static_obj->mesh_id = 0;
-	map->objects[0].transform = tek_transform_create(vec3_create(0,0,0),vec3_create(0,0,0),vec3_create(1,1,1));
+	map->num_brushes = 0;
+	map->brushes = NULL;
 
-	map->objects[1].type = TEK_MAP_OBJECT_STATIC;
-	map->objects[1].static_obj = (TekStaticObj*)tek_malloc(sizeof(TekStaticObj));
-	map->objects[1].static_obj->mat_id = 0;
-	map->objects[1].static_obj->mesh_id = 1;
-	map->objects[1].transform = tek_transform_create(vec3_create(-5, 0, -5), vec3_create(0, 0, 0), vec3_create(1, 1, 1));
-
-	map->objects[2].type = TEK_MAP_OBJECT_BILLBOARD;
-	map->objects[2].bb_obj = (TekBillboardObj*)tek_malloc(sizeof(TekBillboardObj));
-	map->objects[2].bb_obj->mat_id = 0;
-	map->objects[2].bb_obj->bb_id = 0;
-	map->objects[2].transform = tek_transform_create(vec3_create(-2, 1, -2), vec3_create(0, 0, 0), vec3_create(1, 1, 1));
-
-	map->brushes.push_back(TekBrush());
-
-	map->brushes[0].set_material(&map->materials[0].material,0);
-	map->brushes[0].set_material(&map->materials[0].material,1);
-	map->brushes[0].set_material(&map->materials[0].material,2);
-	map->brushes[0].set_material(&map->materials[0].material,3);
-	map->brushes[0].set_material(&map->materials[0].material,4);
-	map->brushes[0].set_material(&map->materials[0].material,5);
-
-	map->num_quads = 1;
-	map->quads = (TekQuad*)tek_malloc(sizeof(TekQuad) * map->num_quads);
-	tek_quad_init(&map->quads[0]);
-	tek_quad_set_material(&map->quads[0],&map->materials[0].material);
+	map->num_quads = 0;
+	map->quads = NULL;
 
 	return true;
 }
@@ -76,15 +37,24 @@ void tek_map_destroy(TekMap* map)
 	{
 		tek_mesh_destroy(&map->meshes[i].mesh);
 	}
-	tek_free(map->meshes);
-
-	for (u32 i = 0; i < map->bbs.size(); ++i)
+	if (map->num_meshes > 0)
 	{
-		delete map->bbs[i];
+		tek_free(map->meshes);
+	}
+	if (map->num_objects > 0)
+	{
+		tek_free(map->objects);
+	}	
+
+	if (map->num_brushes > 0)
+	{
+		tek_free(map->brushes);
 	}
 
-	tek_free(map->objects);
-	tek_free(map->quads);
+	if (map->num_quads > 0)
+	{
+		tek_free(map->quads);
+	}
 }
 
 void tek_map_render(TekMap* map, TekMeshbuffer* buffer)
@@ -96,14 +66,14 @@ void tek_map_render(TekMap* map, TekMeshbuffer* buffer)
 	}
 
 	//render geometry
-	for(u32 i=0; i<map->brushes.size(); ++i)
+	for(u32 i=0; i<map->num_brushes; ++i)
 	{
-		map->brushes[i].render(buffer);
+		tek_brush_render(&map->brushes[i],buffer,map);
 	}
 
 	for(u32 i=0; i<map->num_quads; ++i)
 	{
-		tek_quad_render(&map->quads[i],buffer);
+		tek_quad_render(&map->quads[i],buffer,map);
 	}
 
 	for (u32 i = 0; i < map->num_objects; ++i)
@@ -111,35 +81,60 @@ void tek_map_render(TekMap* map, TekMeshbuffer* buffer)
 		TekMapObject* obj = &map->objects[i];
 		if (obj->type == TEK_MAP_OBJECT_STATIC)
 		{
+			if (obj->static_obj->mesh_id < 0 || obj->static_obj->mat_id < 0)
+				continue;
+
 			TekMesh* mesh = &map->meshes[obj->static_obj->mesh_id].mesh;
 			TekMaterial* mat = &map->materials[obj->static_obj->mat_id].material;
-			buffer->draw_mesh(mesh, mat, &obj->transform);
+			tek_mb_draw_mesh(buffer,mesh, mat, &obj->transform);
 		}
 		if (obj->type == TEK_MAP_OBJECT_BILLBOARD)
 		{
-			TekBillboard* bb = map->bbs[obj->bb_obj->bb_id];
+			if (obj->bb_obj->mat_id < 0)
+				continue;
+
+			TekBillboard* bb = &obj->bb_obj->bb;
 			TekMaterial* mat = &map->materials[obj->bb_obj->mat_id].material;
-			buffer->draw_billboard(bb, mat, &obj->transform,false);
+			tek_mb_draw_billboard(buffer, bb, mat, &obj->transform,false);
 		}
 	}
+}
+
+void tek_object_render_shape(TekMapObject* obj, TekShapebuffer* buffer, bool selected)
+{
+	float offset = 0.5f;
+	Vec3 p_original = obj->transform.position;
+	Vec3 p0 = vec3_create(p_original.x - offset, p_original.y + offset, p_original.z - offset);
+	Vec3 p1 = vec3_create(p_original.x - offset, p_original.y + offset, p_original.z + offset);
+	Vec3 p2 = vec3_create(p_original.x + offset, p_original.y + offset, p_original.z + offset);
+	Vec3 p3 = vec3_create(p_original.x + offset, p_original.y + offset, p_original.z - offset);
+
+	Vec3 p4 = vec3_create(p_original.x - offset, p_original.y - offset, p_original.z - offset);
+	Vec3 p5 = vec3_create(p_original.x - offset, p_original.y - offset, p_original.z + offset);
+	Vec3 p6 = vec3_create(p_original.x + offset, p_original.y - offset, p_original.z + offset);
+	Vec3 p7 = vec3_create(p_original.x + offset, p_original.y - offset, p_original.z - offset);
+
+	TekColor color = tek_color_white();
+	if (selected)
+		color = tek_color_red();
+	
+	tek_shapebuffer_draw_line(buffer, p0, p1, color);
+	tek_shapebuffer_draw_line(buffer, p1, p2, color);
+	tek_shapebuffer_draw_line(buffer, p2, p3, color);
+	tek_shapebuffer_draw_line(buffer, p3, p0, color);
+	tek_shapebuffer_draw_line(buffer, p4, p5, color);
+	tek_shapebuffer_draw_line(buffer, p5, p6, color);
+	tek_shapebuffer_draw_line(buffer, p6, p7, color);
+	tek_shapebuffer_draw_line(buffer, p7, p4, color);
+	tek_shapebuffer_draw_line(buffer, p0, p4, color);
+	tek_shapebuffer_draw_line(buffer, p1, p5, color);
+	tek_shapebuffer_draw_line(buffer, p2, p6, color);
+	tek_shapebuffer_draw_line(buffer, p3, p7, color);
 }
 
 void tek_map_update(TekMap* map, float delta)
 {
 
-}
-
-TekBrush* tek_map_add_brush(TekMap* map)
-{
-	return NULL;
-}
-
-TekQuad* tek_map_add_quad(TekMap* map)
-{
-	map->num_quads++;
-	map->quads = (TekQuad*)tek_realloc(map->quads,sizeof(TekQuad) * map->num_quads);
-	tek_quad_init(&map->quads[map->num_quads-1]);
-	return &map->quads[map->num_quads-1];
 }
 
 struct Header
@@ -155,7 +150,7 @@ bool tek_map_save(TekMap* map, const char* name)
 	Header hdr;
 	hdr.num_materials = map->num_materials;
 	hdr.num_meshes = map->num_meshes;
-	hdr.num_brushes = map->brushes.size();
+	hdr.num_brushes = map->num_brushes;
 	hdr.num_objects = map->num_objects;
 
 	char filename[256];
@@ -193,7 +188,7 @@ bool tek_map_save(TekMap* map, const char* name)
 	}
 
 	//brushes
-	for(u32 i=0; i<map->brushes.size(); ++i)
+	for(u32 i=0; i<map->num_brushes; ++i)
 	{
 
 	}
@@ -223,7 +218,7 @@ bool tek_map_load(TekMap* map, const char* name)
 	in_file.read((char *) &hdr, sizeof(Header));
 
 	map->num_materials = hdr.num_materials;
-	map->materials = (TekMapMaterial*)tek_malloc(sizeof(TekMapMaterial) * map->num_materials);
+	map->materials = (TekAssetMaterial*)tek_malloc(sizeof(TekAssetMaterial) * map->num_materials);
 	for(u32 i=0; i<map->num_materials; ++i)
 	{
 		in_file.read((char*)&map->materials[i].name, sizeof(char)*128);
@@ -254,4 +249,203 @@ bool tek_map_load(TekMap* map, const char* name)
 		return false;
 	}
 	return true;
+}
+
+void tek_map_add_material(TekMap* map, TekAssetMaterial mat)
+{
+	if (map->num_materials == 0)
+	{
+		map->num_materials = 1;
+		map->materials = (TekAssetMaterial*)tek_malloc(sizeof(TekAssetMaterial));
+		map->materials[0] = mat;
+	}
+	else
+	{
+		map->num_materials++;
+		map->materials = (TekAssetMaterial*)tek_realloc(map->materials, sizeof(TekAssetMaterial) * map->num_materials);
+		map->materials[map->num_materials - 1] = mat;
+	}
+}
+
+void tek_map_add_mesh(TekMap* map, TekAssetMesh mesh)
+{
+	if (map->num_meshes== 0)
+	{
+		map->num_meshes = 1;
+		map->meshes = (TekAssetMesh*)tek_malloc(sizeof(TekAssetMesh));
+		map->meshes[0] = mesh;
+		map->meshes[0].mesh.vertices = (TekMeshVertexData*)tek_malloc(sizeof(TekMeshVertexData) * mesh.mesh.num_vertices);
+		memcpy(map->meshes[0].mesh.vertices, mesh.mesh.vertices, sizeof(TekMeshVertexData) * mesh.mesh.num_vertices);
+		map->meshes[0].mesh.indices= (u32*)tek_malloc(sizeof(u32) * mesh.mesh.num_indices);
+		memcpy(map->meshes[0].mesh.indices, mesh.mesh.indices, sizeof(u32) * mesh.mesh.num_indices);
+	}
+	else
+	{
+		map->num_meshes++;
+		map->meshes= (TekAssetMesh*)tek_realloc(map->meshes, sizeof(TekAssetMesh) * map->num_meshes);
+		map->meshes[map->num_meshes - 1] = mesh;
+		map->meshes[map->num_meshes - 1].mesh.vertices = (TekMeshVertexData*)tek_malloc(sizeof(TekMeshVertexData) * mesh.mesh.num_vertices);
+		memcpy(map->meshes[map->num_meshes - 1].mesh.vertices, mesh.mesh.vertices, sizeof(TekMeshVertexData) * mesh.mesh.num_vertices);
+		map->meshes[map->num_meshes - 1].mesh.indices = (u32*)tek_malloc(sizeof(u32) * mesh.mesh.num_indices);
+		memcpy(map->meshes[map->num_meshes - 1].mesh.indices, mesh.mesh.indices, sizeof(u32) * mesh.mesh.num_indices);
+	}
+}
+
+TekBrush* tek_map_add_brush(TekMap* map)
+{
+	if (map->num_brushes == 0)
+	{
+		map->num_brushes = 1;
+		map->brushes = (TekBrush*)tek_malloc(sizeof(TekBrush));
+		tek_brush_init(&map->brushes[0]);
+		return &map->brushes[0];
+	}
+	else
+	{
+		map->num_brushes++;
+		map->brushes = (TekBrush*)tek_realloc(map->brushes, sizeof(TekBrush) * map->num_brushes);
+		tek_brush_init(&map->brushes[map->num_brushes - 1]);
+		return &map->brushes[map->num_brushes - 1];
+	}
+}
+
+TekQuad* tek_map_add_quad(TekMap* map)
+{
+	if (map->num_quads == 0)
+	{
+		map->num_quads = 1;
+		map->quads = (TekQuad*)tek_malloc(sizeof(TekQuad));
+		tek_quad_init(&map->quads[0]);
+		return &map->quads[0];
+	}
+	else
+	{
+		map->num_quads++;
+		map->quads = (TekQuad*)tek_realloc(map->quads, sizeof(TekQuad) * map->num_quads);
+		tek_quad_init(&map->quads[map->num_quads - 1]);
+		return &map->quads[map->num_quads - 1];
+	}
+}
+
+static int check_materials(TekMap* map, TekAssetMaterial* mat)
+{
+	bool found = false;
+	int id = -1;
+	for (u32 i = 0; i < map->num_materials; ++i)
+	{
+		if (strcmp(map->materials[i].name, mat->name) == 0)
+		{
+			found = true;
+			id = i;
+			break;
+		}
+	}
+	if (!found)
+	{
+		tek_map_add_material(map, *mat);
+		id = map->num_materials - 1;
+	}
+	return id;
+}
+
+static int check_meshes(TekMap* map, TekAssetMesh* mesh)
+{
+	bool found = false;
+	int id = -1;
+	for (u32 i = 0; i < map->num_meshes; ++i)
+	{
+		if (strcmp(map->meshes[i].name, mesh->name) == 0)
+		{
+			found = true;
+			id = i;
+			break;
+		}
+	}
+	if (!found)
+	{
+		tek_map_add_mesh(map, *mesh);
+		id = map->num_meshes- 1;
+	}
+	return id;
+}
+
+void tek_map_brush_set_material(TekMap* map, TekBrush* brush, TekAssetMaterial* mat, int plane)
+{
+	int id = check_materials(map, mat);
+	brush->planes[plane].mat_id = id;
+}
+
+void tek_map_quad_set_material(TekMap* map, TekQuad* quad, TekAssetMaterial* mat)
+{
+	int id = check_materials(map, mat);
+	quad->plane.mat_id = id;
+}
+
+void tek_map_object_set_material(TekMap* map, TekMapObject* obj, TekAssetMaterial* mat)
+{
+	if (obj->type == TEK_MAP_OBJECT_STATIC)
+	{
+		int id = check_materials(map, mat);
+		obj->static_obj->mat_id = id;
+	}
+	else if (obj->type == TEK_MAP_OBJECT_BILLBOARD)
+	{
+		int id = check_materials(map, mat);
+		obj->bb_obj->mat_id = id;
+	}
+}
+
+void tek_map_object_set_mesh(TekMap* map, TekMapObject* obj, TekAssetMesh* mesh)
+{
+	if (obj->type == TEK_MAP_OBJECT_STATIC)
+	{
+		int id = check_meshes(map, mesh);
+		obj->static_obj->mesh_id = id;
+	}
+}
+
+static void object_init(TekMapObject* obj)
+{	
+	obj->static_obj = NULL;
+	obj->bb_obj = NULL;	
+	obj->transform = tek_transform_create(vec3_create(0, 0, 0), vec3_create(0, 0, 0), vec3_create(1, 1, 1));
+}
+
+static TekMapObject* create_new_object(TekMap* map)
+{
+	TekMapObject* obj = NULL;
+	if (map->num_objects == 0)
+	{
+		map->num_objects = 1;
+		map->objects = (TekMapObject*)tek_malloc(sizeof(TekMapObject) * map->num_objects);
+		obj = &map->objects[0];
+	}
+	else
+	{
+		map->num_objects++;
+		map->objects = (TekMapObject*)tek_realloc(map->objects, sizeof(TekMapObject) * map->num_objects);
+		obj = &map->objects[map->num_objects - 1];
+	}
+	object_init(obj);
+	return obj;
+}
+
+TekMapObject* tek_map_add_static_object(TekMap* map)
+{
+	TekMapObject* obj = create_new_object(map);
+	obj->type = TEK_MAP_OBJECT_STATIC;
+	obj->static_obj = (TekStaticObj*)tek_malloc(sizeof(TekStaticObj));
+	obj->static_obj->mat_id = -1;
+	obj->static_obj->mesh_id = -1;
+	return obj;
+}
+
+TekMapObject* tek_map_add_bb_object(TekMap* map)
+{
+	TekMapObject* obj = create_new_object(map);
+	obj->type = TEK_MAP_OBJECT_BILLBOARD;
+	obj->bb_obj = (TekBillboardObj*)tek_malloc(sizeof(TekBillboardObj));
+	obj->bb_obj->mat_id = -1;
+	tek_bb_init(&obj->bb_obj->bb,1,1,tek_rect_create(0,0,1,1));
+	return obj;
 }

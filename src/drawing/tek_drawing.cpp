@@ -117,16 +117,16 @@ void tek_renderer_resize(u32 width, u32 height)
 
 void tek_renderer_bind_framebuffer(TekFramebuffer* buffer, TekColor color)
 {
-	buffer->bind_writing();
-	GLCall(glViewport(0, 0, buffer->get_width(), buffer->get_height()));
-	Vec4 col = color.to_vec4();
+	tek_fb_bind_writing(buffer);
+	GLCall(glViewport(0, 0, buffer->width, buffer->height));
+	Vec4 col = tek_color_to_vec4(color);
 	GLCall(glClearColor(col.x, col.y, col.z, col.w));
 	GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 }
 
 void tek_renderer_unbind_framebuffer()
 {
-	TekFramebuffer::unbind();
+	tek_fb_unbind();
 	//GLCall(glViewport(0, 0, g_width, g_height));
 }
 
@@ -147,7 +147,7 @@ void tek_renderer_enable_depth_test()
 
 void tek_renderer_clear(TekColor color)
 {
-	Vec4 col = color.to_vec4();
+	Vec4 col = tek_color_to_vec4(color);
 	GLCall(glClearColor(col.x, col.y, col.z, col.w));
 	GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 }
@@ -248,19 +248,19 @@ void tek_renderer_draw_mesh(TekMesh* mesh, TekMaterial* material, Mat4* transfor
 
 	upload_material(material, &g_geometry_shader);
 
-	Mat4 mvp = cam->get_projection() * cam->get_view();
+	Mat4 mvp = mat4_mul2(&cam->projection, &cam->view);
 	Mat4 world;
 	Mat4 mv;
 	if (transform != NULL)
 	{
 		mvp = mat4_mul2(&mvp, transform);
 		world = mat4_transposed(transform);
-		mv = cam->get_view() * (*transform);
+		mv = mat4_mul2(&cam->view, transform);
 	}
 	else
 	{
 		world = mat4_transposed(&world);
-		mv = cam->get_view();
+		mv = cam->view;
 	}
 
 	mvp = mat4_transposed(&mvp);
@@ -317,7 +317,7 @@ void tek_renderer_draw_shape(TekShape* shape, Mat4* transform, TekCamera* cam)
 {
 	tek_shader_bind(&g_shape_shader);
 
-	Mat4 mvp = cam->get_projection() * cam->get_view();
+	Mat4 mvp = mat4_mul2(&cam->projection, &cam->view);
 	if (transform != NULL)
 	{
 		mvp = mat4_mul2(&mvp, transform);
@@ -337,11 +337,11 @@ void tek_renderer_draw_billboard(TekBillboard* billboard, TekMaterial* material,
 
 	upload_material(material, &g_billboard_shader);
 
-	Mat4 p = cam->get_projection().transposed();
-	Mat4 mv = cam->get_view();
+	Mat4 p = mat4_transposed(&cam->projection);
+	Mat4 mv = cam->view;
 	if (transform != NULL)
 	{
-		mv = cam->get_view() * (*transform);
+		mv = mat4_mul2(&cam->view, transform);
 	}
 	mv = mat4_transposed(&mv);
 
@@ -369,8 +369,8 @@ static void upload_material(TekMaterial* mat, TekShader* shader)
 	else
 	{
 		tek_shader_uniform_int(shader, "u_material.has_diffuse_map", 0);
-		tek_shader_uniform_vec4(shader,"u_material.ambient_color", mat->ambient_color.to_vec4());
-		tek_shader_uniform_vec4(shader,"u_material.diffuse_color", mat->diffuse_color.to_vec4());
+		tek_shader_uniform_vec4(shader,"u_material.ambient_color", tek_color_to_vec4(mat->ambient_color));
+		tek_shader_uniform_vec4(shader,"u_material.diffuse_color", tek_color_to_vec4(mat->diffuse_color));
 	}
 
 	/*

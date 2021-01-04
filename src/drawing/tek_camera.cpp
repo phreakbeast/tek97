@@ -1,80 +1,82 @@
 #include "tek_camera.hpp"
 
-TekCamera::TekCamera(TekCamera::Type type, Mat4 projection)
+TekCamera tek_cam_create(CameraType type, Mat4 projection)
 {
-	this->projection = projection;
-	this->type = type;
+	TekCamera res;
+	res.projection = projection;
+	res.type = type;
 	switch (type)
 	{
-		case Type::First:
+		case TEK_CAMERA_FIRST:
 		{
-			position = vec3_create(0, 0, 0);
-			rotation = vec3_create(0, 0, 0);
+			res.position = vec3_create(0, 0, 0);
+			res.rotation = vec3_create(0, 0, 0);
 		}
 			break;
-		case Type::Third:
+		case TEK_CAMERA_THIRD:
 		{
-			position = vec3_create(0, 0, 0);
-			rotation = vec3_create(40, 0, 0);
-			target_position = vec3_create(0, 0, 0);
-			target_rotation = vec3_create(0, 0, 0);
-			distance = 10;
-			min_distance = 2;
-			max_distance = 15;
-			min_tilt = 15;
-			max_tilt = 75;
+			res.position = vec3_create(0, 0, 0);
+			res.rotation = vec3_create(40, 0, 0);
+			res.target_position = vec3_create(0, 0, 0);
+			res.target_rotation = vec3_create(0, 0, 0);
+			res.distance = 10;
+			res.min_distance = 2;
+			res.max_distance = 15;
+			res.min_tilt = 15;
+			res.max_tilt = 75;
 		}
 			break;
 		default:
 			break;
 	}
-	calc();
+	tek_cam_calc(&res);
+	return res;
 }
 
-void TekCamera::calc()
+void tek_cam_calc(TekCamera* cam)
 {
-	switch (type)
+	switch (cam->type)
 	{
-		case Type::First:
+		case TEK_CAMERA_FIRST:
 		{
-			Mat4 trans = mat4_translate(-position.x, -position.y, -position.z);
+			Mat4 trans = mat4_translate(-cam->position.x, -cam->position.y, -cam->position.z);
 
-			Mat4 rot_x = mat4_rotate(-rotation.x, 1, 0, 0);
-			Mat4 rot_y = mat4_rotate(-rotation.y, 0, 1, 0);
+			Mat4 rot_x = mat4_rotate(-cam->rotation.x, 1, 0, 0);
+			Mat4 rot_y = mat4_rotate(-cam->rotation.y, 0, 1, 0);
 
 			Mat4 rot = mat4_mul2(&rot_x, &rot_y);
 
-			view = mat4_mul2(&rot, &trans);
-			view_rot = rot;
+			cam->view = mat4_mul2(&rot, &trans);
+			cam->view_rot = rot;
 		}
 			break;
-		case Type::Third:
+		case TEK_CAMERA_THIRD:
 		{
 			//calculate camera view
 			//calc distance to target point
-			float dist_hor = distance * cosf(math_to_radian(rotation.x));
-			float dist_vert = distance * sinf(math_to_radian(rotation.x));
+			float dist_hor = cam->distance * cosf(math_to_radian(cam->rotation.x));
+			float dist_vert = cam->distance * sinf(math_to_radian(cam->rotation.x));
 
 			//calc position
-			position.y = target_position.y + dist_vert;
+			cam->position.y = cam->target_position.y + dist_vert;
 
-			float theta = target_rotation.y;
+			float theta = cam->target_rotation.y;
 			float x_offset = dist_hor * sinf(math_to_radian(theta));
 			float z_offset = dist_hor * cosf(math_to_radian(theta));
 
-			position.x = target_position.x + x_offset;
-			position.z = target_position.z + z_offset;
+			cam->position.x = cam->target_position.x + x_offset;
+			cam->position.z = cam->target_position.z + z_offset;
 
 			//g_cam.rotation.y = 180 - theta;
-			rotation.y = theta;
+			cam->rotation.y = theta;
 
-			Mat4 trans = mat4_translate(-position.x, -position.y, -position.z);
-			Mat4 rot_x = mat4_rotate(rotation.x, 1, 0, 0);
-			Mat4 rot_y = mat4_rotate(-rotation.y, 0, 1, 0);
+			Mat4 trans = mat4_translate(-cam->position.x, -cam->position.y, -cam->position.z);
+			Mat4 rot_x = mat4_rotate(cam->rotation.x, 1, 0, 0);
+			Mat4 rot_y = mat4_rotate(-cam->rotation.y, 0, 1, 0);
 			Mat4 rot = mat4_mul2(&rot_x, &rot_y);
 
-			view = mat4_mul2(&rot, &trans);
-			view_rot = rot;
+			cam->view = mat4_mul2(&rot, &trans);
+			cam->view_rot = rot;
 		}
 			break;
 		default:
@@ -82,22 +84,22 @@ void TekCamera::calc()
 	}
 }
 
-void TekCamera::move(float dir, float speed)
+void tek_cam_move(TekCamera* cam, float dir, float speed)
 {
-	switch (type)
+	switch (cam->type)
 	{
-		case Type::First:
+		case TEK_CAMERA_FIRST:
 		{
-			float rad = math_to_radian(rotation.y + dir);
-			position.x -= sinf(rad) * speed;
-			position.z -= cosf(rad) * speed;
+			float rad = math_to_radian(cam->rotation.y + dir);
+			cam->position.x -= sinf(rad) * speed;
+			cam->position.z -= cosf(rad) * speed;
 		}
 			break;
-		case Type::Third:
+		case TEK_CAMERA_THIRD:
 		{
-			float rad = math_to_radian(target_rotation.y + dir);
-			target_position.x -= sinf(rad) * speed;
-			target_position.z -= cosf(rad) * speed;
+			float rad = math_to_radian(cam->target_rotation.y + dir);
+			cam->target_position.x -= sinf(rad) * speed;
+			cam->target_position.z -= cosf(rad) * speed;
 		}
 			break;
 		default:
@@ -105,20 +107,20 @@ void TekCamera::move(float dir, float speed)
 	}
 }
 
-void TekCamera::move_up(float dir, float speed)
+void tek_cam_move_up(TekCamera* cam, float dir, float speed)
 {
-	switch (type)
+	switch (cam->type)
 	{
-		case Type::First:
+		case TEK_CAMERA_FIRST:
 		{
-			float rad = math_to_radian(rotation.x + dir);
-			position.y += sinf(rad) * speed;
+			float rad = math_to_radian(cam->rotation.x + dir);
+			cam->position.y += sinf(rad) * speed;
 		}
 			break;
-		case Type::Third:
+		case TEK_CAMERA_THIRD:
 		{
-			float rad = math_to_radian(target_rotation.y + dir);
-			target_position.y += sinf(rad) * speed;
+			float rad = math_to_radian(cam->target_rotation.y + dir);
+			cam->target_position.y += sinf(rad) * speed;
 		}
 			break;
 		default:
@@ -126,68 +128,33 @@ void TekCamera::move_up(float dir, float speed)
 	}
 }
 
-void TekCamera::rotate_x(float val)
+void tek_cam_rotate_x(TekCamera* cam, float val)
 {
-	switch (type)
+	switch (cam->type)
 	{
-		case Type::First:
+		case TEK_CAMERA_FIRST:
 		{
-			rotation.x += val;
-			if (rotation.x < -45)
+			cam->rotation.x += val;
+			if (cam->rotation.x < -45)
 			{
-				rotation.x = -45;
+				cam->rotation.x = -45;
 			}
-			if (rotation.x > 80)
+			if (cam->rotation.x > 80)
 			{
-				rotation.x = 80;
+				cam->rotation.x = 80;
 			}
 		}
 			break;
-		case Type::Third:
+		case TEK_CAMERA_THIRD:
 		{
-			rotation.x += val;
-			if (rotation.x < min_tilt)
+			cam->rotation.x += val;
+			if (cam->rotation.x < cam->min_tilt)
 			{
-				rotation.x = min_tilt;
+				cam->rotation.x = cam->min_tilt;
 			}
-			if (rotation.x > max_tilt)
+			if (cam->rotation.x > cam->max_tilt)
 			{
-				rotation.x = max_tilt;
-			}
-		}
-			break;
-		default:
-			break;
-	}
-}
-
-void TekCamera::rotate_y(float val)
-{
-	switch (type)
-	{
-		case Type::First:
-		{
-			rotation.y += val;
-			if (rotation.y > 360.0f)
-			{
-				rotation.y -= 360.0f;
-			}
-			if (rotation.y < 0.0f)
-			{
-				rotation.y += 360.0f;
-			}
-		}
-			break;
-		case Type::Third:
-		{
-			target_rotation.y += val;
-			if (target_rotation.y > 360.0f)
-			{
-				target_rotation.y -= 360.0f;
-			}
-			if (target_rotation.y < 0.0f)
-			{
-				target_rotation.y += 360.0f;
+				cam->rotation.x = cam->max_tilt;
 			}
 		}
 			break;
@@ -196,21 +163,56 @@ void TekCamera::rotate_y(float val)
 	}
 }
 
-void TekCamera::zoom(float val)
+void tek_cam_rotate_y(TekCamera* cam, float val)
 {
-	switch (type)
+	switch (cam->type)
 	{
-		case Type::Third:
+		case TEK_CAMERA_FIRST:
 		{
-			distance += val;
-			if (distance > max_distance)
+			cam->rotation.y += val;
+			if (cam->rotation.y > 360.0f)
 			{
-				distance = max_distance;
+				cam->rotation.y -= 360.0f;
+			}
+			if (cam->rotation.y < 0.0f)
+			{
+				cam->rotation.y += 360.0f;
+			}
+		}
+			break;
+		case TEK_CAMERA_THIRD:
+		{
+			cam->target_rotation.y += val;
+			if (cam->target_rotation.y > 360.0f)
+			{
+				cam->target_rotation.y -= 360.0f;
+			}
+			if (cam->target_rotation.y < 0.0f)
+			{
+				cam->target_rotation.y += 360.0f;
+			}
+		}
+			break;
+		default:
+			break;
+	}
+}
+
+void tek_cam_zoom(TekCamera* cam, float val)
+{
+	switch (cam->type)
+	{
+		case TEK_CAMERA_THIRD:
+		{
+			cam->distance += val;
+			if (cam->distance > cam->max_distance)
+			{
+				cam->distance = cam->max_distance;
 			}
 
-			if (distance < min_distance)
+			if (cam->distance < cam->min_distance)
 			{
-				distance = min_distance;
+				cam->distance = cam->min_distance;
 			}
 		}
 			break;

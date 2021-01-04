@@ -1,4 +1,4 @@
-#include "tek_platform.hpp"
+#include "../tek_platform.hpp"
 
 #include <stdio.h>
 #include <time.h>
@@ -24,7 +24,8 @@ static int g_wheel;
 static TekInputLetter g_letters[MAX_LETTERS];
 static u32 g_num_letters = 0;
 
-static int get_key(Key key);
+static int get_scancode(Key key);
+static Key get_key(int scancode);
 static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 void tek_window_destroy()
@@ -166,7 +167,7 @@ bool tek_window_open(u32 width, u32 height, const char* title, bool fullscreen)
 
 	printf("creating opengl context...\n");
 	PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB = (PFNWGLCREATECONTEXTATTRIBSARBPROC)wglGetProcAddress("wglCreateContextAttribsARB");
-	if (wglCreateContextAttribsARB) 
+	if (wglCreateContextAttribsARB)
 	{
 		g_hglrc = wglCreateContextAttribsARB(g_hdc, NULL, attributes);
 		wglMakeCurrent(NULL, NULL);
@@ -245,50 +246,78 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}break;
 	case WM_KEYDOWN: {
 		g_keys[wParam] = 1;
+
+		TekInputLetter l;
+		char letter = (char)wParam;
+		Key key = get_key(letter);
+		switch (key)
+		{
+		case KEY_BACKSPACE: {  // backspace
+			l.type = INPUT_LETTER_BACKSPACE;
+		}break;
+		case KEY_ESCAPE: {  // escape
+			l.type = INPUT_LETTER_ESCAPE;
+		}break;
+		case KEY_TAB: {  // tab
+			l.type = INPUT_LETTER_TAB;
+		}break;
+		case KEY_ENTER: {  // carriage return
+			l.type = INPUT_LETTER_ENTER;
+		}break;
+		case KEY_SPACE: {
+			l.type = INPUT_LETTER_SPACE;
+		}break;
+		case KEY_UP: {
+			l.type = INPUT_LETTER_UP;
+		}break;
+		case KEY_DOWN: {
+			l.type = INPUT_LETTER_DOWN;
+		}break;
+		case KEY_LEFT: {
+			l.type = INPUT_LETTER_LEFT;
+		}break;
+		case KEY_RIGHT: {
+			l.type = INPUT_LETTER_RIGHT;
+		}break;
+		case KEY_DELETE: {
+			l.type = INPUT_LETTER_DELETE;
+		}break;
+		case KEY_NONE:
+			l.type = INPUT_LETTER_NONE;
+			break;
+		default: //printable character
+		{
+			l.type = INPUT_LETTER_LETTER;
+			int mapped_key = get_scancode(key);
+			l.key = key;
+		}
+		break;
+		}
+		if (l.type != INPUT_LETTER_NONE)
+		{
+			if (g_num_letters < MAX_LETTERS)
+			{
+				g_letters[g_num_letters++] = l;
+			}
+		}
 	}break;
 	case WM_KEYUP: {
 		g_keys[wParam] = 0;
 	}break;
 	case WM_CHAR: {
-		TekInputLetter l;
-		switch (wParam)
-		{
-		case 0x08: {  // backspace
-			l.type = INPUT_LETTER_BACKSPACE;
-		}break;
-		case 0x1B: {  // escape
-			l.type = INPUT_LETTER_ESCAPE;
-		}break;
-		case 0x09: {  // tab
-			l.type = INPUT_LETTER_TAB;
-		}break;
-		case 0x0D: {  // carriage return
-			l.type = INPUT_LETTER_ENTER;
-		}break;
-		default: //printable character
-		{
-			char letter = (char)wParam;
-			l.type = INPUT_LETTER_LETTER;
-			l.letter = letter;
-		}
-		break;
-		}
-		if (g_num_letters < MAX_LETTERS)
-		{
-			g_letters[g_num_letters++] = l;
-		}
+		
 	}break;
 	case WM_MOUSEMOVE: {
 		if (!is_tracking)
 		{
 			track_mouse(hWnd);
 			is_tracking = 1;
-		}		
+		}
 
 		g_mouse_pos_x = LOWORD(lParam);
 		g_mouse_pos_y = HIWORD(lParam);
 		//printf("%d %d\n", g_mouse_pos_x, g_mouse_pos_y);
-		
+
 	}break;
 	case WM_MOUSEHOVER: {
 		//printf("enter\n");
@@ -318,7 +347,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_MOUSEWHEEL: {
 		int z_delta = GET_WHEEL_DELTA_WPARAM(wParam) / 120;
 		g_wheel = z_delta;
-	}break;	
+	}break;
 	case WM_ACTIVATE: {
 		if (LOWORD(wParam) == WA_INACTIVE)
 		{
@@ -335,7 +364,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 bool tek_window_is_key_down(Key key)
 {
-	int mapped_key = get_key(key);
+	int mapped_key = get_scancode(key);
 	return g_keys[mapped_key];
 }
 
@@ -399,7 +428,7 @@ TekInputLetter* tek_window_get_letter(int* letters)
 	return NULL;
 }
 
-static int get_key(Key key)
+static int get_scancode(Key key)
 {
 	//TODO: change to table lookup
 	switch (key)
@@ -455,9 +484,9 @@ static int get_key(Key key)
 	case KEY_SEMICOLON: {
 		return VK_OEM_1;
 	}break;
-		/*case 0x41: {
-		return KEY_EQUAL;
-		}break;*/ //TODO: find scancode
+		case KEY_EQUAL: {
+		return 187;
+		}break; //TODO: find scancode
 	case KEY_A: {
 		return 0x41;
 	}break;
@@ -683,24 +712,36 @@ static int get_key(Key key)
 	case KEY_KP_ADD: {
 		return VK_ADD;
 	}break;
-	case KEY_LEFT_SHIFT: {
+	/*case KEY_LEFT_SHIFT: {
 		return VK_LSHIFT;
+	}break;*/
+	case KEY_LEFT_SHIFT: {
+		return 16;
 	}break;
 	case KEY_LEFT_CONTROL: {
-		return VK_LCONTROL;
+		return 17;
 	}break;
+	/*case KEY_LEFT_CONTROL: {
+		return VK_LCONTROL;
+	}break;*/
 	case KEY_LEFT_ALT: {
 		return VK_LMENU;
 	}break;
 	case KEY_LEFT_SUPER: {
 		return VK_LWIN;
 	}break;
-	case KEY_RIGHT_SHIFT: {
+	/*case KEY_RIGHT_SHIFT: {
 		return VK_RSHIFT;
+	}break;*/
+	case KEY_RIGHT_SHIFT: {
+		return 16;
 	}break;
 	case KEY_RIGHT_CONTROL: {
-		return VK_RCONTROL;
+		return 17;
 	}break;
+	/*case KEY_RIGHT_CONTROL: {
+		return VK_RCONTROL;
+	}break;*/
 	case KEY_RIGHT_ALT: {
 		return VK_RMENU;
 	}break;
@@ -714,5 +755,322 @@ static int get_key(Key key)
 		break;
 	}
 	return -1;
+}
+
+static Key get_key(int scancode)
+{
+	//TODO: change to table lookup
+	switch (scancode)
+	{
+	case VK_SPACE: {
+		return KEY_SPACE;
+	}break;
+	case VK_OEM_7: {
+		return KEY_APOSTROPHE;
+	}break;
+	case VK_OEM_COMMA: {  /* , */
+		return KEY_COMMA;
+	}break;
+	case VK_OEM_MINUS: {  /* - */
+		return KEY_MINUS;
+	}break;
+	case VK_OEM_PERIOD: {  /* . */
+		return KEY_PERIOD;
+	}break;
+	case VK_OEM_2: {  /* / */
+		return KEY_SLASH;
+	}break;
+	case 0x30: {
+		return KEY_0;
+	}break;
+	case 0x31: {
+		return KEY_1;
+	}break;
+	case 0x32: {
+		return KEY_2;
+	}break;
+	case 0x33: {
+		return KEY_3;
+	}break;
+	case 0x34: {
+		return KEY_4;
+	}break;
+	case 0x35: {
+		return KEY_5;
+	}break;
+	case 0x36: {
+		return KEY_6;
+	}break;
+	case 0x37: {
+		return KEY_7;
+	}break;
+	case 0x38: {
+		return KEY_8;
+	}break;
+	case 0x39: {
+		return KEY_9;
+	}break;
+	case VK_OEM_1: {
+		return KEY_SEMICOLON;
+	}break;
+		case 187: {
+		return KEY_EQUAL;
+		}break; //TODO: find scancode
+	case 0x41: {
+		return KEY_A;
+	}break;
+	case 0x42: {
+		return KEY_B;
+	}break;
+	case 0x43: {
+		return KEY_C;
+	}break;
+	case 0x44: {
+		return KEY_D;
+	}break;
+	case 0x45: {
+		return KEY_E;
+	}break;
+	case 0x46: {
+		return KEY_F;
+	}break;
+	case 0x47: {
+		return KEY_G;
+	}break;
+	case 0x48: {
+		return KEY_H;
+	}break;
+	case 0x49: {
+		return KEY_I;
+	}break;
+	case 0x4A: {
+		return KEY_J;
+	}break;
+	case 0x4B: {
+		return KEY_K;
+	}break;
+	case 0x4C: {
+		return KEY_L;
+	}break;
+	case 0x4D: {
+		return KEY_M;
+	}break;
+	case 0x4E: {
+		return KEY_N;
+	}break;
+	case 0x4F: {
+		return KEY_O;
+	}break;
+	case 0x50: {
+		return KEY_P;
+	}break;
+	case 0x51: {
+		return KEY_Q;
+	}break;
+	case 0x52: {
+		return KEY_R;
+	}break;
+	case 0x53: {
+		return KEY_S;
+	}break;
+	case 0x54: {
+		return KEY_T;
+	}break;
+	case 0x55: {
+		return KEY_U;
+	}break;
+	case 0x56: {
+		return KEY_V;
+	}break;
+	case 0x57: {
+		return KEY_W;
+	}break;
+	case 0x58: {
+		return KEY_X;
+	}break;
+	case 0x59: {
+		return KEY_Y;
+	}break;
+	case 0x5A: {
+		return KEY_Z;
+	}break;
+	case VK_OEM_4: {
+		return KEY_LEFT_BRACKET;
+	}break;
+	case VK_OEM_5: {
+		return KEY_BACKSLASH;
+	}break;
+	case VK_OEM_6: {  /* ] */
+		return KEY_RIGHT_BRACKET;
+	}break;
+	case VK_ESCAPE: {
+		return KEY_ESCAPE;
+	}break;
+	case VK_RETURN: {
+		return KEY_ENTER;
+	}break;
+	case VK_TAB: {
+		return KEY_TAB;
+	}break;
+	case VK_BACK: {
+		return KEY_BACKSPACE;
+	}break;
+	case VK_INSERT: {
+		return KEY_INSERT;
+	}break;
+	case VK_DELETE: {
+		return KEY_DELETE;
+	}break;
+	case VK_RIGHT: {
+		return KEY_RIGHT;
+	}break;
+	case VK_LEFT: {
+		return KEY_LEFT;
+	}break;
+	case VK_DOWN: {
+		return KEY_DOWN;
+	}break;
+	case VK_UP: {
+		return KEY_UP;
+	}break;
+	case VK_PRIOR: {
+		return KEY_PAGE_UP;
+	}break;
+	case VK_NEXT: {
+		return KEY_PAGE_DOWN;
+	}break;
+	case VK_HOME: {
+		return KEY_HOME;
+	}break;
+	case VK_END: {
+		return KEY_END;
+	}break;
+	case VK_CAPITAL: {
+		return KEY_CAPS_LOCK;
+	}break;
+	case VK_SCROLL: {
+		return KEY_SCROLL_LOCK;
+	}break;
+		/*case 0x41: {
+		return KEY_NUM_LOCK;
+		}break;*///TODO: find scancode
+	case VK_PRINT: {
+		return KEY_PRINT_SCREEN;
+	}break;
+	case VK_PAUSE: {
+		return KEY_PAUSE;
+	}break;
+	case VK_F1: {
+		return KEY_F1;
+	}break;
+	case VK_F2: {
+		return KEY_F2;
+	}break;
+	case VK_F3: {
+		return KEY_F3;
+	}break;
+	case VK_F4: {
+		return KEY_F4;
+	}break;
+	case VK_F5: {
+		return KEY_F5;
+	}break;
+	case VK_F6: {
+		return KEY_F6;
+	}break;
+	case VK_F7: {
+		return KEY_F7;
+	}break;
+	case VK_F8: {
+		return KEY_F8;
+	}break;
+	case VK_F9: {
+		return KEY_F9;
+	}break;
+	case VK_F10: {
+		return KEY_F10;
+	}break;
+	case VK_F11: {
+		return KEY_F11;
+	}break;
+	case VK_F12: {
+		return KEY_F12;
+	}break;
+	case VK_NUMPAD0: {
+		return KEY_KP_0;
+	}break;
+	case VK_NUMPAD1: {
+		return KEY_KP_1;
+	}break;
+	case VK_NUMPAD2: {
+		return KEY_KP_2;
+	}break;
+	case VK_NUMPAD3: {
+		return KEY_KP_3;
+	}break;
+	case VK_NUMPAD4: {
+		return KEY_KP_4;
+	}break;
+	case VK_NUMPAD5: {
+		return KEY_KP_5;
+	}break;
+	case VK_NUMPAD6: {
+		return KEY_KP_6;
+	}break;
+	case VK_NUMPAD7: {
+		return KEY_KP_7;
+	}break;
+	case VK_NUMPAD8: {
+		return KEY_KP_8;
+	}break;
+	case VK_NUMPAD9: {
+		return KEY_KP_9;
+	}break;
+	case VK_DECIMAL: {
+		return KEY_KP_DECIMAL;
+	}break;
+	case VK_DIVIDE: {
+		return KEY_KP_DIVIDE;
+	}break;
+	case VK_MULTIPLY: {
+		return KEY_KP_MULTIPLY;
+	}break;
+	case VK_SUBTRACT: {
+		return KEY_KP_SUBTRACT;
+	}break;
+	case VK_ADD: {
+		return KEY_KP_ADD;
+	}break;
+	case VK_LSHIFT: {
+		return KEY_LEFT_SHIFT;
+	}break;
+	case VK_LCONTROL: {
+		return KEY_LEFT_CONTROL;
+	}break;
+	case VK_LMENU: {
+		return KEY_LEFT_ALT;
+	}break;
+	case VK_LWIN: {
+		return KEY_LEFT_SUPER;
+	}break;
+	case VK_RSHIFT: {
+		return KEY_RIGHT_SHIFT;
+	}break;
+	case VK_RCONTROL: {
+		return KEY_RIGHT_CONTROL;
+	}break;
+	case VK_RMENU: {
+		return KEY_RIGHT_ALT;
+	}break;
+	case VK_RWIN: {
+		return KEY_RIGHT_SUPER;
+	}break;
+	case VK_APPS: {
+		return KEY_MENU;
+	}break;
+	default:
+		break;
+	}
+	return KEY_NONE;
 }
 

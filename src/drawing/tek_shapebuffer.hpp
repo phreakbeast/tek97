@@ -4,7 +4,6 @@
 #include "../math/tek_math.hpp"
 #include "tek_color.hpp"
 #include "tek_camera.hpp"
-#include <vector>
 
 typedef struct
 {
@@ -15,7 +14,9 @@ typedef struct
 typedef struct
 {
 	TekCamera* cam;
-	std::vector<TekSBufferVertexData> buffer;
+	TekSBufferVertexData* buffer;
+	u32 buffer_size;
+	u32 buffer_capacity;
 }TekShapebuffer;
 
 void tek_shapebuffer_init(TekShapebuffer* buffer, TekCamera* cam);

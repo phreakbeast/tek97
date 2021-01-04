@@ -6,11 +6,25 @@
 void tek_shapebuffer_init(TekShapebuffer* buffer, TekCamera* cam)
 {
 	buffer->cam = cam;
+	buffer->buffer_size = 0;
+	buffer->buffer_capacity = 100;
+	buffer->buffer = (TekSBufferVertexData*)tek_malloc(sizeof(TekSBufferVertexData) * buffer->buffer_capacity);
 }
 
 void tek_shapebuffer_destroy(TekShapebuffer* buffer)
 {
+	tek_free(buffer->buffer);
+}
 
+static void add_vertex(TekShapebuffer* buffer, TekSBufferVertexData vert)
+{
+	if (buffer->buffer_size >= buffer->buffer_capacity)
+	{
+		buffer->buffer_capacity += buffer->buffer_capacity;
+		buffer->buffer = (TekSBufferVertexData*)tek_realloc(buffer->buffer, sizeof(TekSBufferVertexData) * buffer->buffer_capacity);
+	}
+
+	buffer->buffer[buffer->buffer_size++] = vert;
 }
 
 void tek_shapebuffer_draw_line(TekShapebuffer* buffer, Vec3 p0, Vec3 p1, TekColor color)
@@ -19,21 +33,24 @@ void tek_shapebuffer_draw_line(TekShapebuffer* buffer, Vec3 p0, Vec3 p1, TekColo
 	TekSBufferVertexData v0;
 
 	v0.position = p0;
-	v0.color = color.to_vec3();
+	v0.color = tek_color_to_vec3(color);
 
 	v1.position = p1;
-	v1.color = color.to_vec3();
-
-	buffer->buffer.push_back(v0);
-	buffer->buffer.push_back(v1);
+	v1.color = tek_color_to_vec3(color);
+	
+	add_vertex(buffer, v0);
+	add_vertex(buffer, v1);
 }
 
 void tek_shapebuffer_render(TekShapebuffer* buffer)
 {
+	if (buffer->buffer_size < 1)
+		return;
+
 	TekShader* shader = tek_renderer_get_shape_shader();
 	tek_shader_bind(shader);
 
-	Mat4 mvp = buffer->cam->get_projection() * buffer->cam->get_view();
+	Mat4 mvp = mat4_mul2(&buffer->cam->projection, &buffer->cam->view);
 	mvp = mat4_transposed(&mvp);
 
 	tek_shader_uniform_mat4(shader, "u_mvp", &mvp, 1);
@@ -44,7 +61,7 @@ void tek_shapebuffer_render(TekShapebuffer* buffer)
 	int loc_pos = tek_shader_get_attrib_loc(shader, "a_position");
 	int loc_color = tek_shader_get_attrib_loc(shader, "a_color");
 
-	int size = buffer->buffer.size() * sizeof(TekSBufferVertexData);
+	int size = buffer->buffer_size * sizeof(TekSBufferVertexData);
 
 	GLCall(glGenVertexArrays(1, &vao));
 	GLCall(glBindVertexArray(vao));
@@ -64,7 +81,7 @@ void tek_shapebuffer_render(TekShapebuffer* buffer)
 	GLCall(glEnableVertexAttribArray(loc_color));	
 
 
-	GLCall(glDrawArrays(GL_LINES, 0, buffer->buffer.size()));
+	GLCall(glDrawArrays(GL_LINES, 0, buffer->buffer_size));
 
 	GLCall(glDisableVertexAttribArray(loc_pos));
 	GLCall(glDisableVertexAttribArray(loc_color));
@@ -78,5 +95,5 @@ void tek_shapebuffer_render(TekShapebuffer* buffer)
 
 void tek_shapebuffer_reset(TekShapebuffer* buffer)
 {
-	buffer->buffer.clear();
+	buffer->buffer_size = 0;
 }

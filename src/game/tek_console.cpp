@@ -14,7 +14,7 @@ typedef struct
 } ConsoleLine;
 
 static bool g_active = false;
-static TekFont *g_font;
+static TekFont g_font;
 
 static ConsoleLine g_history[12];
 static u32 g_num_lines = 0;
@@ -186,11 +186,11 @@ static void confirm_line()
 
 	if (res == 1)
 	{
-		g_history[g_num_lines - 1].color = TekColor::green();
+		g_history[g_num_lines - 1].color = tek_color_green();
 	}
 	else if (res == 2)
 	{
-		g_history[g_num_lines - 1].color = TekColor::red();
+		g_history[g_num_lines - 1].color = tek_color_red();
 	}
 
 	g_cursor_pos = 0;
@@ -198,19 +198,18 @@ static void confirm_line()
 
 bool tek_console_init()
 {
-	g_font = TekFont::load("data/fonts/test.font");
-	if (!g_font)
+	if(!tek_font_load(&g_font, "data/fonts/test.font"))
 		return false;
 
 	g_curr_line.text[0] = '\0';
-	g_curr_line.color = TekColor::white();
+	g_curr_line.color = tek_color_white();
 
 	return true;
 }
 
 void tek_console_destroy()
 {
-	delete g_font;
+	tek_font_destroy(&g_font);
 }
 
 void tek_console_update(float delta)
@@ -278,18 +277,18 @@ void tek_console_render(TekSpritebatch *sb)
 {
 	if (g_active)
 	{
-		tek_sb_render_rect(sb, TekRect(0, 0, 640, 100), TekColor(128, 128, 128));
-		tek_sb_render_rect(sb, TekRect(0, 100, 640, 16), TekColor(100, 100, 100));
+		tek_sb_render_rect(sb, tek_rect_create(0, 0, 640, 100), tek_color_create(128, 128, 128));
+		tek_sb_render_rect(sb, tek_rect_create(0, 100, 640, 16), tek_color_create(100, 100, 100));
 
 		float cur_pos = g_cursor_pos * 8;
-		tek_sb_render_rect(sb, TekRect(cur_pos, 104, 8, 8), TekColor(180, 180, 180));
+		tek_sb_render_rect(sb, tek_rect_create(cur_pos, 104, 8, 8), tek_color_create(180, 180, 180));
 
-		tek_sb_render_text(sb, g_curr_line.text, g_font, 0, 104, g_curr_line.color, 640);
+		tek_sb_render_text(sb, g_curr_line.text, &g_font, 0, 104, g_curr_line.color, 640);
 
 		for (u32 i = 0; i < 12; ++i)
 		{
 			float pos_y = i * 8.0f;
-			tek_sb_render_text(sb, g_history[i].text, g_font, 0, pos_y, g_history[i].color, 640);
+			tek_sb_render_text(sb, g_history[i].text, &g_font, 0, pos_y, g_history[i].color, 640);
 		}
 	}
 }

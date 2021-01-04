@@ -10,20 +10,20 @@ struct TekRect
 	float y;
 	float w;
 	float h;
-
-	TekRect();
-	TekRect(float x, float y, float w, float h);
-	TekRect(float x, float y, float w, float h, u32 width, u32 height);
-
-	const Vec4 to_vec4() const;
-
-	const TekRect move(float x, float y) const;
-
-	bool is_inside(float x, float y) const;
-
-	const TekRect create_vertical_slice(float start, float end) const;
-
-	const TekRect horizontal_slice(float start, float end) const;
 };
+
+
+TekRect tek_rect_create(float x, float y, float w, float h);
+TekRect tek_rect_uv(float x, float y, float w, float h, u32 width, u32 height);
+
+const Vec4 tek_rect_to_vec4(TekRect rect);
+
+const TekRect tek_rect_move(TekRect rect, float x, float y);
+
+bool tek_rect_is_inside(TekRect rect,float x, float y);
+
+const TekRect tek_rect_create_vertical_slice(TekRect rect, float start, float end);
+
+const TekRect tek_rect_horizontal_slice(TekRect rect, float start, float end);
 
 #endif

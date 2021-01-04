@@ -28,7 +28,7 @@ const TekColor tek_img_get_pixel(TekImage *img, int x, int y)
 	if (img->internal_format == 4)
 		a = img->pixels[(x + y * img->width) * img->internal_format + 3];
 
-	TekColor res = TekColor(r, g, b, a);
+	TekColor res = tek_color_create_alpha(r, g, b, a);
 	return res;
 }
 
@@ -107,14 +107,14 @@ tek_img_create_checker(TekImage *img, TekColor color1, TekColor color2, int x_di
 
 bool tek_img_create_from_noise(TekImage *img, TekNoise *noise, TekColor color1, TekColor color2)
 {
-	tek_img_create_blank(img, noise->get_width(), noise->get_height(), color1);
+	tek_img_create_blank(img, noise->width, noise->height, color1);
 
-	for (int y = 0; y < noise->get_height(); ++y)
+	for (int y = 0; y < noise->height; ++y)
 	{
-		for (int x = 0; x < noise->get_width(); ++x)
+		for (int x = 0; x < noise->width; ++x)
 		{
-			float val = noise->get_value(x, y);
-			TekColor c = color1.lerp(color2, val);
+			float val = tek_noise_get_value(noise,x, y);
+			TekColor c = tek_color_lerp(color1,color2, val);
 			tek_img_set_pixel(img, x, y, c);
 		}
 	}

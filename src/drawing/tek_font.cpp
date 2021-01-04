@@ -7,59 +7,56 @@
 #include <string.h>
 
 
-TekFont::~TekFont()
+void tek_font_destroy(TekFont* font)
 {
-	tek_tex_destroy(&texture);
+	tek_tex_destroy(&font->texture);
 }
 
-const TekFontLetter* TekFont::get_letter(char character) const
+const TekFontLetter* tek_font_get_letter(TekFont* font, char character)
 {
 	//TODO: replace with something faster
-	for (int i = 0; i < num_letters; ++i)
+	for (int i = 0; i < font->num_letters; ++i)
 	{
-		if (letters[i].character == character)
+		if (font->letters[i].character == character)
 		{
-			return &letters[i];
+			return &font->letters[i];
 		}
 	}
 	return nullptr;
 }
 
-const u32 TekFont::text_length(const char *text) const
+const u32 tek_font_text_length(TekFont* font, const char* text)
 {
 	u32 res = 0;
 	u32 len = (u32) strlen(text);
 	for (u32 i = 0; i < len; ++i)
 	{
 		char c = text[i];
-		const TekFontLetter *letter = get_letter(c);
+		const TekFontLetter *letter = tek_font_get_letter(font, c);
 		if (letter == NULL)
 		{
-			letter = get_letter('?');
+			letter = tek_font_get_letter(font, '?');
 		}
 		res += letter->width;
 	}
 	return res;
 }
 
-const u32 TekFont::text_height(const char *text) const
+const u32 tek_font_text_height(TekFont* font, const char* text)
 {
 	//TODO: implement
-	return height;
+	return font->height;
 }
 
 
-TekFont* TekFont::load(const char *filename)
+bool tek_font_load(TekFont* font, const char* filename)
 {
-	TekFont* font = new TekFont();
-
 	printf("loading font %s\n", filename);
 	FILE *fp = fopen(filename, "rb");
 	if (!fp)
 	{
 		printf("Error: cannot open file %s\n", filename);
-		delete font;
-		return nullptr;
+		return false;
 	}
 
 	char line[1024];
@@ -91,8 +88,7 @@ TekFont* TekFont::load(const char *filename)
 			if (!result)
 			{
 				fclose(fp);
-				delete font;
-				return nullptr;
+				return false;
 			}
 
 			font->width = width;
@@ -169,12 +165,5 @@ TekFont* TekFont::load(const char *filename)
 	assert(font->num_letters < 512);
 	font->letters[font->num_letters++] = letter;
 
-	return font;
-}
-
-TekFont::TekFont()
-{
-	num_letters = 0;
-	width = 0;
-	height = 0;
+	return true;
 }

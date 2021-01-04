@@ -7,23 +7,8 @@
 #include "tek_texture.hpp"
 #include "tek_font.hpp"
 
-class TekFramebuffer
+struct TekFramebuffer
 {
-public:
-	TekFramebuffer(u32 width, u32 height);
-
-	~TekFramebuffer();
-
-	void bind_reading(u32 texture_unit);
-
-	void bind_writing();
-
-	static void unbind();
-
-	const u32 get_width() const {return width;}
-	const u32 get_height() const {return height;}
-	const u32 get_tex_id() const {return tex_id;}
-private:
 	u32 fbo;
 	u32 tex_id;
 	u32 depth_id;
@@ -31,5 +16,15 @@ private:
 	u32 width;
 	u32 height;
 };
+
+void tek_fb_init(TekFramebuffer* fb, u32 width, u32 height);
+
+void tek_fb_destroy(TekFramebuffer* fb);
+
+void tek_fb_bind_reading(TekFramebuffer* fb, u32 texture_unit);
+
+void tek_fb_bind_writing(TekFramebuffer* fb);
+
+void tek_fb_unbind();
 
 #endif
