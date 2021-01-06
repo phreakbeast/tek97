@@ -4,8 +4,8 @@
 
 typedef struct
 {
-	float x;
-	float y;
+    float x;
+    float y;
 }Vec2;
 
 Vec2 vec2_create(float x, float y);

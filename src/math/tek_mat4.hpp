@@ -6,10 +6,10 @@
 
 typedef struct
 {
-	union {
-		float m[16];
-		Vec4 rows[4];
-	};
+    union {
+	float m[16];
+	Vec4 rows[4];
+    };
 }Mat4;
 
 void mat4_init(Mat4 *m);

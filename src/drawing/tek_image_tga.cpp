@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+namespace tek
+{
 
 #pragma pack(push, 1)
 typedef struct
@@ -305,4 +307,4 @@ bool _tek_load_tga(TekImage *img, const char *filename)
 
 	return success;
 }
-
+}

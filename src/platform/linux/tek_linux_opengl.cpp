@@ -8,20 +8,11 @@
 
 void load_gl_extensions()
 {
-#ifdef TEK_PLATFORM_LINUX
+
 #undef GL_FUNCTION
 #define GL_FUNCTION(x, y)y = (PFN## x ##PROC)glXGetProcAddress((const GLubyte*)#y);
 
 #include "../gl_functions.inl"
-
-#endif
-
-#ifdef TEK_PLATFORM_WINDOWS
-#undef GL_FUNCTION
-#define GL_FUNCTION(x,y)y = (PFN## x ##PROC)wglGetProcAddress(#y);
-
-#include "../gl_functions.inl"
-#endif
 
 //TODO: some kind of check if the functions pointers are correct
 }

@@ -5,10 +5,10 @@
 
 typedef struct
 {
-	float x;
-	float y;
-	float z;
-	float w;
+    float x;
+    float y;
+    float z;
+    float w;
 }Quat;
 
 Quat quat_create(float x, float y, float z, float w);

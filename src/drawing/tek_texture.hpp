@@ -5,17 +5,20 @@
 #include "tek_color.hpp"
 #include "tek_image.hpp"
 
+namespace tek
+{
+
 typedef enum
 {
-	TEK_TEX_FILTER_NONE,
-	TEK_TEX_FILTER_LINEAR
+    TEK_TEX_FILTER_NONE,
+    TEK_TEX_FILTER_LINEAR
 } TekTextureFilter;
 
 typedef struct
 {
-	u32 id;
-	u32 width;
-	u32 height;
+    u32 id;
+    u32 width;
+    u32 height;
 } TekTexture;
 
 
@@ -27,4 +30,5 @@ bool tek_tex_load(TekTexture *tex, const char *filename, TekTextureFilter filter
 
 bool tek_tex_create(TekTexture *tex, TekImage *image, TekTextureFilter filter);
 
+}
 #endif

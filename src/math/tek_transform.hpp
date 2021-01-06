@@ -3,13 +3,13 @@
 
 #include "tek_math.hpp"
 
-struct TekTransform
+typedef struct
 {
 	Vec3 position;
 	Vec3 rotation;
 	Vec3 size;
 	Mat4 matrix;
-};
+}TekTransform;
 
 
 TekTransform tek_transform_create(Vec3 position, Vec3 rotation, Vec3 size);

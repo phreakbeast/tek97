@@ -6,20 +6,23 @@
 #include "tek_color.hpp"
 #include <stdio.h>
 
+namespace tek
+{
+
 typedef enum
 {
-	TEK_IMG_NONE,
-	TEK_IMG_RGB,
-	TEK_IMG_RGBA
+    TEK_IMG_NONE,
+    TEK_IMG_RGB,
+    TEK_IMG_RGBA
 } TekImageFormat;
 
 typedef struct
 {
-	u32 width;
-	u32 height;
-	TekImageFormat format;
-	int internal_format;
-	u8 *pixels;
+    u32 width;
+    u32 height;
+    TekImageFormat format;
+    int internal_format;
+    u8 *pixels;
 } TekImage;
 
 void tek_img_destroy(TekImage *img);
@@ -40,4 +43,5 @@ bool tek_img_create_from_noise(TekImage *img, TekNoise *noise, TekColor color1, 
 //TODO: handle top and bottom origins
 bool _tek_load_tga(TekImage *img, const char *filename);
 
+}
 #endif

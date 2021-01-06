@@ -2,56 +2,66 @@
 
 #include "../platform/tek_platform.hpp"
 
-
-void tek_stopwatch_start(TekStopwatch* timer)
+namespace tek
 {
-	timer->started_time = tek_time_get_seconds();
-	timer->paused_time = 0;
-	timer->is_started = true;
-	timer->is_paused = false;
-}
+    TekStopwatch::TekStopwatch()
+    {
+	started_time = 0;
+	paused_time = 0;
+	is_started = false;
+	is_paused = false;
+    }
+    
+    void TekStopwatch::start()
+    {
+	started_time = tek_time_get_seconds();
+	paused_time = 0;
+	is_started = true;
+	is_paused = false;
+    }
 
-void tek_stopwatch_stop(TekStopwatch* timer)
-{
-	timer->started_time = 0;
-	timer->paused_time = 0;
-	timer->is_started = false;
-	timer->is_paused = false;
-}
+    void TekStopwatch::stop()
+    {
+	started_time = 0;
+	paused_time = 0;
+	is_started = false;
+	is_paused = false;
+    }
 
-void tek_stopwatch_pause(TekStopwatch* timer)
-{
-	if (timer->is_started && !timer->is_paused)
+    void TekStopwatch::pause()
+    {
+	if (is_started && !is_paused)
 	{
-		timer->is_paused = true;
-		timer->paused_time = tek_time_get_seconds();
-		timer->started_time = 0;
+	    is_paused = true;
+	    paused_time = tek_time_get_seconds();
+	    started_time = 0;
 	}
-}
+    }
 
-void tek_stopwatch_unpause(TekStopwatch* timer)
-{
-	if (timer->is_started && timer->is_paused)
+    void TekStopwatch::unpause()
+    {
+	if (is_started && is_paused)
 	{
-		timer->is_paused = false;
-		timer->paused_time = 0;
-		timer->started_time = tek_time_get_seconds();
+	    is_paused = false;
+	    paused_time = 0;
+	    started_time = tek_time_get_seconds();
 	}
-}
+    }
 
-double tek_stopwatch_get_seconds(TekStopwatch* timer)
-{
+    double TekStopwatch::get_seconds()
+    {
 	double res = 0;
-	if (timer->is_started)
+	if (is_started)
 	{
-		if (timer->is_paused)
-		{
-			res = timer->paused_time;
-		}
-		else
-		{
-			res = tek_time_get_seconds() - timer->started_time;
-		}
+	    if (is_paused)
+	    {
+		res = paused_time;
+	    }
+	    else
+	    {
+		res = tek_time_get_seconds() - started_time;
+	    }
 	}
 	return res;
+    }
 }

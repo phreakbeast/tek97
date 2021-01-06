@@ -3,13 +3,13 @@
 
 #include "../core/tek_core.hpp"
 
-struct TekNoise
+typedef struct
 {
 	u32 width;
 	u32 height;
 	float *values;
 	u32 num_values;
-};
+}TekNoise;
 
 void tek_noise_init(TekNoise* noise, u32 width, u32 height);
 void tek_noise_destroy(TekNoise* noise);

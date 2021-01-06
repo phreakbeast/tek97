@@ -6,6 +6,9 @@
 #include <string.h>
 #include <stdlib.h>
 
+namespace tek
+{
+
 #define SB_MAX_SPRITES    60000
 #define SB_VERTEX_SIZE    sizeof(TekSbVertexData)
 #define SB_SPRITE_SIZE    SB_VERTEX_SIZE * 4
@@ -127,7 +130,7 @@ void tek_sb_flush(TekSpritebatch *sb)
 {
     tek_shader_bind(&sb->shader);
 
-    tek_shader_uniform_mat4(&sb->shader, "u_mvp", &sb->ortho, 1);
+    tek_shader_uniform_mat4(&sb->shader, "u_mvp", &sb->ortho, 1, false);
 
 
     tek_shader_uniform_int(&sb->shader, "u_texture_0", 0);
@@ -189,7 +192,7 @@ void tek_sb_render_rect(TekSpritebatch *sb, TekRect rect, TekColor color)
 {
     const Vec3 position = {rect.x, rect.y, 0};
     const Vec2 size = {rect.w, rect.h};
-    const u32 col = tek_color_to_int(color);
+    const u32 col = color.to_int();
     const Vec2 uv = {0, 0};
     const float tid = 0;
 
@@ -236,7 +239,7 @@ void tek_sb_render_sprite(TekSpritebatch *sb, TekRect dest, TekRect src, u32 tex
 {
     const Vec3 position = {dest.x, dest.y, 0};
     const Vec2 size = {dest.w, dest.h};
-    const u32 col = tek_color_floats_to_int(1, 1, 1, 1);
+    const u32 col = TekColor::floats_to_int(1, 1, 1, 1);
     const GLuint tid = texture_id;
 
     Vec2 uv[4];
@@ -326,7 +329,7 @@ void tek_sb_render_polygon(TekSpritebatch *sb, Vec2 p0, Vec2 p1, Vec2 p2, Vec2 p
     const Vec3 v2 = {p2.x, p2.y, 0};
     const Vec3 v3 = {p3.x, p3.y, 0};
 
-    const u32 col = tek_color_to_int(color);
+    const u32 col = color.to_int();
     const Vec2 uv = {0, 0};
     const float tid = 0;
 
@@ -394,15 +397,15 @@ void tek_sb_render_text(TekSpritebatch *sb, const char *text, TekFont *font, int
             continue;
         }
 
-        const TekFontLetter *letter = tek_font_get_letter(font, c);
+        const TekFontLetter *letter = font->get_letter(c);
         if (letter == NULL)
         {
-            letter = tek_font_get_letter(font, '?');
+            letter = font->get_letter('?');
         }
 
         const Vec3 position = {(float) pos_x, (float) pos_y, 0};
         const Vec2 size = {(float) letter->width, (float) letter->width};
-        const unsigned int col = tek_color_to_int(color);
+        const unsigned int col = color.to_int();
         Vec2 uv[4];
 
         uv[0].x = letter->uv_l;
@@ -515,7 +518,7 @@ tek_sb_render_circle(TekSpritebatch *sb, Vec2 pos, float radius, float start_ang
     points[num_segments + 1].y = pos.y;
     points[num_segments + 1].z = 0;
 
-    const u32 col = tek_color_to_int(color);
+    const u32 col = color.to_int();
     const Vec2 uv = {0, 0};
     const float tid = 0;
 
@@ -600,7 +603,7 @@ void tek_sb_render_line(TekSpritebatch *sb, Vec2 p0, Vec2 p1, float width, TekCo
     new_pos[3].y = v3.y;
     new_pos[3].z = 0;
 
-    const u32 col = tek_color_to_int(color);
+    const u32 col = color.to_int();
     const Vec2 uv = {0, 0};
     const float tid = 0;
 
@@ -630,4 +633,5 @@ void tek_sb_render_line(TekSpritebatch *sb, Vec2 p0, Vec2 p1, float width, TekCo
 
     sb->index_count += 6;
     sb->num_sprites++;
+}
 }

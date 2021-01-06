@@ -3,10 +3,10 @@
 
 typedef struct
 {
-	float x;
-	float y;
-	float z;
-	float w;
+    float x;
+    float y;
+    float z;
+    float w;
 }Vec4;
 
 Vec4 vec4_create(float x, float y, float z, float w);

@@ -5,6 +5,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+namespace tek
+{
+
 static u32 g_cur_program = 0;
 
 void tek_shader_destroy(TekShader *shader)
@@ -128,8 +131,9 @@ static GLuint link_shader(GLuint vert_id, GLuint frag_id, GLuint geom_id)
 
 	GLCall(glAttachShader(program, vert_id));
 	GLCall(glAttachShader(program, frag_id));
-	if (geom_id > 0)
-	GLCall(glAttachShader(program, geom_id));
+	if (geom_id > 0){
+	    GLCall(glAttachShader(program, geom_id));
+	}
 
 	GLCall(glLinkProgram(program));
 	GLint result = GL_FALSE;
@@ -422,4 +426,5 @@ int tek_shader_get_uniform_loc(TekShader* shader, const char* name)
 	printf("Warning: uniform %s not found\n", name);
 #endif
 	return -1;
+}
 }

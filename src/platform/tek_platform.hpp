@@ -6,14 +6,6 @@
 //---------------------------------------------------
 // opengl
 //---------------------------------------------------
-#ifdef TEK_PLATFORM_LINUX
-#include <X11/X.h>
-#include <X11/Xlib.h>
-#include <GL/gl.h>
-#include <GL/glx.h>
-#include <GL/glext.h>
-#include <GL/glxext.h>
-#endif
 
 #ifdef TEK_PLATFORM_WINDOWS
 #define WIN32_LEAN_AND_MEAN
@@ -22,6 +14,13 @@
 #include <GL/GLext.h>
 #define WGL_WGLEXT_PROTOTYPES
 #include <GL/wglext.h>
+#else
+#include <X11/X.h>
+#include <X11/Xlib.h>
+#include <GL/gl.h>
+#include <GL/glx.h>
+#include <GL/glext.h>
+#include <GL/glxext.h>
 #endif
 
 #ifdef TEK_DEBUG
@@ -46,24 +45,24 @@ void load_gl_extensions();
 
 typedef enum
 {
-	INPUT_LETTER_LETTER,
-	INPUT_LETTER_BACKSPACE,
-	INPUT_LETTER_ESCAPE,
-	INPUT_LETTER_TAB,
-	INPUT_LETTER_ENTER,
-	INPUT_LETTER_SPACE,
-	INPUT_LETTER_UP,
-	INPUT_LETTER_DOWN,
-	INPUT_LETTER_LEFT,
-	INPUT_LETTER_RIGHT,
-	INPUT_LETTER_DELETE,
-	INPUT_LETTER_NONE,
+    INPUT_LETTER_LETTER,
+    INPUT_LETTER_BACKSPACE,
+    INPUT_LETTER_ESCAPE,
+    INPUT_LETTER_TAB,
+    INPUT_LETTER_ENTER,
+    INPUT_LETTER_SPACE,
+    INPUT_LETTER_UP,
+    INPUT_LETTER_DOWN,
+    INPUT_LETTER_LEFT,
+    INPUT_LETTER_RIGHT,
+    INPUT_LETTER_DELETE,
+    INPUT_LETTER_NONE,
 }TekInputLetterType;
 
 typedef struct
 {
-	TekInputLetterType type;
-	Key key;
+    TekInputLetterType type;
+    Key key;
 }TekInputLetter;
 
 void tek_window_destroy();
@@ -94,6 +93,8 @@ void tek_window_set_cursor_pos(int x, int y);
 void tek_window_show_cursor(int val);
 
 TekInputLetter *tek_window_get_letter(int *letters);
+
+void tek_window_set_on_resize(void(*f)(u32,u32));
 
 //---------------------------------------------------
 // timing

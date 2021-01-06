@@ -6,6 +6,9 @@
 #include "tek_rect.hpp"
 #include "tek_color.hpp"
 
+namespace tek
+{
+
 #define SB_MAX_TEXTURES 8
 
 typedef struct
@@ -61,4 +64,5 @@ tek_sb_render_circle(TekSpritebatch *sb, Vec2 pos, float radius, float start_ang
 
 void tek_sb_render_line(TekSpritebatch *sb, Vec2 p0, Vec2 p1, float width, TekColor color);
 
+}
 #endif

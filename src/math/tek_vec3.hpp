@@ -4,9 +4,9 @@
 
 typedef struct
 {
-	float x;
-	float y;
-	float z;
+    float x;
+    float y;
+    float z;
 }Vec3;
 
 Vec3 vec3_create(float x, float y, float z);

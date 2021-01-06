@@ -1,6 +1,8 @@
 #ifndef _TEK_KEYS_HPP
 #define _TEK_KEYS_HPP
 
+#include "tek_types.hpp"
+
 typedef enum
 {
 	KEY_SPACE = 0,

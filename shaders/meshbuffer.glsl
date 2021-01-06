@@ -134,45 +134,6 @@ uniform sampler2D u_texture_5;
 uniform sampler2D u_texture_6;
 uniform sampler2D u_texture_7;
 
-sampler2D get_texture(int id)
-{
-	if(id == 0)
-	{
-		return u_texture_0;
-	}
-	else if(id == 1)
-	{
-		return u_texture_1;
-	}
-	else if(id == 2)
-	{
-		return u_texture_2;
-	}
-	else if(id == 3)
-	{
-		return u_texture_3;
-	}
-	else if(id == 4)
-	{
-		return u_texture_4;
-	}
-	else if(id == 5)
-	{
-		return u_texture_5;
-	}
-	else if(id == 6)
-	{
-		return u_texture_6;
-	}
-	else if(id == 7)
-	{
-		return u_texture_7;
-	}
-
-	//wrong id, but something must be returned
-	return u_texture_0;
-}
-
 struct Material
 {
 	vec4 ambient_color;
@@ -191,7 +152,7 @@ vec4 material_get_diffuse_color(Material mat, vec2 uv)
 	vec4 res_color;
 	if(mat.has_diffuse_map == 1)
 	{
-		res_color = texture2D(get_texture(mat.diffuse_map), uv.xy);
+		res_color = texture2D(u_texture_0, uv.xy);
 	}
 	else
 	{
@@ -206,7 +167,7 @@ vec4 material_get_specular_color(Material mat, vec2 uv)
 	
 	if(mat.has_specular_map == 1)
 	{
-		res_color = texture2D(get_texture(mat.specular_map), uv.xy);
+		res_color = texture2D(u_texture_0, uv.xy);
 	}
 	else
 	{

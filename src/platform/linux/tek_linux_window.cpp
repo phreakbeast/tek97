@@ -36,6 +36,8 @@ static bool g_close_requested = false;
 
 static Key g_keys_defs[512];
 
+void (*win_on_resize_callback)(u32,u32) = NULL;
+
 static void init_keys();
 
 static Key get_key_def(int key);
@@ -103,6 +105,11 @@ int main(void) {
 	return 0;
 }
  */
+
+void tek_window_set_on_resize(void(*f)(u32,u32))
+{
+    win_on_resize_callback = f;
+}
 
 bool tek_window_open(u32 width, u32 height, const char *title, bool fullscreen)
 {
@@ -252,145 +259,149 @@ void tek_window_swap_buffers()
 
 bool tek_window_update()
 {
-	XEvent e;
-	g_wheel = 0;
-	g_num_input_letters = 0;
-	while (XPending(g_display))
+    XEvent e;
+    g_wheel = 0;
+    g_num_input_letters = 0;
+    while (XPending(g_display))
+    {
+	XNextEvent(g_display, &e);
+	if (XFilterEvent(&e, None))
 	{
-		XNextEvent(g_display, &e);
-		if (XFilterEvent(&e, None))
-		{
-			continue;
-		}
-
-		switch (e.type)
-		{
-			case ConfigureNotify:
-			{
-				XConfigureEvent xce = e.xconfigure;
-
-				g_width = xce.width;
-				g_height = xce.height;
-			}
-				break;
-			case KeyPress:
-			{
-				Key mapped_key = get_key_def(e.xkey.keycode);
-				g_keys_down[mapped_key] = true;
-
-				TekInputLetter input_letter;
-
-				if (mapped_key == KEY_TAB)
-				{
-					input_letter.type = INPUT_LETTER_TAB;
-				}
-				else if (mapped_key == KEY_ENTER)
-				{
-					input_letter.type = INPUT_LETTER_ENTER;
-				}
-				else if (mapped_key == KEY_BACKSPACE)
-				{
-					input_letter.type = INPUT_LETTER_BACKSPACE;
-				}
-				else if (mapped_key == KEY_ESCAPE)
-				{
-					input_letter.type = INPUT_LETTER_ESCAPE;
-				}
-				else if (mapped_key == KEY_SPACE)
-				{
-					input_letter.type = INPUT_LETTER_SPACE;
-				}
-				else if (mapped_key == KEY_UP)
-				{
-					input_letter.type = INPUT_LETTER_UP;
-				}
-				else if (mapped_key == KEY_DOWN)
-				{
-					input_letter.type = INPUT_LETTER_DOWN;
-				}
-				else if (mapped_key == KEY_LEFT)
-				{
-					input_letter.type = INPUT_LETTER_LEFT;
-				}
-				else if (mapped_key == KEY_RIGHT)
-				{
-					input_letter.type = INPUT_LETTER_RIGHT;
-				}
-				else if (mapped_key == KEY_DELETE)
-				{
-					input_letter.type = INPUT_LETTER_DELETE;
-				}
-				else
-				{
-					input_letter.type = INPUT_LETTER_LETTER;
-					input_letter.key = mapped_key;
-				}
-
-				if(g_num_input_letters < 8)
-				{
-					g_input_letters[g_num_input_letters++] = input_letter;
-				}
-			}
-				break;
-			case KeyRelease:
-			{
-				Key mapped_key = get_key_def(e.xkey.keycode);
-				g_keys_down[mapped_key] = false;
-			}
-				break;
-			case ButtonPress:
-			{
-				if (e.xbutton.button == Button4)
-				{
-					g_wheel = 1;
-				}
-				else if (e.xbutton.button == Button5)
-				{
-					g_wheel = -1;
-				}
-				else
-				{
-					u32 btn = e.xbutton.button;
-					g_buttons_down[btn] = true;
-				}
-			}
-				break;
-			case ButtonRelease:
-			{
-				u32 btn = e.xbutton.button;
-				g_buttons_down[btn] = false;
-			}
-				break;
-			case MotionNotify:
-			{
-				g_mx = e.xmotion.x;
-				g_my = e.xmotion.y;
-			}
-				break;
-			case EnterNotify:
-			{
-
-			}
-				break;
-			case LeaveNotify:
-			{
-
-			}
-				break;
-			case ClientMessage:
-			{
-				//printf("window closed by wm\n");
-
-				g_close_requested = true;
-
-				return false;
-			}
-			default:
-				break;
-		}
+	    continue;
 	}
 
-	return true;
+	switch (e.type)
+	{
+	    case ConfigureNotify:
+	    {
+		XConfigureEvent xce = e.xconfigure;
+
+		g_width = xce.width;
+		g_height = xce.height;
+		if(win_on_resize_callback)
+		{
+		    win_on_resize_callback(g_width,g_height);
+		}
+	    }
+	    break;
+	    case KeyPress:
+	    {
+		Key mapped_key = get_key_def(e.xkey.keycode);
+		g_keys_down[mapped_key] = true;
+
+		TekInputLetter input_letter;
+
+		if (mapped_key == KEY_TAB)
+		{
+		    input_letter.type = INPUT_LETTER_TAB;
+		}
+		else if (mapped_key == KEY_ENTER)
+		{
+		    input_letter.type = INPUT_LETTER_ENTER;
+		}
+		else if (mapped_key == KEY_BACKSPACE)
+		{
+		    input_letter.type = INPUT_LETTER_BACKSPACE;
+		}
+		else if (mapped_key == KEY_ESCAPE)
+		{
+		    input_letter.type = INPUT_LETTER_ESCAPE;
+		}
+		else if (mapped_key == KEY_SPACE)
+		{
+		    input_letter.type = INPUT_LETTER_SPACE;
+		}
+		else if (mapped_key == KEY_UP)
+		{
+		    input_letter.type = INPUT_LETTER_UP;
+		}
+		else if (mapped_key == KEY_DOWN)
+		{
+		    input_letter.type = INPUT_LETTER_DOWN;
+		}
+		else if (mapped_key == KEY_LEFT)
+		{
+		    input_letter.type = INPUT_LETTER_LEFT;
+		}
+		else if (mapped_key == KEY_RIGHT)
+		{
+		    input_letter.type = INPUT_LETTER_RIGHT;
+		}
+		else if (mapped_key == KEY_DELETE)
+		{
+		    input_letter.type = INPUT_LETTER_DELETE;
+		}
+		else
+		{
+		    input_letter.type = INPUT_LETTER_LETTER;
+		    input_letter.key = mapped_key;
+		}
+
+		if(g_num_input_letters < 8)
+		{
+		    g_input_letters[g_num_input_letters++] = input_letter;
+		}
+	    }
+	    break;
+	    case KeyRelease:
+	    {
+		Key mapped_key = get_key_def(e.xkey.keycode);
+		g_keys_down[mapped_key] = false;
+	    }
+	    break;
+	    case ButtonPress:
+	    {
+		if (e.xbutton.button == Button4)
+		{
+		    g_wheel = 1;
+		}
+		else if (e.xbutton.button == Button5)
+		{
+		    g_wheel = -1;
+		}
+		else
+		{
+		    u32 btn = e.xbutton.button;
+		    g_buttons_down[btn] = true;
+		}
+	    }
+	    break;
+	    case ButtonRelease:
+	    {
+		u32 btn = e.xbutton.button;
+		g_buttons_down[btn] = false;
+	    }
+	    break;
+	    case MotionNotify:
+	    {
+		g_mx = e.xmotion.x;
+		g_my = e.xmotion.y;
+	    }
+	    break;
+	    case EnterNotify:
+	    {
+
+	    }
+	    break;
+	    case LeaveNotify:
+	    {
+
+	    }
+	    break;
+	    case ClientMessage:
+	    {
+		//printf("window closed by wm\n");
+
+		g_close_requested = true;
+
+		return false;
+	    }
+	    default:
+		break;
+	}
+    }
+
+    return true;
 }
 
 bool tek_window_should_close()

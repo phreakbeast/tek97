@@ -5,6 +5,9 @@
 #include <string.h>
 #include <stdio.h>
 
+namespace tek
+{
+
 static TekSpritebatch g_sprite_batch;
 
 static TekRenderStats g_stats;
@@ -18,8 +21,6 @@ static TekShader g_meshbuffer_shader;
 
 static u32 g_width;
 static u32 g_height;
-
-static void upload_material(TekMaterial* mat, TekShader* shader);
 
 void tek_renderer_destroy()
 {
@@ -119,7 +120,7 @@ void tek_renderer_bind_framebuffer(TekFramebuffer* buffer, TekColor color)
 {
 	tek_fb_bind_writing(buffer);
 	GLCall(glViewport(0, 0, buffer->width, buffer->height));
-	Vec4 col = tek_color_to_vec4(color);
+	Vec4 col = color.to_vec4();
 	GLCall(glClearColor(col.x, col.y, col.z, col.w));
 	GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 }
@@ -147,7 +148,7 @@ void tek_renderer_enable_depth_test()
 
 void tek_renderer_clear(TekColor color)
 {
-	Vec4 col = tek_color_to_vec4(color);
+	Vec4 col = color.to_vec4();
 	GLCall(glClearColor(col.x, col.y, col.z, col.w));
 	GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 }
@@ -163,15 +164,31 @@ TekRenderStats* tek_renderer_get_stats()
 	return &g_stats;
 }
 
+struct TekVertexData
+{
+    Vec3 position;
+    Vec2 uv;
+    Vec3 normal;
+};
+
+TekVertexData tek_mesh_vertex_data_create(float x, float y, float z, float u, float v, float nx, float ny, float nz)
+{
+    TekVertexData res;
+    res.position = vec3_create(x, y, z);
+    res.uv = vec2_create(u, v);
+    res.normal = vec3_create(nx, ny, nz);
+    return res;
+}
+
 void tek_renderer_render_sprite(TekRect dest, TekRect src, u32 texture_id, Mat4* ortho)
 {
 	tek_shader_bind(&g_sprite_shader);
 
-	tek_shader_uniform_mat4(&g_sprite_shader, "u_mvp", ortho, 1);
+	tek_shader_uniform_mat4(&g_sprite_shader, "u_mvp", ortho, 1, false);
 
 	tek_shader_uniform_int(&g_sprite_shader, "u_use_texture", 1);
 
-	TekMeshVertexData vertices[4];
+	TekVertexData vertices[4];
 	u32 indices[6];
 
 	float x = dest.x;
@@ -197,7 +214,7 @@ void tek_renderer_render_sprite(TekRect dest, TekRect src, u32 texture_id, Mat4*
 	indices[4] = 2;
 	indices[5] = 3;
 
-	int size = 4 * sizeof(TekMeshVertexData);
+	int size = 4 * sizeof(TekVertexData);
 
 	u32 vao;
 	u32 vbo;
@@ -216,8 +233,8 @@ void tek_renderer_render_sprite(TekRect dest, TekRect src, u32 texture_id, Mat4*
 	GLCall(glBindBuffer(GL_ARRAY_BUFFER, vbo));
 	GLCall(glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW));
 
-	GLCall(glVertexAttribPointer(loc_pos, 3, GL_FLOAT, GL_FALSE, sizeof(TekMeshVertexData), (const GLvoid*)(offsetof(TekMeshVertexData, position))));
-	GLCall(glVertexAttribPointer(loc_uv, 2, GL_FLOAT, GL_FALSE, sizeof(TekMeshVertexData), (const GLvoid*)(offsetof(TekMeshVertexData, uv))));
+	GLCall(glVertexAttribPointer(loc_pos, 3, GL_FLOAT, GL_FALSE, sizeof(TekVertexData), (const GLvoid*)(offsetof(TekVertexData, position))));
+	GLCall(glVertexAttribPointer(loc_uv, 2, GL_FLOAT, GL_FALSE, sizeof(TekVertexData), (const GLvoid*)(offsetof(TekVertexData, uv))));
 
 	GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
 	GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(u32), indices, GL_STATIC_DRAW));
@@ -241,152 +258,6 @@ void tek_renderer_render_sprite(TekRect dest, TekRect src, u32 texture_id, Mat4*
 	GLCall(glDeleteVertexArrays(1, &vao));
 }
 
-void tek_renderer_draw_mesh(TekMesh* mesh, TekMaterial* material, Mat4* transform, TekCamera* cam,
-	TekDirectionalLight* light, TekPointLight* plights, u32 num_plights)
-{
-	tek_shader_bind(&g_geometry_shader);
-
-	upload_material(material, &g_geometry_shader);
-
-	Mat4 mvp = mat4_mul2(&cam->projection, &cam->view);
-	Mat4 world;
-	Mat4 mv;
-	if (transform != NULL)
-	{
-		mvp = mat4_mul2(&mvp, transform);
-		world = mat4_transposed(transform);
-		mv = mat4_mul2(&cam->view, transform);
-	}
-	else
-	{
-		world = mat4_transposed(&world);
-		mv = cam->view;
-	}
-
-	mvp = mat4_transposed(&mvp);
-	mv = mat4_transposed(&mv);
-
-
-	tek_shader_uniform_mat4(&g_geometry_shader, "u_mvp", &mvp, 1);
-	tek_shader_uniform_mat4(&g_geometry_shader, "u_world", &world, 1);
-	tek_shader_uniform_mat4(&g_geometry_shader, "u_mv", &mv, 1);
-
-	if (light)
-	{
-		tek_shader_uniform_vec3(&g_geometry_shader,"u_direct_light.direction", light->direction);
-		tek_shader_uniform_vec3(&g_geometry_shader,"u_direct_light.color", light->color);
-		tek_shader_uniform_float(&g_geometry_shader,"u_direct_light.intensity", light->intensity);
-		//tek_shader_uniform_vec3(&g_geometry_shader,"u_eye_world_pos", cam->position);
-		tek_shader_uniform_int(&g_geometry_shader,"u_use_d_light", 1);
-	}
-	else
-	{
-		tek_shader_uniform_int(&g_geometry_shader, "u_use_d_light", 0);
-	}
-
-	if (plights)
-	{
-		tek_shader_uniform_int(&g_geometry_shader, "u_use_p_light", 1);
-		tek_shader_uniform_int(&g_geometry_shader, "u_num_pointlights", num_plights);
-		for (u32 i = 0; i < num_plights; ++i)
-		{
-			char name0[128];
-			char name1[128];
-			char name2[128];
-
-			sprintf(name0, "u_point_lights[%u].position", i);
-			sprintf(name1, "u_point_lights[%u].color", i);
-			sprintf(name2, "u_point_lights[%u].range", i);
-
-			tek_shader_uniform_vec3(&g_geometry_shader, name0, plights[i].position);
-			tek_shader_uniform_vec3(&g_geometry_shader, name1, plights[i].color);
-			tek_shader_uniform_float(&g_geometry_shader, name2, plights[i].range);
-		}
-	}
-	else
-	{
-		tek_shader_uniform_int(&g_geometry_shader, "u_use_p_light", 0);
-	}
-
-	tek_mesh_render(mesh);
-
-	g_drawcalls++;
-}
-
-void tek_renderer_draw_shape(TekShape* shape, Mat4* transform, TekCamera* cam)
-{
-	tek_shader_bind(&g_shape_shader);
-
-	Mat4 mvp = mat4_mul2(&cam->projection, &cam->view);
-	if (transform != NULL)
-	{
-		mvp = mat4_mul2(&mvp, transform);
-	}
-
-	mvp = mat4_transposed(&mvp);
-
-	tek_shader_uniform_mat4(&g_shape_shader,"u_mvp", &mvp, 1);
-
-	tek_shape_render(shape);
-	g_drawcalls++;
-}
-
-void tek_renderer_draw_billboard(TekBillboard* billboard, TekMaterial* material, Mat4* transform, TekCamera* cam, bool spherical)
-{
-	tek_shader_bind(&g_billboard_shader);
-
-	upload_material(material, &g_billboard_shader);
-
-	Mat4 p = mat4_transposed(&cam->projection);
-	Mat4 mv = cam->view;
-	if (transform != NULL)
-	{
-		mv = mat4_mul2(&cam->view, transform);
-	}
-	mv = mat4_transposed(&mv);
-
-	tek_shader_uniform_mat4(&g_billboard_shader,"u_mv", &mv, 1);
-	tek_shader_uniform_mat4(&g_billboard_shader,"u_p", &p, 1);
-
-	int sph = 0;
-	if (spherical)
-		sph = 1;
-
-	tek_shader_uniform_int(&g_billboard_shader,"u_spherical", sph);
-
-	//tek_bb_render(billboard);
-
-	g_drawcalls++;
-}
-
-static void upload_material(TekMaterial* mat, TekShader* shader)
-{
-	if (mat->has_diffuse_map)
-	{
-		tek_shader_uniform_int(shader,"u_material.has_diffuse_map", 1);
-		tek_tex_bind(&mat->diffuse_map, 0);
-	}
-	else
-	{
-		tek_shader_uniform_int(shader, "u_material.has_diffuse_map", 0);
-		tek_shader_uniform_vec4(shader,"u_material.ambient_color", tek_color_to_vec4(mat->ambient_color));
-		tek_shader_uniform_vec4(shader,"u_material.diffuse_color", tek_color_to_vec4(mat->diffuse_color));
-	}
-
-	/*
-	if (mat->has_specular_map)
-	{
-		tek_shader_uniform_int(shader,"u_material.has_specular_map", 1);
-		tek_tex_bind(&mat->specular_map, 1);
-	}
-	else
-	{
-		tek_shader_uniform_int(shader, "u_material.has_specular_map", 0);
-		tek_shader_uniform_vec4(shader,"u_material.specular_color", tek_color_to_vec4(mat->specular_color));
-	}
-	*/
-}
-
 TekShader* tek_renderer_get_shape_shader()
 {
 	return &g_shape_shader;
@@ -405,4 +276,5 @@ TekShader* tek_renderer_get_billboard_shader()
 TekShader* tek_renderer_get_meshbuffer_shader()
 {
 	return &g_meshbuffer_shader;
+}
 }

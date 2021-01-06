@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+namespace tek
+{
 
 void tek_tex_destroy(TekTexture *tex)
 {
@@ -72,3 +74,4 @@ bool tek_tex_create(TekTexture *tex, TekImage *image, TekTextureFilter filter)
 	return true;
 }
 
+}

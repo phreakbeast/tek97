@@ -7,13 +7,11 @@
 #include "tek_framebuffer.hpp"
 #include "tek_rect.hpp"
 #include "tek_color.hpp"
-#include "tek_material.hpp"
+#include "tek_shader.hpp"
 #include "tek_spritebatch.hpp"
-#include "tek_camera.hpp"
-#include "tek_mesh.hpp"
-#include "tek_shape.hpp"
-#include "tek_billboard.hpp"
-#include "tek_light.hpp"
+
+namespace tek
+{
 
 typedef struct
 {
@@ -57,13 +55,6 @@ void tek_renderer_resize(u32 width, u32 height);
 
 void tek_renderer_render_sprite(TekRect dest, TekRect src, u32 texture_id, Mat4* ortho);
 
-void tek_renderer_draw_mesh(TekMesh *mesh, TekMaterial *material, Mat4 *transform, TekCamera *cam,
-                            TekDirectionalLight *light, TekPointLight* plights, u32 num_plights);
-
-
-void tek_renderer_draw_shape(TekShape *shape, Mat4 *transform, TekCamera *cam);
-
-void tek_renderer_draw_billboard(TekBillboard *billboard, TekMaterial* material, Mat4 *transform, TekCamera *cam, bool spherical);
-
+}
 
 #endif
