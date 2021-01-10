@@ -12,49 +12,66 @@
 
 namespace tek
 {
+	struct TekRenderStats
+	{
+		float delta;
+		u32 fps;
+		u32 ups;
+		u32 num_sprites;
+		u32 num_drawcalls;
 
-typedef struct
-{
-    float delta;
-    u32 fps;
-    u32 ups;
-    u32 num_sprites;
-    u32 num_drawcalls;
-} TekRenderStats;
+		TekRenderStats()
+		{
+			delta = 0;
+			fps = 0;
+			ups = 0;
+			num_sprites = 0;
+			num_drawcalls = 0;
+		}
+	};
 
-bool tek_renderer_init(u32 width, u32 height);
+	class Renderer
+	{
+	public:
+		Renderer();
+		~Renderer();
 
-void tek_renderer_destroy();
+		bool init(u32 width, u32 height);
 
-void tek_renderer_start_frame();
+		void start_frame();
 
-void tek_renderer_end_frame();
+		void end_frame();
 
-void tek_renderer_bind_framebuffer(TekFramebuffer *buffer, TekColor color);
+		void bind_framebuffer(TekFramebuffer *buffer, TekColor color);
 
-void tek_renderer_unbind_framebuffer();
+		void unbind_framebuffer();
 
-void tek_renderer_viewport(u32 width, u32 height);
+		void viewport(u32 width, u32 height);
 
-void tek_renderer_disable_depth_test();
+		void disable_depth_test();
 
-void tek_renderer_enable_depth_test();
+		void enable_depth_test();
 
-void tek_renderer_clear(TekColor color);
+		void clear(TekColor color);
 
-TekRenderStats *tek_renderer_get_stats();
+		TekRenderStats* get_stats();
 
-TekSpritebatch *tek_renderer_get_sb();
+		TekSpritebatch* get_sb();
 
-TekShader* tek_renderer_get_shape_shader();
-TekShader* tek_renderer_get_geometry_shader();
-TekShader* tek_renderer_get_billboard_shader();
-TekShader* tek_renderer_get_meshbuffer_shader();
+		void resize(u32 width, u32 height);
 
-void tek_renderer_resize(u32 width, u32 height);
+		void render_sprite(TekRect dest, TekRect src, u32 texture_id, Mat4 *ortho);
+	private:
+		TekSpritebatch* sprite_batch;
 
-void tek_renderer_render_sprite(TekRect dest, TekRect src, u32 texture_id, Mat4* ortho);
+		TekRenderStats stats;
+		u32 drawcalls = 0;
 
+		TekShader sprite_shader;
+
+		u32 width;
+		u32 height;
+	};
 }
 
 #endif

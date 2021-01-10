@@ -6,49 +6,58 @@
 
 namespace tek
 {
-    struct TekColor
-    {
-	u8 r;
-	u8 g;
-	u8 b;
-	u8 a;
+	struct TekColor
+	{
+		u8 r;
+		u8 g;
+		u8 b;
+		u8 a;
 
-	TekColor();
-	TekColor(u8 r, u8 g, u8 b);
-	TekColor(u8 r, u8 g, u8 b, u8 a);
+		TekColor();
 
-	const u32 to_int() const;
+		TekColor(u8 r, u8 g, u8 b);
 
-	const Vec3 to_vec3() const;
+		TekColor(u8 r, u8 g, u8 b, u8 a);
 
-	const Vec4 to_vec4() const;
-	
-	const TekColor lighten(u8 shade) const;
+		const u32 to_int() const;
 
-	const TekColor darken(u8 shade) const;
+		const Vec3 to_vec3() const;
 
-	const TekColor lerp(TekColor c2, float t) const;
-	
-	static const u32 floats_to_int(float r, float g, float b, float a);
+		const Vec4 to_vec4() const;
 
-	static const u32 vec4_to_int(Vec4 color);
-	
-	static const u32 vec3_to_int(Vec3 color);
+		const TekColor lighten(u8 shade) const;
 
-	static const TekColor white();
-	static const TekColor black();
-	static const TekColor red();
-	static const TekColor green();
-	static const TekColor blue();
-	static const TekColor yellow();
-	static const TekColor random();
-    private:
-	static TekColor _white;
-	static TekColor _black;
-	static TekColor _red;
-	static TekColor _green;
-	static TekColor _blue;
-	static TekColor _yellow;
-    };
+		const TekColor darken(u8 shade) const;
+
+		const TekColor lerp(TekColor c2, float t) const;
+
+		static const u32 floats_to_int(float r, float g, float b, float a);
+
+		static const u32 vec4_to_int(Vec4 color);
+
+		static const u32 vec3_to_int(Vec3 color);
+
+		static const TekColor white();
+
+		static const TekColor black();
+
+		static const TekColor red();
+
+		static const TekColor green();
+
+		static const TekColor blue();
+
+		static const TekColor yellow();
+
+		static const TekColor random();
+
+	private:
+		static TekColor _white;
+		static TekColor _black;
+		static TekColor _red;
+		static TekColor _green;
+		static TekColor _blue;
+		static TekColor _yellow;
+	};
 }
 #endif

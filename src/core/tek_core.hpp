@@ -2,7 +2,7 @@
 #define _TEK_CORE_HPP
 
 #include "tek_types.hpp"
-#include "tek_keys.hpp"
+#include "../platform/tek_keys.hpp"
 #include "tek_stopwatch.hpp"
 #include "tek_memory.hpp"
 

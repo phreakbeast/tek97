@@ -7,26 +7,23 @@
 
 namespace tek
 {
+	struct TekFramebuffer
+	{
+		u32 fbo;
+		u32 tex_id;
+		u32 depth_id;
 
-typedef struct
-{
-    u32 fbo;
-    u32 tex_id;
-    u32 depth_id;
+		u32 width;
+		u32 height;
 
-    u32 width;
-    u32 height;
-}TekFramebuffer;
+		TekFramebuffer(u32 width, u32 height);
+		~TekFramebuffer();
 
-void tek_fb_init(TekFramebuffer* fb, u32 width, u32 height);
+		void bind_reading(u32 texture_unit);
 
-void tek_fb_destroy(TekFramebuffer* fb);
+		void bind_writing();
 
-void tek_fb_bind_reading(TekFramebuffer* fb, u32 texture_unit);
-
-void tek_fb_bind_writing(TekFramebuffer* fb);
-
-void tek_fb_unbind();
-
+		static void unbind();
+	};
 }
 #endif

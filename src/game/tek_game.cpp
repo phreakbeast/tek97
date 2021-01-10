@@ -1,48 +1,71 @@
 #include "tek_game.hpp"
 
 #include "../drawing/tek_drawing.hpp"
-#include "../core/tek_input.hpp"
+#include "../platform/tek_input.hpp"
 #include "../drawing/tek_font.hpp"
 
-static tek::TekFont* g_font;
-
-bool tek_game_init(u32 width, u32 height)
+namespace game
 {
-    g_font = tek::TekFont::load("data/fonts/test.font");
-    if(!g_font)
-	return false;
+	Game::Game()
+	{
+		map = nullptr;
+		font = nullptr;
+	}
 
-    return true;
-}
+	Game::~Game()
+	{
+		delete font;
+		delete map;
+	}
 
-void tek_game_destroy()
-{
-    delete g_font;
-}
+	bool Game::on_init()
+	{
+		font = tek::TekFont::load("data/fonts/test.font");
+		if (!font)
+			return false;
 
-void tek_game_render()
-{
-    tek::tek_renderer_disable_depth_test();
-    //render 2d
-    tek::TekSpritebatch *sb = tek::tek_renderer_get_sb();
+		map = new Map();
 
-    //render gui
-    tek::tek_sb_begin(sb);
+		return true;
+	}
 
-    //render debug text
-    tek::TekRenderStats *stats = tek::tek_renderer_get_stats();
-    char fps_str[256];
+	void Game::on_render()
+	{
+		renderer->disable_depth_test();
+		//render 2d
+		tek::TekSpritebatch *sb = renderer->get_sb();
+		sb->begin();
 
-    sprintf(fps_str, "fps: %u ups: %u", stats->fps, stats->ups);
+		map->render(renderer, cam_pos);
 
-    tek_sb_render_text(sb, fps_str, g_font, 5, 5, tek::TekColor::white(), 0);
+		//render debug text
+		tek::TekRenderStats *stats = renderer->get_stats();
+		char fps_str[256];
 
-    tek::tek_sb_end(sb);
-    tek::tek_sb_flush(sb);
-    tek::tek_renderer_enable_depth_test();
-}
+		sprintf(fps_str, "fps: %u ups: %u", stats->fps, stats->ups);
 
-void tek_game_update(float delta)
-{
-    tek::TekKeyboardState *kstate = tek::tek_input_get_key_state();
+		sb->render_text(fps_str, font, 5, 5, tek::TekColor::white(), 0);
+
+		sb->end();
+		sb->flush();
+		renderer->enable_depth_test();
+	}
+
+	void Game::on_update(float delta)
+	{
+		tek::TekKeyboardState *kstate = input->get_key_state();
+		if(kstate->keys_down[tek::KEY_A])
+		{
+			cam_pos.x -= delta * 15;
+		}
+		if(kstate->keys_down[tek::KEY_D])
+		{
+			cam_pos.x += delta * 15;
+		}
+	}
+
+	void Game::on_resize(u32 width, u32 height)
+	{
+
+	}
 }

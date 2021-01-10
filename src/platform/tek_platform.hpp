@@ -62,39 +62,8 @@ typedef enum
 typedef struct
 {
     TekInputLetterType type;
-    Key key;
+    tek::Key key;
 }TekInputLetter;
-
-void tek_window_destroy();
-
-bool tek_window_open(u32 width, u32 height, const char *title, bool fullscreen);
-
-//TODO: implement
-void tek_window_toggle_fullscreen();
-
-void tek_window_swap_buffers();
-
-bool tek_window_update();
-
-bool tek_window_should_close();
-
-bool tek_window_is_key_down(Key key);
-
-bool tek_window_is_mouse_down(MouseButton button);
-
-int tek_window_get_mouse_x();
-
-int tek_window_get_mouse_y();
-
-int tek_window_get_mouse_wheel();
-
-void tek_window_set_cursor_pos(int x, int y);
-
-void tek_window_show_cursor(int val);
-
-TekInputLetter *tek_window_get_letter(int *letters);
-
-void tek_window_set_on_resize(void(*f)(u32,u32));
 
 //---------------------------------------------------
 // timing
