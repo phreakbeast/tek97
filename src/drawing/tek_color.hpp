@@ -4,60 +4,48 @@
 #include "../core/tek_core.hpp"
 #include "../math/tek_math.hpp"
 
-namespace tek
+typedef struct
 {
-	struct TekColor
-	{
-		u8 r;
-		u8 g;
-		u8 b;
-		u8 a;
+    u8 r;
+    u8 g;
+    u8 b;
+    u8 a;
+}TekColor;
 
-		TekColor();
+TekColor tek_color_create(u8 r, u8 g, u8 b);
 
-		TekColor(u8 r, u8 g, u8 b);
+TekColor tek_color_create_alpha(u8 r, u8 g, u8 b, u8 a);
 
-		TekColor(u8 r, u8 g, u8 b, u8 a);
+const u32 tek_color_to_int(TekColor color);
 
-		const u32 to_int() const;
+const Vec3 tek_color_to_vec3(TekColor color);
 
-		const Vec3 to_vec3() const;
+const Vec4 tek_color_to_vec4(TekColor color);
 
-		const Vec4 to_vec4() const;
+const TekColor tek_color_lighten(TekColor color, u8 shade);
 
-		const TekColor lighten(u8 shade) const;
+const TekColor tek_color_darken(TekColor color, u8 shade);
 
-		const TekColor darken(u8 shade) const;
+const TekColor tek_color_lerp(TekColor c1, TekColor c2, float t);
 
-		const TekColor lerp(TekColor c2, float t) const;
+const u32 tek_color_floats_to_int(float r, float g, float b, float a);
 
-		static const u32 floats_to_int(float r, float g, float b, float a);
+const u32 tek_color_vec4_to_int(Vec4 color);
 
-		static const u32 vec4_to_int(Vec4 color);
+const u32 tek_color_vec3_to_int(Vec3 color);
 
-		static const u32 vec3_to_int(Vec3 color);
+const TekColor tek_color_white();
 
-		static const TekColor white();
+const TekColor tek_color_black();
 
-		static const TekColor black();
+const TekColor tek_color_red();
 
-		static const TekColor red();
+const TekColor tek_color_green();
 
-		static const TekColor green();
+const TekColor tek_color_blue();
 
-		static const TekColor blue();
+const TekColor tek_color_yellow();
 
-		static const TekColor yellow();
+const TekColor tek_color_random();
 
-		static const TekColor random();
-
-	private:
-		static TekColor _white;
-		static TekColor _black;
-		static TekColor _red;
-		static TekColor _green;
-		static TekColor _blue;
-		static TekColor _yellow;
-	};
-}
 #endif

@@ -5,50 +5,51 @@
 #include "../math/tek_math.hpp"
 #include "../platform/tek_platform.hpp"
 
-namespace tek
-{
-
 #define MAX_ATTRIBS 16
 #define MAX_UNIFORMS 64
 
-typedef struct
+struct TekLocation
 {
     int loc;
     char name[128];
-}TekLocation;
+};
 
-typedef struct
+class Shader
 {
+public:
+    Shader();
+    ~Shader();
+        
+    void bind();
+
+    void uniform_int(const char* name, int val);
+
+    void uniform_int_array(const char* name, int *val, int count);
+
+    void uniform_float(const char* name, float val);
+
+    void uniform_float_array(const char* name, float *val, int count);
+
+    void uniform_vec2(const char* name, Vec2 val);
+
+    void uniform_vec3(const char* name, Vec3 val);
+
+    void uniform_vec4(const char* name, Vec4 val);
+
+    void uniform_mat4(const char* name, Mat4 *val, u32 count, bool transpose = false);
+
+    static Shader* load(const char *filename);
+
+    int get_attrib_loc(const char* name);
+    int get_uniform_loc(const char* name);
+
+private:
     u32 program;
+    static u32 cur_program;
     
     TekLocation attribs[MAX_ATTRIBS];
     TekLocation uniforms[MAX_UNIFORMS];
-} TekShader;
+};
 
-void tek_shader_destroy(TekShader *shader);
 
-void tek_shader_bind(TekShader *shader);
-
-void tek_shader_uniform_int(TekShader* shader, const char* name, int val);
-
-void tek_shader_uniform_int_array(TekShader* shader, const char* name, int *val, int count);
-
-void tek_shader_uniform_float(TekShader* shader, const char* name, float val);
-
-void tek_shader_uniform_float_array(TekShader* shader, const char* name, float *val, int count);
-
-void tek_shader_uniform_vec2(TekShader* shader, const char* name, Vec2 val);
-
-void tek_shader_uniform_vec3(TekShader* shader, const char* name, Vec3 val);
-
-void tek_shader_uniform_vec4(TekShader* shader, const char* name, Vec4 val);
-
-void tek_shader_uniform_mat4(TekShader* shader, const char* name, Mat4 *val, u32 count, bool transpose);
-
-bool tek_shader_load(TekShader *shader, const char *filename);
-
-int tek_shader_get_attrib_loc(TekShader* shader, const char* name);
-int tek_shader_get_uniform_loc(TekShader* shader, const char* name);
-
-}
 #endif

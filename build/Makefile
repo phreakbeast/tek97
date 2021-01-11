@@ -142,60 +142,6 @@ tek97/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/build
 .PHONY : tek97/fast
 
-src/core/tek_input.o: src/core/tek_input.cpp.o
-
-.PHONY : src/core/tek_input.o
-
-# target to build an object file
-src/core/tek_input.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/core/tek_input.cpp.o
-.PHONY : src/core/tek_input.cpp.o
-
-src/core/tek_input.i: src/core/tek_input.cpp.i
-
-.PHONY : src/core/tek_input.i
-
-# target to preprocess a source file
-src/core/tek_input.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/core/tek_input.cpp.i
-.PHONY : src/core/tek_input.cpp.i
-
-src/core/tek_input.s: src/core/tek_input.cpp.s
-
-.PHONY : src/core/tek_input.s
-
-# target to generate assembly for a file
-src/core/tek_input.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/core/tek_input.cpp.s
-.PHONY : src/core/tek_input.cpp.s
-
-src/core/tek_keys.o: src/core/tek_keys.cpp.o
-
-.PHONY : src/core/tek_keys.o
-
-# target to build an object file
-src/core/tek_keys.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/core/tek_keys.cpp.o
-.PHONY : src/core/tek_keys.cpp.o
-
-src/core/tek_keys.i: src/core/tek_keys.cpp.i
-
-.PHONY : src/core/tek_keys.i
-
-# target to preprocess a source file
-src/core/tek_keys.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/core/tek_keys.cpp.i
-.PHONY : src/core/tek_keys.cpp.i
-
-src/core/tek_keys.s: src/core/tek_keys.cpp.s
-
-.PHONY : src/core/tek_keys.s
-
-# target to generate assembly for a file
-src/core/tek_keys.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/core/tek_keys.cpp.s
-.PHONY : src/core/tek_keys.cpp.s
-
 src/core/tek_memory.o: src/core/tek_memory.cpp.o
 
 .PHONY : src/core/tek_memory.o
@@ -249,6 +195,33 @@ src/core/tek_stopwatch.s: src/core/tek_stopwatch.cpp.s
 src/core/tek_stopwatch.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/core/tek_stopwatch.cpp.s
 .PHONY : src/core/tek_stopwatch.cpp.s
+
+src/drawing/tek_camera.o: src/drawing/tek_camera.cpp.o
+
+.PHONY : src/drawing/tek_camera.o
+
+# target to build an object file
+src/drawing/tek_camera.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/drawing/tek_camera.cpp.o
+.PHONY : src/drawing/tek_camera.cpp.o
+
+src/drawing/tek_camera.i: src/drawing/tek_camera.cpp.i
+
+.PHONY : src/drawing/tek_camera.i
+
+# target to preprocess a source file
+src/drawing/tek_camera.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/drawing/tek_camera.cpp.i
+.PHONY : src/drawing/tek_camera.cpp.i
+
+src/drawing/tek_camera.s: src/drawing/tek_camera.cpp.s
+
+.PHONY : src/drawing/tek_camera.s
+
+# target to generate assembly for a file
+src/drawing/tek_camera.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/drawing/tek_camera.cpp.s
+.PHONY : src/drawing/tek_camera.cpp.s
 
 src/drawing/tek_color.o: src/drawing/tek_color.cpp.o
 
@@ -358,6 +331,33 @@ src/drawing/tek_framebuffer.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/drawing/tek_framebuffer.cpp.s
 .PHONY : src/drawing/tek_framebuffer.cpp.s
 
+src/drawing/tek_geometry.o: src/drawing/tek_geometry.cpp.o
+
+.PHONY : src/drawing/tek_geometry.o
+
+# target to build an object file
+src/drawing/tek_geometry.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/drawing/tek_geometry.cpp.o
+.PHONY : src/drawing/tek_geometry.cpp.o
+
+src/drawing/tek_geometry.i: src/drawing/tek_geometry.cpp.i
+
+.PHONY : src/drawing/tek_geometry.i
+
+# target to preprocess a source file
+src/drawing/tek_geometry.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/drawing/tek_geometry.cpp.i
+.PHONY : src/drawing/tek_geometry.cpp.i
+
+src/drawing/tek_geometry.s: src/drawing/tek_geometry.cpp.s
+
+.PHONY : src/drawing/tek_geometry.s
+
+# target to generate assembly for a file
+src/drawing/tek_geometry.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/drawing/tek_geometry.cpp.s
+.PHONY : src/drawing/tek_geometry.cpp.s
+
 src/drawing/tek_image.o: src/drawing/tek_image.cpp.o
 
 .PHONY : src/drawing/tek_image.o
@@ -411,6 +411,33 @@ src/drawing/tek_image_tga.s: src/drawing/tek_image_tga.cpp.s
 src/drawing/tek_image_tga.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/drawing/tek_image_tga.cpp.s
 .PHONY : src/drawing/tek_image_tga.cpp.s
+
+src/drawing/tek_mesh.o: src/drawing/tek_mesh.cpp.o
+
+.PHONY : src/drawing/tek_mesh.o
+
+# target to build an object file
+src/drawing/tek_mesh.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/drawing/tek_mesh.cpp.o
+.PHONY : src/drawing/tek_mesh.cpp.o
+
+src/drawing/tek_mesh.i: src/drawing/tek_mesh.cpp.i
+
+.PHONY : src/drawing/tek_mesh.i
+
+# target to preprocess a source file
+src/drawing/tek_mesh.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/drawing/tek_mesh.cpp.i
+.PHONY : src/drawing/tek_mesh.cpp.i
+
+src/drawing/tek_mesh.s: src/drawing/tek_mesh.cpp.s
+
+.PHONY : src/drawing/tek_mesh.s
+
+# target to generate assembly for a file
+src/drawing/tek_mesh.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/drawing/tek_mesh.cpp.s
+.PHONY : src/drawing/tek_mesh.cpp.s
 
 src/drawing/tek_rect.o: src/drawing/tek_rect.cpp.o
 
@@ -520,6 +547,33 @@ src/drawing/tek_texture.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/drawing/tek_texture.cpp.s
 .PHONY : src/drawing/tek_texture.cpp.s
 
+src/drawing/tek_vertex.o: src/drawing/tek_vertex.cpp.o
+
+.PHONY : src/drawing/tek_vertex.o
+
+# target to build an object file
+src/drawing/tek_vertex.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/drawing/tek_vertex.cpp.o
+.PHONY : src/drawing/tek_vertex.cpp.o
+
+src/drawing/tek_vertex.i: src/drawing/tek_vertex.cpp.i
+
+.PHONY : src/drawing/tek_vertex.i
+
+# target to preprocess a source file
+src/drawing/tek_vertex.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/drawing/tek_vertex.cpp.i
+.PHONY : src/drawing/tek_vertex.cpp.i
+
+src/drawing/tek_vertex.s: src/drawing/tek_vertex.cpp.s
+
+.PHONY : src/drawing/tek_vertex.s
+
+# target to generate assembly for a file
+src/drawing/tek_vertex.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/drawing/tek_vertex.cpp.s
+.PHONY : src/drawing/tek_vertex.cpp.s
+
 src/game/tek_game.o: src/game/tek_game.cpp.o
 
 .PHONY : src/game/tek_game.o
@@ -546,6 +600,33 @@ src/game/tek_game.s: src/game/tek_game.cpp.s
 src/game/tek_game.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/game/tek_game.cpp.s
 .PHONY : src/game/tek_game.cpp.s
+
+src/game/tek_map.o: src/game/tek_map.cpp.o
+
+.PHONY : src/game/tek_map.o
+
+# target to build an object file
+src/game/tek_map.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/game/tek_map.cpp.o
+.PHONY : src/game/tek_map.cpp.o
+
+src/game/tek_map.i: src/game/tek_map.cpp.i
+
+.PHONY : src/game/tek_map.i
+
+# target to preprocess a source file
+src/game/tek_map.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/game/tek_map.cpp.i
+.PHONY : src/game/tek_map.cpp.i
+
+src/game/tek_map.s: src/game/tek_map.cpp.s
+
+.PHONY : src/game/tek_map.s
+
+# target to generate assembly for a file
+src/game/tek_map.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/game/tek_map.cpp.s
+.PHONY : src/game/tek_map.cpp.s
 
 src/main.o: src/main.cpp.o
 
@@ -898,6 +979,60 @@ src/platform/linux/tek_linux_window.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/platform/linux/tek_linux_window.cpp.s
 .PHONY : src/platform/linux/tek_linux_window.cpp.s
 
+src/platform/tek_input.o: src/platform/tek_input.cpp.o
+
+.PHONY : src/platform/tek_input.o
+
+# target to build an object file
+src/platform/tek_input.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/platform/tek_input.cpp.o
+.PHONY : src/platform/tek_input.cpp.o
+
+src/platform/tek_input.i: src/platform/tek_input.cpp.i
+
+.PHONY : src/platform/tek_input.i
+
+# target to preprocess a source file
+src/platform/tek_input.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/platform/tek_input.cpp.i
+.PHONY : src/platform/tek_input.cpp.i
+
+src/platform/tek_input.s: src/platform/tek_input.cpp.s
+
+.PHONY : src/platform/tek_input.s
+
+# target to generate assembly for a file
+src/platform/tek_input.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/platform/tek_input.cpp.s
+.PHONY : src/platform/tek_input.cpp.s
+
+src/platform/tek_keys.o: src/platform/tek_keys.cpp.o
+
+.PHONY : src/platform/tek_keys.o
+
+# target to build an object file
+src/platform/tek_keys.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/platform/tek_keys.cpp.o
+.PHONY : src/platform/tek_keys.cpp.o
+
+src/platform/tek_keys.i: src/platform/tek_keys.cpp.i
+
+.PHONY : src/platform/tek_keys.i
+
+# target to preprocess a source file
+src/platform/tek_keys.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/platform/tek_keys.cpp.i
+.PHONY : src/platform/tek_keys.cpp.i
+
+src/platform/tek_keys.s: src/platform/tek_keys.cpp.s
+
+.PHONY : src/platform/tek_keys.s
+
+# target to generate assembly for a file
+src/platform/tek_keys.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tek97.dir/build.make CMakeFiles/tek97.dir/src/platform/tek_keys.cpp.s
+.PHONY : src/platform/tek_keys.cpp.s
+
 src/tek_application.o: src/tek_application.cpp.o
 
 .PHONY : src/tek_application.o
@@ -934,18 +1069,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... tek97"
-	@echo "... src/core/tek_input.o"
-	@echo "... src/core/tek_input.i"
-	@echo "... src/core/tek_input.s"
-	@echo "... src/core/tek_keys.o"
-	@echo "... src/core/tek_keys.i"
-	@echo "... src/core/tek_keys.s"
 	@echo "... src/core/tek_memory.o"
 	@echo "... src/core/tek_memory.i"
 	@echo "... src/core/tek_memory.s"
 	@echo "... src/core/tek_stopwatch.o"
 	@echo "... src/core/tek_stopwatch.i"
 	@echo "... src/core/tek_stopwatch.s"
+	@echo "... src/drawing/tek_camera.o"
+	@echo "... src/drawing/tek_camera.i"
+	@echo "... src/drawing/tek_camera.s"
 	@echo "... src/drawing/tek_color.o"
 	@echo "... src/drawing/tek_color.i"
 	@echo "... src/drawing/tek_color.s"
@@ -958,12 +1090,18 @@ help:
 	@echo "... src/drawing/tek_framebuffer.o"
 	@echo "... src/drawing/tek_framebuffer.i"
 	@echo "... src/drawing/tek_framebuffer.s"
+	@echo "... src/drawing/tek_geometry.o"
+	@echo "... src/drawing/tek_geometry.i"
+	@echo "... src/drawing/tek_geometry.s"
 	@echo "... src/drawing/tek_image.o"
 	@echo "... src/drawing/tek_image.i"
 	@echo "... src/drawing/tek_image.s"
 	@echo "... src/drawing/tek_image_tga.o"
 	@echo "... src/drawing/tek_image_tga.i"
 	@echo "... src/drawing/tek_image_tga.s"
+	@echo "... src/drawing/tek_mesh.o"
+	@echo "... src/drawing/tek_mesh.i"
+	@echo "... src/drawing/tek_mesh.s"
 	@echo "... src/drawing/tek_rect.o"
 	@echo "... src/drawing/tek_rect.i"
 	@echo "... src/drawing/tek_rect.s"
@@ -976,9 +1114,15 @@ help:
 	@echo "... src/drawing/tek_texture.o"
 	@echo "... src/drawing/tek_texture.i"
 	@echo "... src/drawing/tek_texture.s"
+	@echo "... src/drawing/tek_vertex.o"
+	@echo "... src/drawing/tek_vertex.i"
+	@echo "... src/drawing/tek_vertex.s"
 	@echo "... src/game/tek_game.o"
 	@echo "... src/game/tek_game.i"
 	@echo "... src/game/tek_game.s"
+	@echo "... src/game/tek_map.o"
+	@echo "... src/game/tek_map.i"
+	@echo "... src/game/tek_map.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
@@ -1018,6 +1162,12 @@ help:
 	@echo "... src/platform/linux/tek_linux_window.o"
 	@echo "... src/platform/linux/tek_linux_window.i"
 	@echo "... src/platform/linux/tek_linux_window.s"
+	@echo "... src/platform/tek_input.o"
+	@echo "... src/platform/tek_input.i"
+	@echo "... src/platform/tek_input.s"
+	@echo "... src/platform/tek_keys.o"
+	@echo "... src/platform/tek_keys.i"
+	@echo "... src/platform/tek_keys.s"
 	@echo "... src/tek_application.o"
 	@echo "... src/tek_application.i"
 	@echo "... src/tek_application.s"

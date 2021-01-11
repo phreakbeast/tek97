@@ -3,44 +3,32 @@
 
 #include "../core/tek_core.hpp"
 
-namespace tek
-{
-	class Application;
+bool window_open(u32 width, u32 height, const char *title, bool fullscreen);
 
-	class IWindow
-	{
-	public:
-		IWindow(){application = nullptr;}
-		virtual ~IWindow(){};
+void window_destroy();
+    
+void window_toggle_fullscreen();
 
-		virtual bool open(u32 width, u32 height, const char *title, bool fullscreen)=0;
+void window_swap_buffers();
 
-		virtual void toggle_fullscreen()=0;
+bool window_update();
 
-		virtual void swap_buffers()=0;
+bool window_should_close();
 
-		virtual bool update()=0;
+bool window_is_key_down(Key key);
 
-		virtual bool should_close()=0;
+bool window_is_mouse_down(MouseButton button);
 
-		virtual bool is_key_down(Key key)=0;
+int window_get_mouse_x();
 
-		virtual bool is_mouse_down(MouseButton button)=0;
+int window_get_mouse_y();
 
-		virtual int get_mouse_x()=0;
+int window_get_mouse_wheel();
 
-		virtual int get_mouse_y()=0;
+void window_set_cursor_pos(int x, int y);
 
-		virtual int get_mouse_wheel()=0;
+void window_show_cursor(int val);
 
-		virtual void set_cursor_pos(int x, int y)=0;
-
-		virtual void show_cursor(int val)=0;
-
-		void set_app_object(Application* application){this->application = application;}
-	protected:
-		Application* application;
-	};
-}
+void window_resize_callback(void(*f)(u32,u32));
 
 #endif

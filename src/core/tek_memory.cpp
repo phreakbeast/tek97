@@ -4,15 +4,15 @@
 
 void* tek_malloc(u64 size)
 {
-	return malloc(size);
+    return malloc(size);
 }
 
 void tek_free(void* ptr)
 {
-	free(ptr);
+    free(ptr);
 }
 
 void* tek_realloc(void* ptr, u64 size)
 {
-	return realloc(ptr,size);
+    return realloc(ptr,size);
 }

@@ -5,34 +5,31 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-namespace tek
-{
-
 void tek_tex_destroy(TekTexture *tex)
 {
-	GLCall(glDeleteTextures(1, &tex->id));
+    GLCall(glDeleteTextures(1, &tex->id));
 }
 
 void tek_tex_bind(TekTexture *tex, u32 texture_unit)
 {
-	GLCall(glActiveTexture(GL_TEXTURE0 + texture_unit));
-	GLCall(glBindTexture(GL_TEXTURE_2D, tex->id));
+    GLCall(glActiveTexture(GL_TEXTURE0 + texture_unit));
+    GLCall(glBindTexture(GL_TEXTURE_2D, tex->id));
 }
 
 bool tek_tex_load(TekTexture *tex, const char *filename, TekTextureFilter filter)
 {
-	TekImage img;
-	bool result = tek_img_load(&img, filename);
-	if (!result)
-	{
-		return false;
-	}
+    TekImage img;
+    bool result = tek_img_load(&img, filename);
+    if (!result)
+    {
+	return false;
+    }
 
-	result = tek_tex_create(tex, &img, filter);
-
-	tek_img_destroy(&img);
-
-	return result;
+    result = tek_tex_create(tex, &img, filter);
+    
+    tek_img_destroy(&img);
+    
+    return result;
 }
 
 bool tek_tex_create(TekTexture *tex, TekImage *image, TekTextureFilter filter)
@@ -74,4 +71,3 @@ bool tek_tex_create(TekTexture *tex, TekImage *image, TekTextureFilter filter)
 	return true;
 }
 
-}

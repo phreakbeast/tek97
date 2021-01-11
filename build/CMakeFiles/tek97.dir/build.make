@@ -76,35 +76,9 @@ include CMakeFiles/tek97.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/tek97.dir/flags.make
 
-CMakeFiles/tek97.dir/src/core/tek_input.cpp.o: CMakeFiles/tek97.dir/flags.make
-CMakeFiles/tek97.dir/src/core/tek_input.cpp.o: ../src/core/tek_input.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/tek97.dir/src/core/tek_input.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/core/tek_input.cpp.o -c /home/eugen/projects/tek97/src/core/tek_input.cpp
-
-CMakeFiles/tek97.dir/src/core/tek_input.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/tek97.dir/src/core/tek_input.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/eugen/projects/tek97/src/core/tek_input.cpp > CMakeFiles/tek97.dir/src/core/tek_input.cpp.i
-
-CMakeFiles/tek97.dir/src/core/tek_input.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tek97.dir/src/core/tek_input.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/eugen/projects/tek97/src/core/tek_input.cpp -o CMakeFiles/tek97.dir/src/core/tek_input.cpp.s
-
-CMakeFiles/tek97.dir/src/core/tek_keys.cpp.o: CMakeFiles/tek97.dir/flags.make
-CMakeFiles/tek97.dir/src/core/tek_keys.cpp.o: ../src/core/tek_keys.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/tek97.dir/src/core/tek_keys.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/core/tek_keys.cpp.o -c /home/eugen/projects/tek97/src/core/tek_keys.cpp
-
-CMakeFiles/tek97.dir/src/core/tek_keys.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/tek97.dir/src/core/tek_keys.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/eugen/projects/tek97/src/core/tek_keys.cpp > CMakeFiles/tek97.dir/src/core/tek_keys.cpp.i
-
-CMakeFiles/tek97.dir/src/core/tek_keys.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tek97.dir/src/core/tek_keys.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/eugen/projects/tek97/src/core/tek_keys.cpp -o CMakeFiles/tek97.dir/src/core/tek_keys.cpp.s
-
 CMakeFiles/tek97.dir/src/core/tek_memory.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/core/tek_memory.cpp.o: ../src/core/tek_memory.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/tek97.dir/src/core/tek_memory.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/tek97.dir/src/core/tek_memory.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/core/tek_memory.cpp.o -c /home/eugen/projects/tek97/src/core/tek_memory.cpp
 
 CMakeFiles/tek97.dir/src/core/tek_memory.cpp.i: cmake_force
@@ -117,7 +91,7 @@ CMakeFiles/tek97.dir/src/core/tek_memory.cpp.s: cmake_force
 
 CMakeFiles/tek97.dir/src/core/tek_stopwatch.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/core/tek_stopwatch.cpp.o: ../src/core/tek_stopwatch.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/tek97.dir/src/core/tek_stopwatch.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/tek97.dir/src/core/tek_stopwatch.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/core/tek_stopwatch.cpp.o -c /home/eugen/projects/tek97/src/core/tek_stopwatch.cpp
 
 CMakeFiles/tek97.dir/src/core/tek_stopwatch.cpp.i: cmake_force
@@ -128,9 +102,22 @@ CMakeFiles/tek97.dir/src/core/tek_stopwatch.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tek97.dir/src/core/tek_stopwatch.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/eugen/projects/tek97/src/core/tek_stopwatch.cpp -o CMakeFiles/tek97.dir/src/core/tek_stopwatch.cpp.s
 
+CMakeFiles/tek97.dir/src/drawing/tek_camera.cpp.o: CMakeFiles/tek97.dir/flags.make
+CMakeFiles/tek97.dir/src/drawing/tek_camera.cpp.o: ../src/drawing/tek_camera.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/tek97.dir/src/drawing/tek_camera.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/drawing/tek_camera.cpp.o -c /home/eugen/projects/tek97/src/drawing/tek_camera.cpp
+
+CMakeFiles/tek97.dir/src/drawing/tek_camera.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/tek97.dir/src/drawing/tek_camera.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/eugen/projects/tek97/src/drawing/tek_camera.cpp > CMakeFiles/tek97.dir/src/drawing/tek_camera.cpp.i
+
+CMakeFiles/tek97.dir/src/drawing/tek_camera.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tek97.dir/src/drawing/tek_camera.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/eugen/projects/tek97/src/drawing/tek_camera.cpp -o CMakeFiles/tek97.dir/src/drawing/tek_camera.cpp.s
+
 CMakeFiles/tek97.dir/src/drawing/tek_color.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/drawing/tek_color.cpp.o: ../src/drawing/tek_color.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/tek97.dir/src/drawing/tek_color.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/tek97.dir/src/drawing/tek_color.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/drawing/tek_color.cpp.o -c /home/eugen/projects/tek97/src/drawing/tek_color.cpp
 
 CMakeFiles/tek97.dir/src/drawing/tek_color.cpp.i: cmake_force
@@ -143,7 +130,7 @@ CMakeFiles/tek97.dir/src/drawing/tek_color.cpp.s: cmake_force
 
 CMakeFiles/tek97.dir/src/drawing/tek_drawing.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/drawing/tek_drawing.cpp.o: ../src/drawing/tek_drawing.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/tek97.dir/src/drawing/tek_drawing.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/tek97.dir/src/drawing/tek_drawing.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/drawing/tek_drawing.cpp.o -c /home/eugen/projects/tek97/src/drawing/tek_drawing.cpp
 
 CMakeFiles/tek97.dir/src/drawing/tek_drawing.cpp.i: cmake_force
@@ -156,7 +143,7 @@ CMakeFiles/tek97.dir/src/drawing/tek_drawing.cpp.s: cmake_force
 
 CMakeFiles/tek97.dir/src/drawing/tek_font.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/drawing/tek_font.cpp.o: ../src/drawing/tek_font.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/tek97.dir/src/drawing/tek_font.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/tek97.dir/src/drawing/tek_font.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/drawing/tek_font.cpp.o -c /home/eugen/projects/tek97/src/drawing/tek_font.cpp
 
 CMakeFiles/tek97.dir/src/drawing/tek_font.cpp.i: cmake_force
@@ -169,7 +156,7 @@ CMakeFiles/tek97.dir/src/drawing/tek_font.cpp.s: cmake_force
 
 CMakeFiles/tek97.dir/src/drawing/tek_framebuffer.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/drawing/tek_framebuffer.cpp.o: ../src/drawing/tek_framebuffer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/tek97.dir/src/drawing/tek_framebuffer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/tek97.dir/src/drawing/tek_framebuffer.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/drawing/tek_framebuffer.cpp.o -c /home/eugen/projects/tek97/src/drawing/tek_framebuffer.cpp
 
 CMakeFiles/tek97.dir/src/drawing/tek_framebuffer.cpp.i: cmake_force
@@ -179,6 +166,19 @@ CMakeFiles/tek97.dir/src/drawing/tek_framebuffer.cpp.i: cmake_force
 CMakeFiles/tek97.dir/src/drawing/tek_framebuffer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tek97.dir/src/drawing/tek_framebuffer.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/eugen/projects/tek97/src/drawing/tek_framebuffer.cpp -o CMakeFiles/tek97.dir/src/drawing/tek_framebuffer.cpp.s
+
+CMakeFiles/tek97.dir/src/drawing/tek_geometry.cpp.o: CMakeFiles/tek97.dir/flags.make
+CMakeFiles/tek97.dir/src/drawing/tek_geometry.cpp.o: ../src/drawing/tek_geometry.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/tek97.dir/src/drawing/tek_geometry.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/drawing/tek_geometry.cpp.o -c /home/eugen/projects/tek97/src/drawing/tek_geometry.cpp
+
+CMakeFiles/tek97.dir/src/drawing/tek_geometry.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/tek97.dir/src/drawing/tek_geometry.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/eugen/projects/tek97/src/drawing/tek_geometry.cpp > CMakeFiles/tek97.dir/src/drawing/tek_geometry.cpp.i
+
+CMakeFiles/tek97.dir/src/drawing/tek_geometry.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tek97.dir/src/drawing/tek_geometry.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/eugen/projects/tek97/src/drawing/tek_geometry.cpp -o CMakeFiles/tek97.dir/src/drawing/tek_geometry.cpp.s
 
 CMakeFiles/tek97.dir/src/drawing/tek_image.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/drawing/tek_image.cpp.o: ../src/drawing/tek_image.cpp
@@ -206,9 +206,22 @@ CMakeFiles/tek97.dir/src/drawing/tek_image_tga.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tek97.dir/src/drawing/tek_image_tga.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/eugen/projects/tek97/src/drawing/tek_image_tga.cpp -o CMakeFiles/tek97.dir/src/drawing/tek_image_tga.cpp.s
 
+CMakeFiles/tek97.dir/src/drawing/tek_mesh.cpp.o: CMakeFiles/tek97.dir/flags.make
+CMakeFiles/tek97.dir/src/drawing/tek_mesh.cpp.o: ../src/drawing/tek_mesh.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/tek97.dir/src/drawing/tek_mesh.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/drawing/tek_mesh.cpp.o -c /home/eugen/projects/tek97/src/drawing/tek_mesh.cpp
+
+CMakeFiles/tek97.dir/src/drawing/tek_mesh.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/tek97.dir/src/drawing/tek_mesh.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/eugen/projects/tek97/src/drawing/tek_mesh.cpp > CMakeFiles/tek97.dir/src/drawing/tek_mesh.cpp.i
+
+CMakeFiles/tek97.dir/src/drawing/tek_mesh.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tek97.dir/src/drawing/tek_mesh.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/eugen/projects/tek97/src/drawing/tek_mesh.cpp -o CMakeFiles/tek97.dir/src/drawing/tek_mesh.cpp.s
+
 CMakeFiles/tek97.dir/src/drawing/tek_rect.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/drawing/tek_rect.cpp.o: ../src/drawing/tek_rect.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/tek97.dir/src/drawing/tek_rect.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/tek97.dir/src/drawing/tek_rect.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/drawing/tek_rect.cpp.o -c /home/eugen/projects/tek97/src/drawing/tek_rect.cpp
 
 CMakeFiles/tek97.dir/src/drawing/tek_rect.cpp.i: cmake_force
@@ -221,7 +234,7 @@ CMakeFiles/tek97.dir/src/drawing/tek_rect.cpp.s: cmake_force
 
 CMakeFiles/tek97.dir/src/drawing/tek_shader.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/drawing/tek_shader.cpp.o: ../src/drawing/tek_shader.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/tek97.dir/src/drawing/tek_shader.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/tek97.dir/src/drawing/tek_shader.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/drawing/tek_shader.cpp.o -c /home/eugen/projects/tek97/src/drawing/tek_shader.cpp
 
 CMakeFiles/tek97.dir/src/drawing/tek_shader.cpp.i: cmake_force
@@ -234,7 +247,7 @@ CMakeFiles/tek97.dir/src/drawing/tek_shader.cpp.s: cmake_force
 
 CMakeFiles/tek97.dir/src/drawing/tek_spritebatch.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/drawing/tek_spritebatch.cpp.o: ../src/drawing/tek_spritebatch.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/tek97.dir/src/drawing/tek_spritebatch.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/tek97.dir/src/drawing/tek_spritebatch.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/drawing/tek_spritebatch.cpp.o -c /home/eugen/projects/tek97/src/drawing/tek_spritebatch.cpp
 
 CMakeFiles/tek97.dir/src/drawing/tek_spritebatch.cpp.i: cmake_force
@@ -247,7 +260,7 @@ CMakeFiles/tek97.dir/src/drawing/tek_spritebatch.cpp.s: cmake_force
 
 CMakeFiles/tek97.dir/src/drawing/tek_texture.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/drawing/tek_texture.cpp.o: ../src/drawing/tek_texture.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/tek97.dir/src/drawing/tek_texture.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/tek97.dir/src/drawing/tek_texture.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/drawing/tek_texture.cpp.o -c /home/eugen/projects/tek97/src/drawing/tek_texture.cpp
 
 CMakeFiles/tek97.dir/src/drawing/tek_texture.cpp.i: cmake_force
@@ -258,9 +271,22 @@ CMakeFiles/tek97.dir/src/drawing/tek_texture.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tek97.dir/src/drawing/tek_texture.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/eugen/projects/tek97/src/drawing/tek_texture.cpp -o CMakeFiles/tek97.dir/src/drawing/tek_texture.cpp.s
 
+CMakeFiles/tek97.dir/src/drawing/tek_vertex.cpp.o: CMakeFiles/tek97.dir/flags.make
+CMakeFiles/tek97.dir/src/drawing/tek_vertex.cpp.o: ../src/drawing/tek_vertex.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/tek97.dir/src/drawing/tek_vertex.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/drawing/tek_vertex.cpp.o -c /home/eugen/projects/tek97/src/drawing/tek_vertex.cpp
+
+CMakeFiles/tek97.dir/src/drawing/tek_vertex.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/tek97.dir/src/drawing/tek_vertex.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/eugen/projects/tek97/src/drawing/tek_vertex.cpp > CMakeFiles/tek97.dir/src/drawing/tek_vertex.cpp.i
+
+CMakeFiles/tek97.dir/src/drawing/tek_vertex.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tek97.dir/src/drawing/tek_vertex.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/eugen/projects/tek97/src/drawing/tek_vertex.cpp -o CMakeFiles/tek97.dir/src/drawing/tek_vertex.cpp.s
+
 CMakeFiles/tek97.dir/src/game/tek_game.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/game/tek_game.cpp.o: ../src/game/tek_game.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/tek97.dir/src/game/tek_game.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/tek97.dir/src/game/tek_game.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/game/tek_game.cpp.o -c /home/eugen/projects/tek97/src/game/tek_game.cpp
 
 CMakeFiles/tek97.dir/src/game/tek_game.cpp.i: cmake_force
@@ -271,9 +297,22 @@ CMakeFiles/tek97.dir/src/game/tek_game.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tek97.dir/src/game/tek_game.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/eugen/projects/tek97/src/game/tek_game.cpp -o CMakeFiles/tek97.dir/src/game/tek_game.cpp.s
 
+CMakeFiles/tek97.dir/src/game/tek_map.cpp.o: CMakeFiles/tek97.dir/flags.make
+CMakeFiles/tek97.dir/src/game/tek_map.cpp.o: ../src/game/tek_map.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/tek97.dir/src/game/tek_map.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/game/tek_map.cpp.o -c /home/eugen/projects/tek97/src/game/tek_map.cpp
+
+CMakeFiles/tek97.dir/src/game/tek_map.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/tek97.dir/src/game/tek_map.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/eugen/projects/tek97/src/game/tek_map.cpp > CMakeFiles/tek97.dir/src/game/tek_map.cpp.i
+
+CMakeFiles/tek97.dir/src/game/tek_map.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tek97.dir/src/game/tek_map.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/eugen/projects/tek97/src/game/tek_map.cpp -o CMakeFiles/tek97.dir/src/game/tek_map.cpp.s
+
 CMakeFiles/tek97.dir/src/main.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/main.cpp.o: ../src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/tek97.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/tek97.dir/src/main.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/main.cpp.o -c /home/eugen/projects/tek97/src/main.cpp
 
 CMakeFiles/tek97.dir/src/main.cpp.i: cmake_force
@@ -286,7 +325,7 @@ CMakeFiles/tek97.dir/src/main.cpp.s: cmake_force
 
 CMakeFiles/tek97.dir/src/math/tek_collision.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/math/tek_collision.cpp.o: ../src/math/tek_collision.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/tek97.dir/src/math/tek_collision.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/tek97.dir/src/math/tek_collision.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/math/tek_collision.cpp.o -c /home/eugen/projects/tek97/src/math/tek_collision.cpp
 
 CMakeFiles/tek97.dir/src/math/tek_collision.cpp.i: cmake_force
@@ -299,7 +338,7 @@ CMakeFiles/tek97.dir/src/math/tek_collision.cpp.s: cmake_force
 
 CMakeFiles/tek97.dir/src/math/tek_mat4.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/math/tek_mat4.cpp.o: ../src/math/tek_mat4.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/tek97.dir/src/math/tek_mat4.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/tek97.dir/src/math/tek_mat4.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/math/tek_mat4.cpp.o -c /home/eugen/projects/tek97/src/math/tek_mat4.cpp
 
 CMakeFiles/tek97.dir/src/math/tek_mat4.cpp.i: cmake_force
@@ -312,7 +351,7 @@ CMakeFiles/tek97.dir/src/math/tek_mat4.cpp.s: cmake_force
 
 CMakeFiles/tek97.dir/src/math/tek_math_functions.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/math/tek_math_functions.cpp.o: ../src/math/tek_math_functions.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/tek97.dir/src/math/tek_math_functions.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/tek97.dir/src/math/tek_math_functions.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/math/tek_math_functions.cpp.o -c /home/eugen/projects/tek97/src/math/tek_math_functions.cpp
 
 CMakeFiles/tek97.dir/src/math/tek_math_functions.cpp.i: cmake_force
@@ -325,7 +364,7 @@ CMakeFiles/tek97.dir/src/math/tek_math_functions.cpp.s: cmake_force
 
 CMakeFiles/tek97.dir/src/math/tek_noise.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/math/tek_noise.cpp.o: ../src/math/tek_noise.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/tek97.dir/src/math/tek_noise.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/tek97.dir/src/math/tek_noise.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/math/tek_noise.cpp.o -c /home/eugen/projects/tek97/src/math/tek_noise.cpp
 
 CMakeFiles/tek97.dir/src/math/tek_noise.cpp.i: cmake_force
@@ -338,7 +377,7 @@ CMakeFiles/tek97.dir/src/math/tek_noise.cpp.s: cmake_force
 
 CMakeFiles/tek97.dir/src/math/tek_quat.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/math/tek_quat.cpp.o: ../src/math/tek_quat.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/tek97.dir/src/math/tek_quat.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/tek97.dir/src/math/tek_quat.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/math/tek_quat.cpp.o -c /home/eugen/projects/tek97/src/math/tek_quat.cpp
 
 CMakeFiles/tek97.dir/src/math/tek_quat.cpp.i: cmake_force
@@ -351,7 +390,7 @@ CMakeFiles/tek97.dir/src/math/tek_quat.cpp.s: cmake_force
 
 CMakeFiles/tek97.dir/src/math/tek_transform.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/math/tek_transform.cpp.o: ../src/math/tek_transform.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/tek97.dir/src/math/tek_transform.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/tek97.dir/src/math/tek_transform.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/math/tek_transform.cpp.o -c /home/eugen/projects/tek97/src/math/tek_transform.cpp
 
 CMakeFiles/tek97.dir/src/math/tek_transform.cpp.i: cmake_force
@@ -364,7 +403,7 @@ CMakeFiles/tek97.dir/src/math/tek_transform.cpp.s: cmake_force
 
 CMakeFiles/tek97.dir/src/math/tek_vec2.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/math/tek_vec2.cpp.o: ../src/math/tek_vec2.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/tek97.dir/src/math/tek_vec2.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/tek97.dir/src/math/tek_vec2.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/math/tek_vec2.cpp.o -c /home/eugen/projects/tek97/src/math/tek_vec2.cpp
 
 CMakeFiles/tek97.dir/src/math/tek_vec2.cpp.i: cmake_force
@@ -377,7 +416,7 @@ CMakeFiles/tek97.dir/src/math/tek_vec2.cpp.s: cmake_force
 
 CMakeFiles/tek97.dir/src/math/tek_vec3.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/math/tek_vec3.cpp.o: ../src/math/tek_vec3.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/tek97.dir/src/math/tek_vec3.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/tek97.dir/src/math/tek_vec3.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/math/tek_vec3.cpp.o -c /home/eugen/projects/tek97/src/math/tek_vec3.cpp
 
 CMakeFiles/tek97.dir/src/math/tek_vec3.cpp.i: cmake_force
@@ -390,7 +429,7 @@ CMakeFiles/tek97.dir/src/math/tek_vec3.cpp.s: cmake_force
 
 CMakeFiles/tek97.dir/src/math/tek_vec4.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/math/tek_vec4.cpp.o: ../src/math/tek_vec4.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/tek97.dir/src/math/tek_vec4.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/tek97.dir/src/math/tek_vec4.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/math/tek_vec4.cpp.o -c /home/eugen/projects/tek97/src/math/tek_vec4.cpp
 
 CMakeFiles/tek97.dir/src/math/tek_vec4.cpp.i: cmake_force
@@ -403,7 +442,7 @@ CMakeFiles/tek97.dir/src/math/tek_vec4.cpp.s: cmake_force
 
 CMakeFiles/tek97.dir/src/platform/linux/tek_linux_clock.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/platform/linux/tek_linux_clock.cpp.o: ../src/platform/linux/tek_linux_clock.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/tek97.dir/src/platform/linux/tek_linux_clock.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/tek97.dir/src/platform/linux/tek_linux_clock.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/platform/linux/tek_linux_clock.cpp.o -c /home/eugen/projects/tek97/src/platform/linux/tek_linux_clock.cpp
 
 CMakeFiles/tek97.dir/src/platform/linux/tek_linux_clock.cpp.i: cmake_force
@@ -416,7 +455,7 @@ CMakeFiles/tek97.dir/src/platform/linux/tek_linux_clock.cpp.s: cmake_force
 
 CMakeFiles/tek97.dir/src/platform/linux/tek_linux_opengl.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/platform/linux/tek_linux_opengl.cpp.o: ../src/platform/linux/tek_linux_opengl.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/tek97.dir/src/platform/linux/tek_linux_opengl.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/tek97.dir/src/platform/linux/tek_linux_opengl.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/platform/linux/tek_linux_opengl.cpp.o -c /home/eugen/projects/tek97/src/platform/linux/tek_linux_opengl.cpp
 
 CMakeFiles/tek97.dir/src/platform/linux/tek_linux_opengl.cpp.i: cmake_force
@@ -429,7 +468,7 @@ CMakeFiles/tek97.dir/src/platform/linux/tek_linux_opengl.cpp.s: cmake_force
 
 CMakeFiles/tek97.dir/src/platform/linux/tek_linux_window.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/platform/linux/tek_linux_window.cpp.o: ../src/platform/linux/tek_linux_window.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/tek97.dir/src/platform/linux/tek_linux_window.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/tek97.dir/src/platform/linux/tek_linux_window.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/platform/linux/tek_linux_window.cpp.o -c /home/eugen/projects/tek97/src/platform/linux/tek_linux_window.cpp
 
 CMakeFiles/tek97.dir/src/platform/linux/tek_linux_window.cpp.i: cmake_force
@@ -440,9 +479,35 @@ CMakeFiles/tek97.dir/src/platform/linux/tek_linux_window.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tek97.dir/src/platform/linux/tek_linux_window.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/eugen/projects/tek97/src/platform/linux/tek_linux_window.cpp -o CMakeFiles/tek97.dir/src/platform/linux/tek_linux_window.cpp.s
 
+CMakeFiles/tek97.dir/src/platform/tek_input.cpp.o: CMakeFiles/tek97.dir/flags.make
+CMakeFiles/tek97.dir/src/platform/tek_input.cpp.o: ../src/platform/tek_input.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/tek97.dir/src/platform/tek_input.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/platform/tek_input.cpp.o -c /home/eugen/projects/tek97/src/platform/tek_input.cpp
+
+CMakeFiles/tek97.dir/src/platform/tek_input.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/tek97.dir/src/platform/tek_input.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/eugen/projects/tek97/src/platform/tek_input.cpp > CMakeFiles/tek97.dir/src/platform/tek_input.cpp.i
+
+CMakeFiles/tek97.dir/src/platform/tek_input.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tek97.dir/src/platform/tek_input.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/eugen/projects/tek97/src/platform/tek_input.cpp -o CMakeFiles/tek97.dir/src/platform/tek_input.cpp.s
+
+CMakeFiles/tek97.dir/src/platform/tek_keys.cpp.o: CMakeFiles/tek97.dir/flags.make
+CMakeFiles/tek97.dir/src/platform/tek_keys.cpp.o: ../src/platform/tek_keys.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/tek97.dir/src/platform/tek_keys.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/platform/tek_keys.cpp.o -c /home/eugen/projects/tek97/src/platform/tek_keys.cpp
+
+CMakeFiles/tek97.dir/src/platform/tek_keys.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/tek97.dir/src/platform/tek_keys.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/eugen/projects/tek97/src/platform/tek_keys.cpp > CMakeFiles/tek97.dir/src/platform/tek_keys.cpp.i
+
+CMakeFiles/tek97.dir/src/platform/tek_keys.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tek97.dir/src/platform/tek_keys.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/eugen/projects/tek97/src/platform/tek_keys.cpp -o CMakeFiles/tek97.dir/src/platform/tek_keys.cpp.s
+
 CMakeFiles/tek97.dir/src/tek_application.cpp.o: CMakeFiles/tek97.dir/flags.make
 CMakeFiles/tek97.dir/src/tek_application.cpp.o: ../src/tek_application.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/tek97.dir/src/tek_application.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object CMakeFiles/tek97.dir/src/tek_application.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tek97.dir/src/tek_application.cpp.o -c /home/eugen/projects/tek97/src/tek_application.cpp
 
 CMakeFiles/tek97.dir/src/tek_application.cpp.i: cmake_force
@@ -455,21 +520,24 @@ CMakeFiles/tek97.dir/src/tek_application.cpp.s: cmake_force
 
 # Object files for target tek97
 tek97_OBJECTS = \
-"CMakeFiles/tek97.dir/src/core/tek_input.cpp.o" \
-"CMakeFiles/tek97.dir/src/core/tek_keys.cpp.o" \
 "CMakeFiles/tek97.dir/src/core/tek_memory.cpp.o" \
 "CMakeFiles/tek97.dir/src/core/tek_stopwatch.cpp.o" \
+"CMakeFiles/tek97.dir/src/drawing/tek_camera.cpp.o" \
 "CMakeFiles/tek97.dir/src/drawing/tek_color.cpp.o" \
 "CMakeFiles/tek97.dir/src/drawing/tek_drawing.cpp.o" \
 "CMakeFiles/tek97.dir/src/drawing/tek_font.cpp.o" \
 "CMakeFiles/tek97.dir/src/drawing/tek_framebuffer.cpp.o" \
+"CMakeFiles/tek97.dir/src/drawing/tek_geometry.cpp.o" \
 "CMakeFiles/tek97.dir/src/drawing/tek_image.cpp.o" \
 "CMakeFiles/tek97.dir/src/drawing/tek_image_tga.cpp.o" \
+"CMakeFiles/tek97.dir/src/drawing/tek_mesh.cpp.o" \
 "CMakeFiles/tek97.dir/src/drawing/tek_rect.cpp.o" \
 "CMakeFiles/tek97.dir/src/drawing/tek_shader.cpp.o" \
 "CMakeFiles/tek97.dir/src/drawing/tek_spritebatch.cpp.o" \
 "CMakeFiles/tek97.dir/src/drawing/tek_texture.cpp.o" \
+"CMakeFiles/tek97.dir/src/drawing/tek_vertex.cpp.o" \
 "CMakeFiles/tek97.dir/src/game/tek_game.cpp.o" \
+"CMakeFiles/tek97.dir/src/game/tek_map.cpp.o" \
 "CMakeFiles/tek97.dir/src/main.cpp.o" \
 "CMakeFiles/tek97.dir/src/math/tek_collision.cpp.o" \
 "CMakeFiles/tek97.dir/src/math/tek_mat4.cpp.o" \
@@ -483,26 +551,31 @@ tek97_OBJECTS = \
 "CMakeFiles/tek97.dir/src/platform/linux/tek_linux_clock.cpp.o" \
 "CMakeFiles/tek97.dir/src/platform/linux/tek_linux_opengl.cpp.o" \
 "CMakeFiles/tek97.dir/src/platform/linux/tek_linux_window.cpp.o" \
+"CMakeFiles/tek97.dir/src/platform/tek_input.cpp.o" \
+"CMakeFiles/tek97.dir/src/platform/tek_keys.cpp.o" \
 "CMakeFiles/tek97.dir/src/tek_application.cpp.o"
 
 # External object files for target tek97
 tek97_EXTERNAL_OBJECTS =
 
-../bin/tek97: CMakeFiles/tek97.dir/src/core/tek_input.cpp.o
-../bin/tek97: CMakeFiles/tek97.dir/src/core/tek_keys.cpp.o
 ../bin/tek97: CMakeFiles/tek97.dir/src/core/tek_memory.cpp.o
 ../bin/tek97: CMakeFiles/tek97.dir/src/core/tek_stopwatch.cpp.o
+../bin/tek97: CMakeFiles/tek97.dir/src/drawing/tek_camera.cpp.o
 ../bin/tek97: CMakeFiles/tek97.dir/src/drawing/tek_color.cpp.o
 ../bin/tek97: CMakeFiles/tek97.dir/src/drawing/tek_drawing.cpp.o
 ../bin/tek97: CMakeFiles/tek97.dir/src/drawing/tek_font.cpp.o
 ../bin/tek97: CMakeFiles/tek97.dir/src/drawing/tek_framebuffer.cpp.o
+../bin/tek97: CMakeFiles/tek97.dir/src/drawing/tek_geometry.cpp.o
 ../bin/tek97: CMakeFiles/tek97.dir/src/drawing/tek_image.cpp.o
 ../bin/tek97: CMakeFiles/tek97.dir/src/drawing/tek_image_tga.cpp.o
+../bin/tek97: CMakeFiles/tek97.dir/src/drawing/tek_mesh.cpp.o
 ../bin/tek97: CMakeFiles/tek97.dir/src/drawing/tek_rect.cpp.o
 ../bin/tek97: CMakeFiles/tek97.dir/src/drawing/tek_shader.cpp.o
 ../bin/tek97: CMakeFiles/tek97.dir/src/drawing/tek_spritebatch.cpp.o
 ../bin/tek97: CMakeFiles/tek97.dir/src/drawing/tek_texture.cpp.o
+../bin/tek97: CMakeFiles/tek97.dir/src/drawing/tek_vertex.cpp.o
 ../bin/tek97: CMakeFiles/tek97.dir/src/game/tek_game.cpp.o
+../bin/tek97: CMakeFiles/tek97.dir/src/game/tek_map.cpp.o
 ../bin/tek97: CMakeFiles/tek97.dir/src/main.cpp.o
 ../bin/tek97: CMakeFiles/tek97.dir/src/math/tek_collision.cpp.o
 ../bin/tek97: CMakeFiles/tek97.dir/src/math/tek_mat4.cpp.o
@@ -516,6 +589,8 @@ tek97_EXTERNAL_OBJECTS =
 ../bin/tek97: CMakeFiles/tek97.dir/src/platform/linux/tek_linux_clock.cpp.o
 ../bin/tek97: CMakeFiles/tek97.dir/src/platform/linux/tek_linux_opengl.cpp.o
 ../bin/tek97: CMakeFiles/tek97.dir/src/platform/linux/tek_linux_window.cpp.o
+../bin/tek97: CMakeFiles/tek97.dir/src/platform/tek_input.cpp.o
+../bin/tek97: CMakeFiles/tek97.dir/src/platform/tek_keys.cpp.o
 ../bin/tek97: CMakeFiles/tek97.dir/src/tek_application.cpp.o
 ../bin/tek97: CMakeFiles/tek97.dir/build.make
 ../bin/tek97: /usr/lib/libSM.so
@@ -526,7 +601,7 @@ tek97_EXTERNAL_OBJECTS =
 ../bin/tek97: /usr/lib/libGLX.so
 ../bin/tek97: /usr/lib/libGLU.so
 ../bin/tek97: CMakeFiles/tek97.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Linking CXX executable ../bin/tek97"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/eugen/projects/tek97/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Linking CXX executable ../bin/tek97"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/tek97.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

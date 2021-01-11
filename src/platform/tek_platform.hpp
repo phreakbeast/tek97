@@ -62,7 +62,7 @@ typedef enum
 typedef struct
 {
     TekInputLetterType type;
-    tek::Key key;
+    Key key;
 }TekInputLetter;
 
 //---------------------------------------------------

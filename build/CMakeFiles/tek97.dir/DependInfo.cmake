@@ -4,21 +4,24 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/eugen/projects/tek97/src/core/tek_input.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/core/tek_input.cpp.o"
-  "/home/eugen/projects/tek97/src/core/tek_keys.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/core/tek_keys.cpp.o"
   "/home/eugen/projects/tek97/src/core/tek_memory.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/core/tek_memory.cpp.o"
   "/home/eugen/projects/tek97/src/core/tek_stopwatch.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/core/tek_stopwatch.cpp.o"
+  "/home/eugen/projects/tek97/src/drawing/tek_camera.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/drawing/tek_camera.cpp.o"
   "/home/eugen/projects/tek97/src/drawing/tek_color.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/drawing/tek_color.cpp.o"
   "/home/eugen/projects/tek97/src/drawing/tek_drawing.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/drawing/tek_drawing.cpp.o"
   "/home/eugen/projects/tek97/src/drawing/tek_font.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/drawing/tek_font.cpp.o"
   "/home/eugen/projects/tek97/src/drawing/tek_framebuffer.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/drawing/tek_framebuffer.cpp.o"
+  "/home/eugen/projects/tek97/src/drawing/tek_geometry.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/drawing/tek_geometry.cpp.o"
   "/home/eugen/projects/tek97/src/drawing/tek_image.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/drawing/tek_image.cpp.o"
   "/home/eugen/projects/tek97/src/drawing/tek_image_tga.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/drawing/tek_image_tga.cpp.o"
+  "/home/eugen/projects/tek97/src/drawing/tek_mesh.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/drawing/tek_mesh.cpp.o"
   "/home/eugen/projects/tek97/src/drawing/tek_rect.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/drawing/tek_rect.cpp.o"
   "/home/eugen/projects/tek97/src/drawing/tek_shader.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/drawing/tek_shader.cpp.o"
   "/home/eugen/projects/tek97/src/drawing/tek_spritebatch.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/drawing/tek_spritebatch.cpp.o"
   "/home/eugen/projects/tek97/src/drawing/tek_texture.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/drawing/tek_texture.cpp.o"
+  "/home/eugen/projects/tek97/src/drawing/tek_vertex.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/drawing/tek_vertex.cpp.o"
   "/home/eugen/projects/tek97/src/game/tek_game.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/game/tek_game.cpp.o"
+  "/home/eugen/projects/tek97/src/game/tek_map.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/game/tek_map.cpp.o"
   "/home/eugen/projects/tek97/src/main.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/main.cpp.o"
   "/home/eugen/projects/tek97/src/math/tek_collision.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/math/tek_collision.cpp.o"
   "/home/eugen/projects/tek97/src/math/tek_mat4.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/math/tek_mat4.cpp.o"
@@ -32,6 +35,8 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/eugen/projects/tek97/src/platform/linux/tek_linux_clock.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/platform/linux/tek_linux_clock.cpp.o"
   "/home/eugen/projects/tek97/src/platform/linux/tek_linux_opengl.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/platform/linux/tek_linux_opengl.cpp.o"
   "/home/eugen/projects/tek97/src/platform/linux/tek_linux_window.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/platform/linux/tek_linux_window.cpp.o"
+  "/home/eugen/projects/tek97/src/platform/tek_input.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/platform/tek_input.cpp.o"
+  "/home/eugen/projects/tek97/src/platform/tek_keys.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/platform/tek_keys.cpp.o"
   "/home/eugen/projects/tek97/src/tek_application.cpp" "/home/eugen/projects/tek97/build/CMakeFiles/tek97.dir/src/tek_application.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

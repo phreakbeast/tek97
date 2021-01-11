@@ -55,22 +55,12 @@ stdint.h
 /home/eugen/projects/tek97/src/core/tek_core.hpp
 tek_types.hpp
 /home/eugen/projects/tek97/src/core/tek_types.hpp
-tek_keys.hpp
-/home/eugen/projects/tek97/src/core/tek_keys.hpp
+../platform/tek_keys.hpp
+/home/eugen/projects/tek97/src/platform/tek_keys.hpp
 tek_stopwatch.hpp
 /home/eugen/projects/tek97/src/core/tek_stopwatch.hpp
 tek_memory.hpp
 /home/eugen/projects/tek97/src/core/tek_memory.hpp
-
-/home/eugen/projects/tek97/src/core/tek_input.hpp
-tek_core.hpp
-/home/eugen/projects/tek97/src/core/tek_core.hpp
-../platform/tek_platform.hpp
-/home/eugen/projects/tek97/src/platform/tek_platform.hpp
-
-/home/eugen/projects/tek97/src/core/tek_keys.hpp
-tek_types.hpp
-/home/eugen/projects/tek97/src/core/tek_types.hpp
 
 /home/eugen/projects/tek97/src/core/tek_memory.hpp
 tek_types.hpp
@@ -83,6 +73,10 @@ tek_types.hpp
 /home/eugen/projects/tek97/src/core/tek_types.hpp
 stdint.h
 -
+
+/home/eugen/projects/tek97/src/drawing/tek_camera.hpp
+../math/tek_math.hpp
+/home/eugen/projects/tek97/src/math/tek_math.hpp
 
 /home/eugen/projects/tek97/src/drawing/tek_color.hpp
 ../core/tek_core.hpp
@@ -107,6 +101,10 @@ tek_shader.hpp
 /home/eugen/projects/tek97/src/drawing/tek_shader.hpp
 tek_spritebatch.hpp
 /home/eugen/projects/tek97/src/drawing/tek_spritebatch.hpp
+tek_mesh.hpp
+/home/eugen/projects/tek97/src/drawing/tek_mesh.hpp
+tek_camera.hpp
+/home/eugen/projects/tek97/src/drawing/tek_camera.hpp
 
 /home/eugen/projects/tek97/src/drawing/tek_font.hpp
 ../core/tek_core.hpp
@@ -131,6 +129,14 @@ tek_color.hpp
 /home/eugen/projects/tek97/src/drawing/tek_color.hpp
 stdio.h
 -
+
+/home/eugen/projects/tek97/src/drawing/tek_mesh.hpp
+../core/tek_core.hpp
+/home/eugen/projects/tek97/src/core/tek_core.hpp
+../math/tek_math.hpp
+/home/eugen/projects/tek97/src/math/tek_math.hpp
+tek_vertex.hpp
+/home/eugen/projects/tek97/src/drawing/tek_vertex.hpp
 
 /home/eugen/projects/tek97/src/drawing/tek_rect.hpp
 ../core/tek_core.hpp
@@ -164,19 +170,33 @@ tek_color.hpp
 tek_image.hpp
 /home/eugen/projects/tek97/src/drawing/tek_image.hpp
 
+/home/eugen/projects/tek97/src/drawing/tek_vertex.hpp
+../math/tek_math.hpp
+/home/eugen/projects/tek97/src/math/tek_math.hpp
+
 /home/eugen/projects/tek97/src/game/tek_game.cpp
 tek_game.hpp
 /home/eugen/projects/tek97/src/game/tek_game.hpp
 ../drawing/tek_drawing.hpp
 /home/eugen/projects/tek97/src/drawing/tek_drawing.hpp
-../core/tek_input.hpp
-/home/eugen/projects/tek97/src/core/tek_input.hpp
+../platform/tek_input.hpp
+/home/eugen/projects/tek97/src/platform/tek_input.hpp
 ../drawing/tek_font.hpp
 /home/eugen/projects/tek97/src/drawing/tek_font.hpp
+tek_map.hpp
+/home/eugen/projects/tek97/src/game/tek_map.hpp
 
 /home/eugen/projects/tek97/src/game/tek_game.hpp
 ../core/tek_core.hpp
 /home/eugen/projects/tek97/src/core/tek_core.hpp
+
+/home/eugen/projects/tek97/src/game/tek_map.hpp
+../drawing/tek_drawing.hpp
+/home/eugen/projects/tek97/src/drawing/tek_drawing.hpp
+../drawing/tek_mesh.hpp
+/home/eugen/projects/tek97/src/drawing/tek_mesh.hpp
+../drawing/tek_camera.hpp
+/home/eugen/projects/tek97/src/drawing/tek_camera.hpp
 
 /home/eugen/projects/tek97/src/math/tek_mat4.hpp
 tek_vec3.hpp
@@ -219,6 +239,16 @@ tek_vec3.hpp
 /home/eugen/projects/tek97/src/math/tek_vec4.hpp
 
 /home/eugen/projects/tek97/src/platform/gl_functions.inl
+
+/home/eugen/projects/tek97/src/platform/tek_input.hpp
+../core/tek_core.hpp
+/home/eugen/projects/tek97/src/core/tek_core.hpp
+tek_platform.hpp
+/home/eugen/projects/tek97/src/platform/tek_platform.hpp
+
+/home/eugen/projects/tek97/src/platform/tek_keys.hpp
+../core/tek_types.hpp
+/home/eugen/projects/tek97/src/core/tek_types.hpp
 
 /home/eugen/projects/tek97/src/platform/tek_platform.hpp
 ../core/tek_core.hpp

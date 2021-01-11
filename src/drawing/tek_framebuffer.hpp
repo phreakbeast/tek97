@@ -5,25 +5,23 @@
 #include "tek_rect.hpp"
 #include "../math/tek_math.hpp"
 
-namespace tek
+typedef struct
 {
-	struct TekFramebuffer
-	{
-		u32 fbo;
-		u32 tex_id;
-		u32 depth_id;
+    u32 fbo;
+    u32 tex_id;
+    u32 depth_id;
 
-		u32 width;
-		u32 height;
+    u32 width;
+    u32 height;
+}TekFramebuffer;
 
-		TekFramebuffer(u32 width, u32 height);
-		~TekFramebuffer();
+void tek_fb_init(TekFramebuffer* fb, u32 width, u32 height);
+void tek_fb_destroy(TekFramebuffer* fb);
 
-		void bind_reading(u32 texture_unit);
+void tek_fb_bind_reading(TekFramebuffer* fb, u32 texture_unit);
 
-		void bind_writing();
+void tek_fb_bind_writing(TekFramebuffer* fb);
 
-		static void unbind();
-	};
-}
+void tek_fb_unbind();
+
 #endif

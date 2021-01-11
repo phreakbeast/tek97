@@ -2,66 +2,56 @@
 
 #include "../platform/tek_platform.hpp"
 
-namespace tek
+
+void tek_stopwatch_start(TekStopwatch* stopwatch)
 {
-    TekStopwatch::TekStopwatch()
-    {
-	started_time = 0;
-	paused_time = 0;
-	is_started = false;
-	is_paused = false;
-    }
-    
-    void TekStopwatch::start()
-    {
-	started_time = tek_time_get_seconds();
-	paused_time = 0;
-	is_started = true;
-	is_paused = false;
-    }
+    stopwatch->started_time = tek_time_get_seconds();
+    stopwatch->paused_time = 0;
+    stopwatch->is_started = true;
+    stopwatch->is_paused = false;
+}
 
-    void TekStopwatch::stop()
-    {
-	started_time = 0;
-	paused_time = 0;
-	is_started = false;
-	is_paused = false;
-    }
+void tek_stopwatch_stop(TekStopwatch* stopwatch)
+{
+    stopwatch->started_time = 0;
+    stopwatch->paused_time = 0;
+    stopwatch->is_started = false;
+    stopwatch->is_paused = false;
+}
 
-    void TekStopwatch::pause()
+void tek_stopwatch_pause(TekStopwatch* stopwatch)
+{
+    if (stopwatch->is_started && !stopwatch->is_paused)
     {
-	if (is_started && !is_paused)
+	stopwatch->is_paused = true;
+	stopwatch->paused_time = tek_time_get_seconds();
+	stopwatch->started_time = 0;
+    }
+}
+
+void tek_stopwatch_unpause(TekStopwatch* stopwatch)
+{
+    if (stopwatch->is_started && stopwatch->is_paused)
+    {
+	stopwatch->is_paused = false;
+	stopwatch->paused_time = 0;
+	stopwatch->started_time = tek_time_get_seconds();
+    }
+}
+
+double tek_stopwatch_get_seconds(TekStopwatch* stopwatch)
+{
+    double res = 0;
+    if (stopwatch->is_started)
+    {
+	if (stopwatch->is_paused)
 	{
-	    is_paused = true;
-	    paused_time = tek_time_get_seconds();
-	    started_time = 0;
+	    res = stopwatch->paused_time;
+	}
+	else
+	{
+	    res = tek_time_get_seconds() - stopwatch->started_time;
 	}
     }
-
-    void TekStopwatch::unpause()
-    {
-	if (is_started && is_paused)
-	{
-	    is_paused = false;
-	    paused_time = 0;
-	    started_time = tek_time_get_seconds();
-	}
-    }
-
-    double TekStopwatch::get_seconds()
-    {
-	double res = 0;
-	if (is_started)
-	{
-	    if (is_paused)
-	    {
-		res = paused_time;
-	    }
-	    else
-	    {
-		res = tek_time_get_seconds() - started_time;
-	    }
-	}
-	return res;
-    }
+    return res;
 }

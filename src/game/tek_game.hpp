@@ -2,30 +2,18 @@
 #define _TEK_GAME_HPP
 
 #include "../core/tek_core.hpp"
-#include "../tek_application.hpp"
-#include "tek_map.hpp"
 
-namespace game
-{
-	class Game : public tek::Application
-	{
-	public:
-		Game();
 
-		~Game();
+bool game_init();
 
-		bool on_init() override;
+void game_destroy();
+    
+void game_render();
 
-		void on_render() override;
+void game_update(float delta);
 
-		void on_update(float delta) override;
+void game_resize(u32 width, u32 height);
 
-		void on_resize(u32 width, u32 height) override;
-	private:
-		tek::TekFont* font;
-		Map* map;
-		tek::Vec2 cam_pos;
-	};
 
-}
 #endif
+

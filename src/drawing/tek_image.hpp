@@ -6,9 +6,6 @@
 #include "tek_color.hpp"
 #include <stdio.h>
 
-namespace tek
-{
-
 typedef enum
 {
     TEK_IMG_NONE,
@@ -43,5 +40,5 @@ bool tek_img_create_from_noise(TekImage *img, TekNoise *noise, TekColor color1, 
 //TODO: handle top and bottom origins
 bool _tek_load_tga(TekImage *img, const char *filename);
 
-}
+
 #endif

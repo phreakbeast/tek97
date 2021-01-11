@@ -3,29 +3,23 @@
 
 #include "tek_types.hpp"
 
-namespace tek
+typedef struct
 {
-	struct TekStopwatch
-	{
-	public:
-		TekStopwatch();
 
-		void start();
+    double started_time;
+    double paused_time;
+    bool is_started;
+    bool is_paused;
+} TekStopwatch;
 
-		void stop();
+void tek_stopwatch_start(TekStopwatch* stopwatch);
 
-		void pause();
+void tek_stopwatch_stop(TekStopwatch* stopwatch);
 
-		void unpause();
+void tek_stopwatch_pause(TekStopwatch* stopwatch);
 
-		double get_seconds();
+void tek_stopwatch_unpause(TekStopwatch* stopwatch);
 
-	private:
-		double started_time;
-		double paused_time;
-		bool is_started;
-		bool is_paused;
-	};
-}
+double tek_stopwatch_get_seconds(TekStopwatch* stopwatch);
 
 #endif

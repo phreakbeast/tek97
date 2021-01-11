@@ -2,179 +2,78 @@
 
 #include "tek_math_functions.hpp"
 
-namespace tek
+Vec4 vec4_create(float x, float y, float z, float w)
 {
-	Vec4::Vec4()
-	{
-		x = 0;
-		y = 0;
-		z = 0;
-		w = 0;
-	}
+    Vec4 res;
+    res.x = x;
+    res.y = y;
+    res.z = z;
+    res.w = w;
+    return res;
+}
 
-	Vec4::Vec4(float a)
-	{
-		this->x = a;
-		this->y = a;
-		this->z = a;
-		this->w = a;
-	}
+const float vec4_length(Vec4 v)
+{
+    return sqrtf(v.x * v.x + v.y * v.y + v.z * v.z + v.w + v.w);
+}
 
-	Vec4::Vec4(float x, float y, float z)
-	{
-		this->x = x;
-		this->y = y;
-		this->z = z;
-		this->w = 0;
-	}
+const Vec4 vec4_normalized(Vec4 v)
+{
+    float len = vec4_length(v);
+    if (len == 0)
+    {
+	len = 0.0000001f;
+    }
 
-	Vec4::Vec4(float x, float y, float z, float w)
-	{
-		this->x = x;
-		this->y = y;
-		this->z = z;
-		this->w = w;
-	}
+    Vec4 res = {
+	v.x / len,
+	v.y / len,
+	v.z / len,
+	v.w / len
+    };
+    return res;
+}
 
-	const float Vec4::length() const
-	{
-		return sqrtf(x * x + y * y + z * z + w + w);
-	}
+const Vec4 vec4_lerp(Vec4 v1, Vec4 v2, float t)
+{
+    Vec4 res = {
+	v1.x + t * (v2.x - v1.x),
+	v1.y + t * (v2.y - v1.y),
+	v1.z + t * (v2.z - v1.z),
+	v1.w + t * (v2.w - v1.w)
+    };
+    return res;
+}
 
-	const Vec4 Vec4::normalized() const
-	{
-		float len = length();
-		if (len == 0)
-		{
-			len = 0.0000001f;
-		}
+const Vec4 vec4_add(const Vec4 v1, const Vec4 v2)
+{
+    Vec4 res = {
+	v1.x + v2.x,
+	v1.y + v2.y,
+	v1.z + v2.z,
+	v1.w + v2.w
+    };
+    return res;
+}
 
-		Vec4 res = {
-				x / len,
-				y / len,
-				z / len,
-				w / len
-		};
-		return res;
-	}
+const Vec4 vec4_sub(const Vec4 v1, const Vec4 v2)
+{
+    Vec4 res = {
+	v1.x - v2.x,
+	v1.y - v2.y,
+	v1.z - v2.z,
+	v1.w - v2.w
+    };
+    return res;
+}
 
-	const Vec4 Vec4::lerp(Vec4 v2, float t) const
-	{
-		Vec4 res = {
-				x + t * (v2.x - x),
-				y + t * (v2.y - y),
-				z + t * (v2.z - z),
-				w + t * (v2.w - w)
-		};
-		return res;
-	}
-
-	Vec4 vec4_create(float x, float y, float z, float w)
-	{
-		Vec4 res;
-		res.x = x;
-		res.y = y;
-		res.z = z;
-		res.w = w;
-		return res;
-	}
-
-	const float vec4_length(Vec4 v)
-	{
-		return sqrtf(v.x * v.x + v.y * v.y + v.z * v.z + v.w + v.w);
-	}
-
-	const Vec4 vec4_normalized(Vec4 v)
-	{
-		float len = vec4_length(v);
-		if (len == 0)
-		{
-			len = 0.0000001f;
-		}
-
-		Vec4 res = {
-				v.x / len,
-				v.y / len,
-				v.z / len,
-				v.w / len
-		};
-		return res;
-	}
-
-	const Vec4 vec4_lerp(Vec4 v1, Vec4 v2, float t)
-	{
-		Vec4 res = {
-				v1.x + t * (v2.x - v1.x),
-				v1.y + t * (v2.y - v1.y),
-				v1.z + t * (v2.z - v1.z),
-				v1.w + t * (v2.w - v1.w)
-		};
-		return res;
-	}
-
-	const Vec4 vec4_add(const Vec4 v1, const Vec4 v2)
-	{
-		Vec4 res = {
-				v1.x + v2.x,
-				v1.y + v2.y,
-				v1.z + v2.z,
-				v1.w + v2.w
-		};
-		return res;
-	}
-
-	const Vec4 vec4_sub(const Vec4 v1, const Vec4 v2)
-	{
-		Vec4 res = {
-				v1.x - v2.x,
-				v1.y - v2.y,
-				v1.z - v2.z,
-				v1.w - v2.w
-		};
-		return res;
-	}
-
-	const Vec4 vec4_mul(const Vec4 v1, float num)
-	{
-		Vec4 res = {
-				v1.x * num,
-				v1.y * num,
-				v1.z * num,
-				v1.w * num
-		};
-		return res;
-	}
-
-	const Vec4 operator+(const Vec4& v1, const Vec4& v2)
-	{
-		Vec4 res = {
-				v1.x + v2.x,
-				v1.y + v2.y,
-				v1.z + v2.z,
-				v1.w + v2.w
-		};
-		return res;
-	}
-
-	const Vec4 operator-(const Vec4& v1, const Vec4& v2)
-	{
-		Vec4 res = {
-				v1.x - v2.x,
-				v1.y - v2.y,
-				v1.z - v2.z,
-				v1.w - v2.w
-		};
-		return res;
-	}
-
-	const Vec4 operator*(const Vec4& v1, float num)
-	{
-		Vec4 res = {
-				v1.x * num,
-				v1.y * num,
-				v1.z * num,
-				v1.w * num
-		};
-		return res;
-	}
+const Vec4 vec4_mul(const Vec4 v1, float num)
+{
+    Vec4 res = {
+	v1.x * num,
+	v1.y * num,
+	v1.z * num,
+	v1.w * num
+    };
+    return res;
 }
