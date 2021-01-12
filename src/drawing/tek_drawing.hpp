@@ -30,7 +30,7 @@ void renderer_start_frame();
 
 void renderer_end_frame();
 
-void renderer_bind_framebuffer(TekFramebuffer *buffer, TekColor color);
+void renderer_bind_framebuffer(TekFramebuffer *buffer, Color color);
 
 void renderer_unbind_framebuffer();
 
@@ -40,7 +40,7 @@ void renderer_disable_depth_test();
 
 void renderer_enable_depth_test();
 
-void renderer_clear(TekColor color);
+void renderer_clear(Color color);
 
 TekRenderStats* renderer_get_stats();
 

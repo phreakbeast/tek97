@@ -6,10 +6,10 @@
 void tek_img_destroy(TekImage *img)
 {
     tek_free(img->pixels);
-    img->pixels = NULL;
+    img->pixels = nullptr;
 }
 
-void tek_img_set_pixel(TekImage *img, int x, int y, TekColor color)
+void tek_img_set_pixel(TekImage *img, int x, int y, Color color)
 {
     img->pixels[(x + y * img->width) * img->internal_format + 0] = color.r;
     img->pixels[(x + y * img->width) * img->internal_format + 1] = color.g;
@@ -18,7 +18,7 @@ void tek_img_set_pixel(TekImage *img, int x, int y, TekColor color)
 	img->pixels[(x + y * img->width) * img->internal_format + 3] = color.a;
 }
 
-const TekColor tek_img_get_pixel(TekImage *img, int x, int y)
+const Color tek_img_get_pixel(TekImage *img, int x, int y)
 {
     u8 r, g, b;
     u8 a = 255;
@@ -28,8 +28,7 @@ const TekColor tek_img_get_pixel(TekImage *img, int x, int y)
     if (img->internal_format == 4)
 	a = img->pixels[(x + y * img->width) * img->internal_format + 3];
 
-    TekColor res = tek_color_create_alpha(r, g, b, a);
-    return res;
+    return Color(r, g, b, a);
 }
 
 
@@ -41,7 +40,7 @@ bool tek_img_load(TekImage *img, const char *filename)
     return success;
 }
 
-bool tek_img_create_blank(TekImage *img, int width, int height, TekColor color)
+bool tek_img_create_blank(TekImage *img, int width, int height, Color color)
 {
     img->width = width;
     img->height = height;
@@ -59,7 +58,7 @@ bool tek_img_create_blank(TekImage *img, int width, int height, TekColor color)
     return true;
 }
 
-void draw_checker(TekImage *img, TekColor col, int xmin, int xmax, int ymin, int ymax)
+void draw_checker(TekImage *img, Color col, int xmin, int xmax, int ymin, int ymax)
 {
     int mid_x = xmin + ((xmax - xmin) / 2);
     int mid_y = ymin + ((ymax - ymin) / 2);
@@ -82,7 +81,7 @@ void draw_checker(TekImage *img, TekColor col, int xmin, int xmax, int ymin, int
 }
 
 bool
-tek_img_create_checker(TekImage *img, TekColor color1, TekColor color2, int x_div, int y_div, int width, int height)
+tek_img_create_checker(TekImage *img, Color color1, Color color2, int x_div, int y_div, int width, int height)
 {
     tek_img_create_blank(img, width, height, color2);
 
@@ -105,7 +104,7 @@ tek_img_create_checker(TekImage *img, TekColor color1, TekColor color2, int x_di
     return true;
 }
 
-bool tek_img_create_from_noise(TekImage *img, TekNoise *noise, TekColor color1, TekColor color2)
+bool tek_img_create_from_noise(TekImage *img, TekNoise *noise, Color color1, Color color2)
 {
     tek_img_create_blank(img, noise->width, noise->height, color1);
 
@@ -114,7 +113,7 @@ bool tek_img_create_from_noise(TekImage *img, TekNoise *noise, TekColor color1, 
 	for (u32 x = 0; x < noise->width; ++x)
 	{
 	    float val = tek_noise_get_value(noise,x, y);
-	    TekColor c = tek_color_lerp(color1,color2, val);
+	    Color c = color1.lerp(color2, val);
 	    tek_img_set_pixel(img, x, y, c);
 	}
     }

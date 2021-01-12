@@ -20,8 +20,8 @@ static u32 g_ups = 0;
 
 static float g_delta = 0;
 
-static TekStopwatch g_ups_timer;
-static TekStopwatch g_delta_timer;
+static Stopwatch g_ups_timer;
+static Stopwatch g_delta_timer;
 
 static u32 g_width = 0;
 static u32 g_height = 0;
@@ -34,10 +34,10 @@ static Mat4 g_ortho;
 
 static void on_resize(u32 width, u32 height);
 
-static bool (*g_on_init_callback)(void) = NULL;
-static void (*g_on_render_callback)(void) = NULL;
-static void (*g_on_update_callback)(float) = NULL;
-static void (*g_on_resize_callback)(u32,u32) = NULL;
+static bool (*g_on_init_callback)(void) = nullptr;
+static void (*g_on_render_callback)(void) = nullptr;
+static void (*g_on_update_callback)(float) = nullptr;
+static void (*g_on_resize_callback)(u32,u32) = nullptr;
     
 void app_destroy()
 {
@@ -83,17 +83,17 @@ bool app_init(u32 width, u32 height, u32 render_width, u32 render_height, const 
 
 void app_start_main_loop()
 {
-    tek_stopwatch_start(&g_ups_timer);
-    tek_stopwatch_start(&g_delta_timer);
+    g_ups_timer.start();
+    g_delta_timer.start();
 
     while (g_is_running)
     {
 	TekRenderStats *stats = renderer_get_stats();
-	double seconds = tek_stopwatch_get_seconds(&g_ups_timer);
+	double seconds = g_ups_timer.get_seconds();
 	if (seconds - g_update_timer > g_update_ticks)
 	{
-	    g_delta = (float)tek_stopwatch_get_seconds(&g_delta_timer);
-	    tek_stopwatch_start(&g_delta_timer);
+	    g_delta = (float)g_delta_timer.get_seconds();
+	    g_delta_timer.start();
 	    if (!window_update())
 	    {
 		break;
@@ -118,7 +118,7 @@ void app_start_main_loop()
 	}
 
 	renderer_start_frame();
-	renderer_bind_framebuffer(&g_fb, tek_color_black());
+	renderer_bind_framebuffer(&g_fb, Color::black());
 
 	if(g_on_render_callback)
 	{

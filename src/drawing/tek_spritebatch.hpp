@@ -47,16 +47,16 @@ void tek_sb_resize(TekSpritebatch* sb, u32 width, u32 height);
 
 void tek_sb_reset_stats(TekSpritebatch* sb);
 
-void tek_sb_render_rect(TekSpritebatch* sb, TekRect rect, TekColor color);
+void tek_sb_render_rect(TekSpritebatch* sb, TekRect rect, Color color);
 
 void tek_sb_render_sprite(TekSpritebatch* sb,TekRect dest, TekRect src, u32 texture_id);
 
-void tek_sb_render_polygon(TekSpritebatch* sb, Vec2 p0, Vec2 p1, Vec2 p2, Vec2 p3, TekColor color);
+void tek_sb_render_polygon(TekSpritebatch* sb, Vec2 p0, Vec2 p1, Vec2 p2, Vec2 p3, Color color);
 
-void tek_sb_render_text(TekSpritebatch* sb, const char *text, TekFont *font, int x, int y, TekColor color, float max_width);
+void tek_sb_render_text(TekSpritebatch* sb, const char *text, TekFont *font, int x, int y, Color color, float max_width);
 
-void tek_sb_render_circle(TekSpritebatch* sb, Vec2 pos, float radius, float start_angle, float end_angle, u32 num_segments, TekColor color);
+void tek_sb_render_circle(TekSpritebatch* sb, Vec2 pos, float radius, float start_angle, float end_angle, u32 num_segments, Color color);
 
-void tek_sb_render_line(TekSpritebatch* sb, Vec2 p0, Vec2 p1, float width, TekColor color);
+void tek_sb_render_line(TekSpritebatch* sb, Vec2 p0, Vec2 p1, float width, Color color);
 
 #endif

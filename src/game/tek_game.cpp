@@ -49,7 +49,7 @@ void game_render()
 
     sprintf(fps_str, "fps: %u ups: %u", stats->fps, stats->ups);
 
-    tek_sb_render_text(sb, fps_str, &g_font, 5, 5, tek_color_white(), 0);
+    tek_sb_render_text(sb, fps_str, &g_font, 5, 5, Color::white(), 0);
 
     tek_sb_end(sb);
     tek_sb_flush(sb);

@@ -99,11 +99,11 @@ void renderer_resize(u32 width, u32 height)
     tek_sb_resize(&g_sprite_batch, width, height);
 }
 
-void renderer_bind_framebuffer(TekFramebuffer *buffer, TekColor color)
+void renderer_bind_framebuffer(TekFramebuffer *buffer, Color color)
 {
     tek_fb_bind_writing(buffer);
     GLCall(glViewport(0, 0, buffer->width, buffer->height));
-    Vec4 col = tek_color_to_vec4(color);
+    Vec4 col = color.to_vec4();
     GLCall(glClearColor(col.x, col.y, col.z, col.w));
     GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 }
@@ -129,9 +129,9 @@ void renderer_enable_depth_test()
     GLCall(glEnable(GL_DEPTH_TEST));
 }
 
-void renderer_clear(TekColor color)
+void renderer_clear(Color color)
 {
-    Vec4 col = tek_color_to_vec4(color);
+    Vec4 col = color.to_vec4();
     GLCall(glClearColor(col.x, col.y, col.z, col.w));
     GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 }
